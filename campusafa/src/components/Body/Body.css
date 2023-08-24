@@ -1,0 +1,14 @@
+body {
+	padding: 0px;
+	margin: 0px auto;
+	background-color: rgba(108, 164, 196, 40%);
+}
+main {
+	display: flex;
+	flex-wrap: wrap;
+	align-content: flex-start;
+	font-family: 'Fira Sans Condensed';
+	margin-left: 100px;
+	margin-right: 100px;
+	justify-content: center;
+}
