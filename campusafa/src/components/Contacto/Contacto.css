@@ -1,9 +1,9 @@
 main.main-contacto {
 	display: flex;
 	flex-wrap: wrap;
-	/* align-content: flex-start; */
+	align-content: flex-start;
 	justify-content: center;
-	font-family: 'Fira Sans Condensed';
+	font-family: 'Fira Sans Condensed', sans-serif;
 	margin-left: 100px;
 	margin-right: 100px;
 
@@ -18,7 +18,7 @@ section.contenedor-contacto {
 
 div.contacto {
 	justify-content: center;
-	font-family: 'Fira Sans Condensed';
+	font-family: 'Fira Sans Condensed', sans-serif;
 	-webkit-text-fill-color: transparent;
 	-webkit-text-stroke: 3px #027496;
 	flex: 100%;
@@ -37,7 +37,7 @@ div.contacto h1 {
 }
 
 section.contacto-info {
-	/* margin: 0 311px; */
+	margin: 0 311px;
 	padding: 0;
 	max-width: 2000px;
 	background-color: transparent;
@@ -63,8 +63,8 @@ form.cont-form {
 }
 
 input.control {
-	font-family: 'Fira Sans Condensed';
-	font-weight: normal;
+	font-family: 'Fira Sans Condensed', sans-serif;
+	font-weight:300;
 	font-style: normal;
 	font-size: calc(1.5vw + 0.5em) !important;
 	border: 0;
@@ -92,8 +92,8 @@ div.asunto {
 
 select.asunt-cont {
 	flex: content;
-	font-family: 'Fira Sans Condensed';
-	font-weight: bold;
+	font-family: 'Fira Sans Condensed', sans-serif;
+	font-weight:500;
 	font-size: calc(1.5vw + 0.5em) !important;
 	-webkit-appearance: none;
 	-moz-appearance: none;
@@ -113,7 +113,7 @@ select.asunt-cont {
 	flex: 1;
 	cursor: pointer;
 	padding-left: 40px;
-	background-image: url("../img/flecha_asunto.png");
+	background-image: url("/public/flecha_asunto.png");
 	background-repeat: no-repeat;
 	background-position: 193px;
 	color: #027496;
@@ -125,7 +125,7 @@ select.asunt-cont ::-ms-expand {
 }
 
 div.asunto.select {
-	font-family: 'Fira Sans Condensed';
+	font-family: 'Fira Sans Condensed', sans-serif;
 	display: flex;
 	align-items: center;
 	margin: 0;
@@ -138,6 +138,7 @@ div.asunto.select {
 
 div.comentario {
 	display: flex;
+	font-weight:300;
 	background-color: #F6F9FB;
 	opacity: 1;
 	width: 100%;
@@ -149,7 +150,8 @@ div.comentario {
 }
 
 textarea.comentario-tex {
-	font-family: 'Fira Sans Condensed';
+	font-family: 'Fira Sans Condensed', sans-serif;
+	font-weight:300;
 	font-size: calc(1.5vw + 0.5em) !important;
 	display: flex;
 	background-color: #F6F9FB;
