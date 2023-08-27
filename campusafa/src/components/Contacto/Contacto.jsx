@@ -5,12 +5,22 @@ import './Contacto.css';
 
 export function Contacto() {
   const [formulario, setFormulario] = useState({ nombreyapellido: "", email: "", asunto:"", comentario:""});
+  const face = <img src="./fc2.png" width={50} alt="Facebook AFA" />
+  const int =<img src="./int2.png" alt="Instagram AFA" width={50}/>
   return (
     <>
       <main className="main-contacto">
         <section className="contenedor-contacto">
           <div className="contacto">
             <h1>CONTACTO</h1>
+          </div>
+          <div className="redes">
+            <ul>
+              <li>{face}</li>
+              <li>{int}</li>
+              <li><img src="/public/twAFA.png" alt="Twitter AFA" width={50}/></li>
+              <li><img src="/public/ytAFA.png" alt="Youtobe AFA" width={50} /></li>
+            </ul>
           </div>
         </section>
         <section className="contacto-info">
@@ -36,14 +46,12 @@ export function Contacto() {
               <div className="boton">
                 <button type="submit" id="enviar-cont">ENVIAR</button>
               </div>
-            
-
-
           </form>
         </section>
       </main>
 
     </>
   );
+  
 }
 export default Contacto;

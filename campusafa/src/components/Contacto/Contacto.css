@@ -35,7 +35,18 @@ div.contacto h1 {
 	
 	font-size: calc(4.5vw + 0.7em) !important;
 }
-
+div.redes{
+	padding: 5px 5px;
+	justify-content: start;
+	display: flex;
+	flex-wrap: wrap;
+	
+}
+ div.redes ul{
+	list-style: none;
+	
+	text-decoration: none;
+ }
 section.contacto-info {
 	margin: 0 311px;
 	padding: 0;
@@ -47,7 +58,7 @@ section.contacto-info {
 
 
 section.contacto-info h2 {
-	
+	font-weight: 400;
 	color: #025377;
 	padding-left: 10px;
 	font-size: calc(1.5vw + 0.6em) !important;
