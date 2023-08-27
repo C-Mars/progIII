@@ -24,12 +24,12 @@ header {
 	}
 }
 
-div.logoNav {
-	margin-left: 75px;
-
+li.logoNav {
+	/* margin-left: 75px; */
+	display: flex;
 	align-content: flex-start;
-
-
+	width: 45px;
+	height: 49px;
 }
 
 /* div.logoNav img {
@@ -92,6 +92,11 @@ div.log a {
 	color: #BAD6DA;
 }
 
+.logoNav:hover{
+	color: #052035;
+	background-image: url("/public/logo_oscuro-01.png");
+	background-color: #052035;
+}
 nav a:hover {
 	color: #052035;
 	background-color: #BAD6DA;
