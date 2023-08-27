@@ -1,0 +1,41 @@
+section.historia {
+	display: flex;
+	text-align: center;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+}
+
+div.historia-t {
+	text-align: center;
+	display: block;
+	width: 100%;
+
+	align-items: center;
+	flex-wrap: wrap;
+}
+
+div.historia-t h1 {
+	font-family: 'Fira Sans Condensed';
+	font-size: calc(4.5vw + 0.7em) !important;
+	text-align: center;
+    -webkit-text-fill-color: transparent;
+	-webkit-text-stroke: 2px #027496;
+	color: #6ca4c4;
+	letter-spacing: 4;
+	
+}
+
+div.historia-t p {
+	font-family: 'Fira Sans Condensed';
+    font-weight: 350;
+	font-size: calc(0.9vw + 0.7em) !important;
+	color: black;
+	text-align: justify;
+
+}
+
+div.historia-t img {
+	width: 50%;
+	border: 5px solid #6ca4c4;
+}
