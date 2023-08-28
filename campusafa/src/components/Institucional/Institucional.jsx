@@ -1,33 +1,7 @@
 import './Institucional.css'
-import '../../primereact-theme/theme.css'
-import React, { useState, useEffect } from 'react';
-import { Galleria } from 'primereact/galleria';
-import { PhotoService } from './service/PhotoService';
-
-export default function ItemWithoutThumbnailsDemo() {
-    const [images, setImages] = useState(null);
-
-    useEffect(() => {
-            PhotoService.getImages().then(data => setImages(data));
-    }, []);
-
-    const itemTemplate = (item) => {
-        return <img src={item.itemImageSrc} alt={item.alt} style={{ width: '100%', display: 'block' }} />;
-    }
-
-    const thumbnailTemplate = (item) => {
-        return <img src={item.thumbnailImageSrc} alt={item.alt} style={{ display: 'block' }} />;
-    }
-
-    return (
-        <div className="card"> 
-            <Galleria value={images} numVisible={5} circular style={{ maxWidth: '640px' }}
-                showThumbnails={false} showItemNavigators item={itemTemplate} thumbnail={thumbnailTemplate} />
-        </div>
-    )
-}
-
-
+import '../../primereact-theme/theme.css';
+import "primereact/resources/primereact.min.css";
+import Carousel from '../Carousel/Carousel';
 
 export function Institucional() {
     return (
@@ -42,7 +16,7 @@ export function Institucional() {
 
                     </div>
                     <div className='galeria-int'>
-                        <ItemWithoutThumbnailsDemo/>
+                        <Carousel/>
                     </div>
                 </section >
             </main >
