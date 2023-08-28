@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState } from "react";
 import './Contacto.css';
+import { Link } from 'react-router-dom';
 
 
 export function Contacto() {
@@ -16,10 +17,10 @@ export function Contacto() {
           </div>
           <div className="redes">
             <ul>
-              <li>{face}</li>
-              <li>{int}</li>
-              <li><img src="/public/twAFA.png" alt="Twitter AFA" width={50}/></li>
-              <li><img src="/public/ytAFA.png" alt="Youtobe AFA" width={50} /></li>
+              <li><Link to='https://www.facebook.com/AFASeleccionArgentina'>{face}</Link></li>
+              <li><Link to='https://www.instagram.com/afaseleccion/'>{int}</Link></li>
+              <li><Link to='https://twitter.com/Argentina'><img src="/public/twAFA.png" alt="Twitter AFA" width={50}/></Link></li>
+              <li><Link to='https://www.youtube.com/user/AFASeleccion'><img src="/public/ytAFA.png" alt="Youtobe AFA" width={50} /></Link></li>
             </ul>
           </div>
         </section>
