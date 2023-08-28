@@ -1,43 +1,57 @@
-section.historia {
-	display: block;
+.historia {
+	display: flex;
 	text-align: center;
-	/* justify-content: center; */
+	justify-content: space-between;
 	/* align-items: center; */
 	width: 100%;
+	flex-flow:wrap;
 }
 
-div.historia-t {
-	text-align: center;
-	display: block;
+.historia-t {
 	width: 100%;
-
+	display: flex;
+	justify-content: center;
 	align-items: center;
-	flex-wrap: wrap;
+	flex-flow:wrap;
 }
 
-div.historia-t h1 {
+.historia-t h1 {
 	font-family: 'Fira Sans Condensed';
-	font-size: calc(4.5vw + 0.7em) !important;
+	font-size: 90px;
 	text-align: center;
 	-webkit-text-fill-color: transparent;
 	-webkit-text-stroke: 2px #027496;
 	color: #6ca4c4;
 	letter-spacing: 4;
+	/* flex-flow:wrap; */
 
 }
-
-div.historia-t p {
+.historia-contenedor{
+	width: 100%;
+	justify-content: center;
+	flex-flow:wrap;
+	display: flex;
+}
+.historia-texto{
+	
 	font-family: 'Fira Sans Condensed';
 	font-weight: 350;
 	font-size: calc(0.9vw + 0.7em) !important;
+	justify-content: start;
+	flex-flow:wrap;
+}
+.historia-texto p {
+	
 	color: black;
 	text-align: justify;
-
 }
 
 
-div.galeria-int {
-	width: 100%;
+.galeria-int {
+	padding: 20px;
+	margin: 10px;
 	display: flex;
-	justify-content: center;
+	justify-content: start;
+	flex-flow:wrap;
+	align-items:flex-end;
 }
