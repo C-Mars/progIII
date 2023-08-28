@@ -6,8 +6,8 @@ import { Link } from 'react-router-dom';
 
 export function Contacto() {
   const [formulario, setFormulario] = useState({ nombreyapellido: "", email: "", asunto:"", comentario:""});
-  const face = <img src="./fc2.png" width={50} alt="Facebook AFA" />
-  const int =<img src="./int2.png" alt="Instagram AFA" width={50}/>
+  const face = <img src="/fc2.png" width={90} alt="Facebook AFA" />
+  const int =<img src="/int2.png" alt="Instagram AFA" width={90}/>
   return (
     <>
       <main className="main-contacto">
@@ -19,8 +19,8 @@ export function Contacto() {
             <ul>
               <li><Link to='https://www.facebook.com/AFASeleccionArgentina'>{face}</Link></li>
               <li><Link to='https://www.instagram.com/afaseleccion/'>{int}</Link></li>
-              <li><Link to='https://twitter.com/Argentina'><img src="/public/twAFA.png" alt="Twitter AFA" width={50}/></Link></li>
-              <li><Link to='https://www.youtube.com/user/AFASeleccion'><img src="/public/ytAFA.png" alt="Youtobe AFA" width={50} /></Link></li>
+              <li><Link to='https://twitter.com/Argentina'><img src="/tw2.png" alt="Twitter AFA" width={90}/></Link></li>
+              <li><Link to='https://www.youtube.com/user/AFASeleccion'><img src="/yt2.png" alt="Youtobe AFA" width={90} /></Link></li>
             </ul>
           </div>
         </section>
