@@ -1,10 +1,14 @@
 import React from 'react';
+import './Noticias.css';
 
-
-export function Noticias(){
+export function Noticias() {
     return (
         <>
-        <h1>Página Noticias</h1>
+            <section class="noticias">
+                <div class="noticia-t">
+                    <h1>NOTICIAS</h1>
+                </div>
+            </section>
         </>
     );
 }

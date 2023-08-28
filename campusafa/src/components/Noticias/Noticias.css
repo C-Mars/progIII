@@ -1,0 +1,18 @@
+section.noticias {
+	width: 100%;
+}
+
+div.noticia-t {
+	font-family: 'Fira Sans Condensed';
+	-webkit-text-fill-color: transparent;
+	-webkit-text-stroke: 2px #027496;
+	flex: 100%;
+	letter-spacing: 3.25px;
+	width: 100%;
+
+}
+
+div.noticia-t h1 {
+	text-align: center;
+	font-size: 90px;
+}
