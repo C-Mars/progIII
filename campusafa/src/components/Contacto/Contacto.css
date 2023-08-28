@@ -117,7 +117,6 @@ div.asunto {
 	flex: auto;
 	background: #F6F9FB;
 	width: 250px;
-	border: 4px solid #027496;
 	height: 90px;
 	margin: 0;
 	padding: 0;
@@ -135,7 +134,7 @@ select.asunt-cont {
 	appearance: none;
 	outline: 0;
 	box-shadow: none;
-	border: 0 !important;
+	border: 4px solid #027496;
 	background: #F6F9FB;
 	opacity: 1;
 	background-image: none;

@@ -12,7 +12,8 @@ export function Header() {
                 <ul className="menu">
                     <li className="logoNav"><Link to="/"> {start}</Link></li>
                     <li><Link to="institucional">INSTITUCIONAL</Link></li>
-                    <li><Link to="contacto">CONTACTO</Link></li>
+                    <li><Link to="noticias">NOTICIAS</Link></li>
+                    <li><Link to="contacto">CONTACTO</Link></li> 
                 </ul>
             </nav>
         </>
