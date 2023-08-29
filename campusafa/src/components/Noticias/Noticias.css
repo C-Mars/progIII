@@ -1,18 +1,94 @@
+/* Noticias.css */
 section.noticias {
 	width: 100%;
-}
-
-div.noticia-t {
+  }
+  
+  div.noticia-t {
 	font-family: 'Fira Sans Condensed';
 	-webkit-text-fill-color: transparent;
 	-webkit-text-stroke: 2px #027496;
 	flex: 100%;
 	letter-spacing: 3.25px;
 	width: 100%;
-
-}
-
-div.noticia-t h1 {
 	text-align: center;
 	font-size: 90px;
-}
+  }
+  
+  /* Estilo para la barra de búsqueda */
+  .search-container {
+	display: flex;
+	justify-content: center;
+	margin-top: 20px;
+  }
+  
+  input[type="text"] {
+	padding: 12px;
+	border: 2px solid #027496;
+	transition: all 0.3s ease-in-out;
+	font-size: 16px;
+	width: 300px;
+  }
+  
+  input[type="text"]:hover {
+	border-color: #00a1cc;
+	width: 350px;
+  }
+  
+  /* Estilo para los elementos de noticias */
+  .search-bar {
+	width: 80%;
+	max-width: 400px;
+	margin: 50px auto;
+	display: flex;
+	align-items: center;
+	background-color: rgba(255, 255, 255, 0.8);
+	border-radius: 25px;
+	padding: 10px;
+  }
+  
+  .search-input {
+	flex: 1;
+	border: none;
+	outline: none;
+	background: transparent;
+	font-size: 16px;
+  }
+  
+  .news-container {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+  }
+  
+  .news-item {
+	width: calc(32% - 20px);
+	border: 2px solid #ccc;
+	padding: 15px;
+	margin-bottom: 20px;
+	color: white;
+  }
+  
+  img {
+	max-width: 100%;
+	height: auto;
+  }
+  
+  .pagination {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-top: 20px;
+  }
+  
+  button {
+	background-color: #007bff;
+	color: white;
+	border: none;
+	padding: 10px 20px;
+	cursor: pointer;
+  }
+  
+  button:hover {
+	background-color: #0056b3;
+  }
+  
