@@ -5,6 +5,7 @@ section.noticias {
   
   div.noticia-t {
 	font-family: 'Fira Sans Condensed';
+	
 	-webkit-text-fill-color: transparent;
 	-webkit-text-stroke: 2px #027496;
 	flex: 100%;
@@ -12,38 +13,52 @@ section.noticias {
 	width: 100%;
 	text-align: center;
 	font-size: 90px;
-  }
-  
+}
+ 
+
+
   /* Estilo para la barra de búsqueda */
   .search-container {
 	display: flex;
 	justify-content: center;
+	margin: 0px auto;
 	margin-top: 20px;
+	position:  center;
+	
+	
   }
 
   input.notiimp[type="text"] {
 	padding: 12px;
 	border: 2px solid #027496;
 	transition: all 0.3s ease-in-out;
-	font-size: 16px;
+	font-size: 20px;
 	width: 300px;
+	font-family: 'Fira Sans Condensed', sans-serif;
+	/* margin-left: 525px; */
+	
+
   }
   
   input.notiimp[type="text"]:hover {
-	border-color:2px solid #00a1cc !important;
+	border-color: #00a1cc;
 	width: 350px;
+
   }
   
+    
   /* Estilo para los elementos de noticias */
   .search-bar {
-	width: 80%;
+	width: 90%;
 	max-width: 400px;
-	margin: 50px auto;
+	margin: 0px auto;
 	display: flex;
 	align-items: center;
 	background-color: rgba(255, 255, 255, 0.8);
 	border-radius: 25px;
-	padding: 10px;
+	padding: 50px;
+
+	
   }
   
   .search-input {
@@ -52,20 +67,31 @@ section.noticias {
 	outline: none;
 	background: transparent;
 	font-size: 16px;
+	font-family: 'Fira Sans Condensed', sans-serif;
   }
   
   .news-container {
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: space-between;
+	margin-top: 30px;
+	margin-inline: 10px;
+	
   }
   
   .news-item {
 	width: calc(32% - 20px);
-	border: 2px solid #ccc;
+	border: 2px solid #00a1cc;
 	padding: 15px;
 	margin-bottom: 20px;
-	color: white;
+	color: black;
+	background-color: white;
+	font-family: 'Fira Sans Condensed', sans-serif;
+  }
+
+  .news-item:hover {
+	background-color: rgb(141, 209, 248);
+	border: 2px solid white;
   }
   
   img {
@@ -78,6 +104,10 @@ section.noticias {
 	justify-content: space-between;
 	align-items: center;
 	margin-top: 20px;
+	font-family: 'Fira Sans Condensed', sans-serif;
+	margin-left: 10px;
+	margin-right: 10px;
+	font-size: 16px;
   }
   
   button {
@@ -86,9 +116,11 @@ section.noticias {
 	border: none;
 	padding: 10px 20px;
 	cursor: pointer;
+	font-family: 'Fira Sans Condensed', sans-serif;
+	font-size: 16px;
+	margin: 10px;
   }
   
   button:hover {
-	background-color: #0056b3;
-  }
-  
+	background-color: #0056b3;
+}
