@@ -1,0 +1,154 @@
+
+/****************************Página Index**********************************************/
+/**Seción principal****/
+div.principal {
+	display: flex;
+	flex-flow: wrap;
+	align-items: center;
+	/* align-content: flex-start; */
+	flex: 1;
+	width: 100%;
+	z-index: -1;
+	margin: 0;
+	padding: 0;
+	justify-content: center;
+
+}
+
+div.main-container {
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-flow: wrap;
+	align-content: flex-start;
+	align-items: center;
+	justify-content: center;
+	background-color: #052035;
+	width: 100%;
+}
+
+@media screen and (max-width: 1191px) {
+	div.main-container {
+		justify-content: center;
+		display: block;
+		/* width:50%; */
+		align-items: center;
+	}
+}
+
+div.imagen-fondo {
+	margin: 0;
+	padding: 0;
+	width: 72%;
+
+	position: relative;
+	align-content: center;
+	align-items: center;
+	justify-content: center;
+	background-color: black !important;
+
+}
+
+@media screen and (max-width: 1550px) {
+	div.imagen-fondo {
+		align-items: center;
+		display: block;
+		width: 100%;
+		justify-content: center;
+	}
+}
+
+
+
+
+div.imagen-fondo img {
+	max-width: 100%;
+	min-width: 450px;
+	opacity: .5;
+}
+
+div.texto-debajo {
+	position: absolute;
+	top: 81%;
+	left: 4%;
+	/* transform: translate(-20%, -35%); */
+	width: 90%;
+	font-family: 'Fira Sans Condensed', sans-serif;
+	font-size: 12pt;
+	/* color: #6ca4c4; */
+	color: #F2DED0;
+	font-style: oblique;
+	font-size: calc(0.5vw + 0.4em) !important;
+
+	z-index: +1;
+}
+
+
+
+
+
+div.proximo {
+	display: block;
+	/* flex-flow: row !important; */
+	align-content: center;
+	justify-content: center;
+	/* width: 27%; */
+	/* min-width: 320px; */
+	background-color: #052035;
+	padding: 20px;
+	min-height: 717px;
+}
+
+div.proximo-part {
+	align-content: center;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+}
+
+
+
+div.proximo-part h2 {
+	font-size: calc(2.125vw + 0.7em) !important;
+	text-align: center;
+	-webkit-text-stroke: 2px #027496 !important;
+	-webkit-text-fill-color: transparent;
+}
+
+div.proximo-part p {
+	color: #ffffff
+}
+
+
+div.boton-vistas {
+	width: 100%;
+	display: flex;
+	flex-flow: wrap;
+	align-content: flex-start;
+	/* max-width: 600px; */
+	align-items: center;
+	text-align: center;
+	justify-content: center;
+}
+
+div.boton2 button {
+	width: 155px;
+	height: 70px;
+	background-color: #052035;
+	;
+	border: 2px solid #F6F9FB;
+	padding: 12px;
+	color: #F6F9FB;
+	margin-left: 10px;
+	font-size: 16px;
+	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+	cursor: pointer;
+	font-family: 'Fira Sans Condensed'
+
+}
+
+div.boton2 button:hover {
+	color: #BAD6DA;
+	background-color: rgb(2, 85, 121);
+	border: 0;
+}
