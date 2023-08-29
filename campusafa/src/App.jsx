@@ -6,6 +6,7 @@ import { Contacto } from './components/Contacto/Contacto';
 import { Inicio } from './components/Inicio/Inicio';
 import { Institucional } from './components/Institucional/Institucional';
 import { Noticias} from './components/Noticias/Noticias'
+import { Footer } from './components/Footer/Footer';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="contacto" element={<Contacto />} />
         <Route path="noticias" element={<Noticias/>}/>
       </Routes>
+      <Footer/>
 
     </BrowserRouter>
   );
