@@ -50,7 +50,7 @@ export function Noticias() {
   };
 
   return (
-    <div>
+    <main>
       <section className="noticias">
         <div className="noticia-t">
           <h1>NOTICIAS</h1>
@@ -82,6 +82,7 @@ export function Noticias() {
           Mostrando {news.length} de {totalResults} resultados
         </p>
       </div>
-    </div>
+    </main>
   );
 }
+ 

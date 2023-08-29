@@ -8,12 +8,15 @@ import ApiSection from './ApiSection';
 export function Inicio() {
     return (
         <>
-            <NextMatch />
-            <div class="noticia-t">
-                <h1>NOTICIAS</h1>
-            </div>
-            <News />
-            <ApiSection />
+            <main>
+                <NextMatch />
+                <div class="noticia-t">
+                    <h1>NOTICIAS</h1>
+                </div>
+                <News />
+                <ApiSection />
+            </main>
+
         </>
     );
 }

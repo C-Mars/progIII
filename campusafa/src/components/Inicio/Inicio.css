@@ -6,6 +6,8 @@
 	display: flex;
 	justify-content: center;
 	margin-bottom: 100px;
+	width: 100%;
+	flex-flow: wrap;
 }
 
 .simply-section {
@@ -14,11 +16,13 @@
 	height: 100px;
 	margin: 20 0px;
 	border-radius: 1px;
-	display: flex;
+	display:flex;
+	flex-flow:block;
 	align-items: center;
 	justify-content: center;
 	font-weight: 100;
 	font-size: 18px;
+	margin-top: 20px;
 
 }
 

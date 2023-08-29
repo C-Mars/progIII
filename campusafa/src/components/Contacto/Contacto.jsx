@@ -10,7 +10,8 @@ export function Contacto() {
   const int =<img src="/int2.png" alt="Instagram AFA" width={90}/>
   return (
     <>
-      <main className="main-contacto">
+    <main>
+    <main className="main-contacto">
         <section className="contenedor-contacto">
           <div className="contacto">
             <h1>CONTACTO</h1>
@@ -50,6 +51,8 @@ export function Contacto() {
           </form>
         </section>
       </main>
+    </main>
+      
 
     </>
   );
