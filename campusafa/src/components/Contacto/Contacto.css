@@ -92,8 +92,8 @@ form.cont-form {
 	margin: 0px;
 	color: #027496;
 	width: 100%;
-	max-width: 1081px;
-	min-width: 400px;
+	/* max-width: 1081px;
+	min-width: 400px; */
 }
 
 input.controles {
@@ -102,7 +102,7 @@ input.controles {
 	font-style: normal;
 	font-size: 35px;
 	border: 0;
-	width: 98.3%;
+	width: 100%;
 	height: 90px;
 	background-color: #F6F9FB;
 	margin-bottom: 16px;
