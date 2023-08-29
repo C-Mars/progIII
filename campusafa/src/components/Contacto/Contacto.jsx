@@ -29,9 +29,9 @@ export function Contacto() {
           <br></br>
           <form onSubmit={() => alert(JSON.stringify(formulario))} className="cont-form" id="formContactos">
               <label for="nombreyapellido"></label>
-              <input className="control" id="nombreyapellido" type="text" placeholder="Nombre y Apellido:"value={formulario.nombreyapellido}  required onChange={(e) => setFormulario({ ...formulario, "nombreyapellido": e.target.value })} ></input>
+              <input className="controles" id="nombreyapellido" type="text" placeholder="Nombre y Apellido:"value={formulario.nombreyapellido}  required onChange={(e) => setFormulario({ ...formulario, "nombreyapellido": e.target.value })} ></input>
               <label for="email"></label>
-              <input className="control" id="email" value={formulario.email} type="email" placeholder="Email:" required onChange={(e) => setFormulario({ ...formulario, "email": e.target.value })}></input>
+              <input className="controles" id="email" value={formulario.email} type="email" placeholder="Email:" required onChange={(e) => setFormulario({ ...formulario, "email": e.target.value })}></input>
               <div className="asunto">
                 <select className="asunt-cont" name="asunto" value={formulario.asunto} id="asunto" onChange={(e) => setFormulario({ ...formulario, "asunto": e.target.value })}>
                   <option selected disabled>ASUNTO</option>

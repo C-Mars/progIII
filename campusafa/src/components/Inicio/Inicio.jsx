@@ -5,15 +5,15 @@ import './Inicio.css';
 import ApiSection from './ApiSection';
 
 
-export function Inicio(){
+export function Inicio() {
     return (
         <>
             <NextMatch />
             <div class="noticia-t">
-        <h1>NOTICIAS</h1>
-      </div>
-                 <News />
-          <ApiSection />
+                <h1>NOTICIAS</h1>
+            </div>
+            <News />
+            <ApiSection />
         </>
     );
 }

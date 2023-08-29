@@ -20,8 +20,8 @@ section.noticias {
 	justify-content: center;
 	margin-top: 20px;
   }
-  
-  input[type="text"] {
+
+  input.notiimp[type="text"] {
 	padding: 12px;
 	border: 2px solid #027496;
 	transition: all 0.3s ease-in-out;
@@ -29,8 +29,8 @@ section.noticias {
 	width: 300px;
   }
   
-  input[type="text"]:hover {
-	border-color: #00a1cc;
+  input.notiimp[type="text"]:hover {
+	border-color:2px solid #00a1cc !important;
 	width: 350px;
   }
   

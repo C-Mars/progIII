@@ -56,7 +56,7 @@ export function Noticias() {
           <h1>NOTICIAS</h1>
         </div>
       </section>
-      <input
+      <input className='notiimp'
         type="text"
         placeholder="Buscar noticias..."
         value={searchTerm}

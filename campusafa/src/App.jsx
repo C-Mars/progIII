@@ -11,10 +11,7 @@ import { Footer } from './components/Footer/Footer';
 function App() {
   return (
     <BrowserRouter>
-      
-
       <Header />
-      
       <Routes>
         <Route path="/" element={<Inicio />} />
         <Route path="institucional" element={<Institucional />} />
