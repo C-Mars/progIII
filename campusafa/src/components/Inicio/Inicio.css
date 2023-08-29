@@ -96,22 +96,28 @@ div.imagen-fondo img {
 }
 
 div.texto-debajo {
+	display: block;
+	flex-flow:wrap ;
 	position: absolute;
-	top: 81%;
-	left: 4%;
+	top: 85%;
+	right: 30%;
 	/* transform: translate(-20%, -35%); */
 	width: 90%;
 	font-family: 'Fira Sans Condensed', sans-serif;
-	font-size: 12pt;
+	
 	/* color: #6ca4c4; */
-	color: #F2DED0;
-	font-style: oblique;
-	font-size: calc(0.5vw + 0.4em) !important;
-
+	color: #f9f9f8;
+	font-style:italic;
+	font-weight: 300;
+	font-size: calc(0.6vw + 0.4em) !important;
+	justify-content: space-between;
+	align-items: start;
 	z-index: +1;
 }
 
-
+div.texto-debajo p{
+	align-items: flex-start;
+}
 
 
 
