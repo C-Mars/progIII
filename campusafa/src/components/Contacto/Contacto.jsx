@@ -64,7 +64,7 @@ export function Contacto() {
                   <option value="jugador">Jugador</option>
                   <option value="cuerpotecnico">Técnico</option>
                   <option value="directivo">Directivo</option>
-                  <option value="spondor">Sponsor</option>
+                  <option value="sponsor">Sponsor</option>
                 </select>
               </div>
               <div className="comentario">
