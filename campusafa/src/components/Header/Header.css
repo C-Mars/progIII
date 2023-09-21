@@ -1,17 +1,17 @@
 
 header {
-	text-align: center;
+	/* text-align: center; */
 	margin: 0;
 	padding: 0;
-	display: block;
+	display: flex;
 	width: 100%;
 	font-size: 16px;
 	background-color: #052035;
-	justify-content: center;
+	justify-content: start;
 	font-family: 'Fira Sans Condensed';
 	font-weight: bolder;
-	align-items: center;
-	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+	/* align-items: center; */
+	box-shadow: 0px 5px 5px rgba(15, 14, 14, 0.25);
 	z-index: +1;
 	flex-flow: wrap;
 }
@@ -20,8 +20,7 @@ header {
 	header {
 		display: flex;
 		flex-direction: row;
-		justify-content: center;
-		
+		/* justify-content: center; */
 		width: 100%;
 	}
 }
@@ -29,17 +28,13 @@ header {
 .logoNav {
 	display: flex;
 	flex-flow: wrap;
-	justify-content: space-between;
+	/* justify-content: space-between; */
 	margin-left: 80px;
 
 
 
 }
 
-/* .logoNav img {
-	width: 45px;
-	height: 49px;
-} */
 
 a {
 	text-decoration: none;
