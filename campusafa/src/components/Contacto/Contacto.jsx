@@ -8,10 +8,10 @@ import { Link } from 'react-router-dom';
 export function Contacto() {
   // 
   //
-  const face = <img src="/fc2.png" width={90} alt="Facebook AFA" />
-  const int = <img src="/int2.png" alt="Instagram AFA" width={90} />
+  const face = <img src="/fc2.png" width={90} alt="Facebook AFA" />;
+  const int = <img src="/int2.png" alt="Instagram AFA" width={90} />;
   // 
-  const baseURL = 'http://localhost:3005/contacto';
+  const baseURL = 'http://localhost:3005/api/src/v1/publico/contacto';
 
   // un objeto que guarde la informacion del form
   const [formulario, setFormulario] = useState({ nombreyapellido: '', email: '', asunto: '', comentario: '' });
@@ -24,15 +24,16 @@ export function Contacto() {
 // argumentos: direccion del servidor, datos enviados al servidor
     axios.post(baseURL,formulario)
     .then( res => {
-        console.log(res);
-        alert(res.data.respuesta);
+        const respuesta = 'correo enviado';
+        // console.log(res);
+        alert(respuesta);
         setFormulario({nombreyapellido: '', email: '', asunto: '', comentario: '' });
     })
     .catch( error=> {
         console.log('error ', error);
     });
 
-}
+};
   return (
     <>
       <main>
