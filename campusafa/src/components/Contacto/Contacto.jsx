@@ -11,7 +11,7 @@ export function Contacto() {
   const face = <img src="/fc2.png" width={90} alt="Facebook AFA" />;
   const int = <img src="/int2.png" alt="Instagram AFA" width={90} />;
   // 
-  const baseURL = 'http://localhost:3005/api/src/v1/publico/contacto';
+  const baseURL = 'http://localhost:3005/api/v1/publico/contacto';
 
   // un objeto que guarde la informacion del form
   const [formulario, setFormulario] = useState({ nombreyapellido: '', email: '', asunto: '', comentario: '' });
