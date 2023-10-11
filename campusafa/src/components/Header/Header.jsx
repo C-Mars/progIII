@@ -14,10 +14,17 @@ export function Header() {
                         <li><Link to="institucional">INSTITUCIONAL</Link></li>
                         <li><Link to="noticias">NOTICIAS</Link></li>
                         <li><Link to="contacto">CONTACTO</Link></li>
+                        <li><Link to="jugadores">JUGADORES</Link></li>
+                        <li><Link to="convocatorias">CONVOCATORIAS</Link></li>
+                        <li><Link to="equipotitular">EQUIPO TITULAR</Link></li>
                     </ul>
+                    {/* cAMBIAR */}
+                    <div className="log">
+                        <a className="nav-link"><Link to="iniciosesion">Iniciar sesión</Link></a>
+                    </div>
                 </nav>
             </header>
-            
+
         </>
     );
 }
