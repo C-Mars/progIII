@@ -1,28 +1,63 @@
+import React from 'react';
+import './jugador.css';
 
-import React from "react";
-import {Button} from "@nextui-org/react";
+export function Jugador() {
+    const poster = <img width="476px" alt="Poster Mundial Femenino 2023" src='./porter_mundial.jpg' />
+    return (
+        <>
+            <main>
+                <section className="cont-inisesion">
+                    <div className="cont-form">
+                        <form action="../index.html">
+                            <fieldset>
+                                <legend>Nuevo Jugador</legend>
+                                <div className="fila-ses">
+                                    <label for="textNombre">Nombre</label>
+                                    <input id="textNombre" name="nombre" type="text" placeholder="Ingrese el nombre del Jugador"></input>
+                                </div>
+                                <div className="fila-ses">
+                                    <label for="textApellido">Apellido</label>
+                                    <input id="textApellido" name="apellido" type="text" placeholder="Ingrese el apellido del Jugador"></input>
+                                </div>
+                                <div className="select">
+                                    <label for="posicionjugadores"></label>
+                                    <select className="pos-cont" name="posicions" id="posicionjugadores" required>
+                                        <option selected disabled>POSICIÓN</option>
+                                        <option value="arquero">ARQUERO</option>
+                                        <option value="defensor">DEFENSOR</option>
+                                        <option value="mediocampista">MEDIOCAMPISTA</option>
+                                        <option value="delantero">DELANTERO</option>
+                                    </select>
+                                    <label for="piejugadores"></label>
+                                    <select className="pos-cont" name="pie" id="piejugadores" required>
+                                        <option value="">Seleccionar</option>
+                                        <option selected disabled>PIE HÁBIL</option>
+                                        <option value="pderecho">DERECHO</option>
+                                        <option value="Pizquierdo">IZQUIERDO</option>
+                                    </select>
+                                    
+                                </div>
+                            </fieldset>
+                        
+                   
 
-export default function App() {
-  return (
-    <div className="flex flex-wrap gap-4 items-center">
-      <Button color="default">
-        Default
-      </Button>
-      <Button color="primary">
-        Primary
-      </Button>  
-      <Button color="secondary">
-        Secondary
-      </Button>  
-      <Button color="success">
-        Success
-      </Button>  
-      <Button color="warning">
-        Warning
-      </Button>  
-      <Button color="danger">
-        Danger
-      </Button>  
-    </div>
-  );
+
+                    <div className="boton2">
+                        <button onclick="validarUsuario()">GUARDAR</button>
+                    </div>
+
+                    <div className="boton2">
+                        <button onclick="crearCuenta()">CANCELAR</button>
+                    </div>
+                </form>
+            </div>
+            <div className="img-sesion">
+                {poster}
+            </div>
+        </section >
+            </main >
+        </>
+    );
 }
+
+export default Jugador;

@@ -45,3 +45,5 @@ export function InicioSesion() {
         </>
     );
 }
+
+export default InicioSesion;

@@ -18,6 +18,7 @@ export function Header() {
         setTimeout(() => {
             setLoading(false);
         }, 2000);
+        <Link to="iniciosesion"/>
     };
     // return (
     //     <Link to="iniciosesion"></Link>
