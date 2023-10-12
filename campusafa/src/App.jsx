@@ -8,6 +8,7 @@ import { Institucional } from './components/Institucional/Institucional';
 import { Noticias} from './components/Noticias/Noticias'
 import { Footer } from './components/Footer/Footer';
 import { InicioSesion } from './components/InicioSesion/iniciosesion';
+import { Jugador} from './components/Jugador/Jugador';
 
 function App() {
   return (
@@ -19,8 +20,8 @@ function App() {
         <Route path="institucional" element={<Institucional />} />
         <Route path="contacto" element={<Contacto />} />
         <Route path="noticias" element={<Noticias/>}/>
-        {/* <Route path="jugadores" element={}/>
-        <Route path="convocatorias" element={}/>
+        <Route path="jugador" element={<Jugador/>}/>
+        {/* <Route path="convocatoria" element={}/>
         <Route path="equipotitular" element={}/> */}
         <Route path="iniciosesion" element={<InicioSesion/>}/>
 
