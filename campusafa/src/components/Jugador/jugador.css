@@ -14,10 +14,10 @@ section.cont-inisesion {
 
 div.img-sesion {
 	display: block;
-	/* flex-flow:wrap; */
+	
 	align-content:center;
 	width: 50%;
-	/* background-color: #027496; */
+	
 	justify-content: center;
 }
 @media screen and (max-width: 1400px) {
@@ -54,7 +54,7 @@ div.cont-form {
 	align-items: center;
 	text-align: center;
 	justify-content: center;
-/* flex-direction:row; */
+
 }
 
 div.cont-form form {
@@ -66,7 +66,7 @@ div.cont-form form {
 	align-items: center;
 	text-align: center;
 	
-	/* flex-direction:row; */
+
 }
 
 div.cont-form fieldset {

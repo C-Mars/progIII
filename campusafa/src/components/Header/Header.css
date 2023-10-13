@@ -39,7 +39,7 @@ a {
 	text-decoration: none;
 }
 
-nav {
+nav.nav-p {
 	margin: 0;
 	padding: 0;
 	display:flex;
