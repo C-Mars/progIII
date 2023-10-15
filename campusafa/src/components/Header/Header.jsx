@@ -27,7 +27,7 @@ export function Header() {
     return (
         <>
             <header>
-                <nav>
+                <nav className='nav-p'>
                     <div className="logoNav"><Link to="/">{start}</Link></div>
                     <ul className="menu">
                         <li><Link to="institucional">INSTITUCIONAL</Link></li>
