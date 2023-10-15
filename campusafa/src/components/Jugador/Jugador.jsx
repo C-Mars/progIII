@@ -1,6 +1,6 @@
 import React from 'react';
 import './jugador.css';
-import {TableJugadores} from '../TableJugadores/TableJugadores'
+
 
 export function Jugador() {
     const poster = <img width="476px" alt="Poster Mundial Femenino 2023" src='./porter_mundial.jpg' />
@@ -58,7 +58,7 @@ export function Jugador() {
         </section >
             </main > */}
             <main>
-            <TableJugadores/>
+            
             </main>
         
         </>
