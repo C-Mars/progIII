@@ -26,10 +26,10 @@ export function ModalAgregarJugadores() {
     // datos de estudiantes
     const [datos, setDatos] = useState([]);
     // Error validacion
-    const [error, setError] = useState({
-        error: false,
-        message: ""
-    })
+    // const [error, setError] = useState({
+    //     error: false,
+    //     message: ""
+    // })
 
     useEffect(() => {
         BuscarTodosFutbolistas();
@@ -51,7 +51,7 @@ export function ModalAgregarJugadores() {
         e.preventDefault();
         // console.log(formulario);
 
-        await axios.post(baseURL + '/api/v1/futbolista/futbolistas', formulario)
+         axios.post(baseURL + '/api/v1/futbolista/futbolistas', formulario)
             .then(res => {
                 console.log(res);
                 // alert(res.data.msj);
@@ -101,8 +101,8 @@ export function ModalAgregarJugadores() {
                             type='texto'
                             variant="standard"
                             margin="normal"
-                            helperText={error.message}
-                            error={error.error}
+                            // helperText={error.message}
+                            // error={error.error}
                             required
                             fullWidth
                             value={formulario.nombre}
@@ -115,8 +115,8 @@ export function ModalAgregarJugadores() {
                             type='texto'
                             variant="standard"
                             margin="normal"
-                            helperText={error.message}
-                            error={error.error}
+                            // helperText={error.message}
+                            // error={error.error}
                             fullWidth
                             required
                             value={formulario.apellido}
@@ -129,8 +129,8 @@ export function ModalAgregarJugadores() {
                             type='number'
                             variant="standard"
                             margin="normal"
-                            helperText={error.message}
-                            error={error.error}
+                            // helperText={error.message}
+                            // error={error.error}
                             fullWidth
 
                             required
@@ -144,8 +144,8 @@ export function ModalAgregarJugadores() {
                             type='texto'
                             variant="standard"
                             margin="normal"
-                            helperText={error.message}
-                            error={error.error}
+                            // helperText={error.message}
+                            // error={error.error}
                             fullWidth
                             // error
                             required
@@ -158,8 +158,8 @@ export function ModalAgregarJugadores() {
                             <Select
                                 labelId="posicionid"
                                 id="posicion"
-                                helperText={error.message}
-                                error={error.error}
+                                // helperText={error.message}
+                                // error={error.error}
                                 value={formulario.posicion}
                                 onChange={(e) => setFormulario({ ...formulario, posicion: e.target.value })}
                                 label="Posicion"
@@ -187,8 +187,8 @@ export function ModalAgregarJugadores() {
                                 label="Piehabil"
                                 fullWidth
                                 required
-                                helperText={error.message}
-                                error={error.error}
+                                // helperText={error.message}
+                                // error={error.error}
                             >
                                 <MenuItem value="">
                                     <em>Ninguno</em>

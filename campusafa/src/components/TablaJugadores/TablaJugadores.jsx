@@ -77,7 +77,7 @@ export function TablaJugadores() {
                     <Card >
                         <CardContent >
                             <ModalAgregarJugadores />
-                            <TableContainer sx={{ maxHeight: 300 }}>
+                            <TableContainer sx={{ maxHeight: 500 }}>
                                 <Table >
                                     <TableHead >
                                         <TableRow component="tr">
