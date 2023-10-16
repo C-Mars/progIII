@@ -13,12 +13,15 @@ export function Header() {
     const [loading, setLoading] = useState(false);
 
     const load = () => {
-        setLoading(true);
+        setLoading(true)
+        
+         
 
         setTimeout(() => {
-            setLoading(false);
-        }, 2000);
-        <Link to="iniciosesion"/>
+            setLoading(false)
+            alert('clicked');
+        }, 1000);
+       
     };
     // return (
     //     <Link to="iniciosesion"></Link>
@@ -39,7 +42,12 @@ export function Header() {
                     </ul>
                     {/* cAMBIAR */}
                     <div className="log">
-                        <Button label="Iniciar sesión" severity="success" outlined  loading={loading} onClick={load}/>
+                        <Button 
+                        label="Iniciar sesión" 
+                        severity="success" 
+                        outlined  
+                        loading={loading} 
+                        onClick={load}/>
                     </div>
                 </nav>
             </header>

@@ -2,9 +2,8 @@ import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-export default function TablaJugadores() {
-    
-    const baseURL = 'http://localhost:3005';
+export function ActulizarListaFutb(){
+const baseURL = 'http://localhost:3005';
     // datos de estudiantes
     const [datos, setDatos] = useState([]);
 
@@ -24,9 +23,5 @@ export default function TablaJugadores() {
                 console.log(error);
             })
     }
-    return (
-        <>
-        
-        </>
-    )
 }
+
