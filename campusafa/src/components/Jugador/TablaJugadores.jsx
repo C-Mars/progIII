@@ -34,6 +34,7 @@ import ModalEditarJugadores from "./ModalEditarJugadores";
 
 
 
+
 export function TablaJugadores() {
 
     const baseURL = 'http://localhost:3005';
@@ -94,16 +95,16 @@ export function TablaJugadores() {
 
                             <TableContainer sx={{ boxShadow: 1 }} >
                                 <Table >
-                                    <TableHead  >
+                                    <TableHead  sx={{bgcolor : "#052035"}}>
                                         <TableRow component="tr" >
-                                            <TableCell component="td" ><Typography variant="h5" >JUGADOR</Typography></TableCell>
+                                            <TableCell component="td" ><Typography color="white"variant="h5" >JUGADOR</Typography></TableCell>
                                             {/* <TableCell component="td" >NOMBRE</TableCell>
                                             <TableCell component="td">APELLIDO</TableCell>
                                             <TableCell component="td">DNI</TableCell> */}
-                                            <TableCell component="td"><Typography variant="h5">POSICIÓN</Typography></TableCell>
-                                            <TableCell component="td"><Typography variant="h5">APODO</Typography></TableCell>
-                                            <TableCell component="td"><Typography variant="h5">PIÉ HABIL</Typography></TableCell>
-                                            <TableCell component="td"><Typography variant="h5">ACCIONES</Typography></TableCell>
+                                            <TableCell component="td"><Typography color="white" variant="h5">POSICIÓN</Typography></TableCell>
+                                            <TableCell component="td"><Typography color="white" variant="h5">APODO</Typography></TableCell>
+                                            <TableCell component="td"><Typography color="white" variant="h5">PIÉ HABIL</Typography></TableCell>
+                                            <TableCell component="td"><Typography color="white" variant="h5">ACCIONES</Typography></TableCell>
 
                                         </TableRow>
                                     </TableHead>
