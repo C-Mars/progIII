@@ -138,10 +138,6 @@ export function TablaJugadores() {
                 </Box>
             </Container >
 
-
-
-
-
         </>
     )
 }

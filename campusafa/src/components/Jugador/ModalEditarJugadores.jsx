@@ -1,5 +1,4 @@
 import React from "react";
-
 import {
     Box,
     Dialog,
@@ -7,23 +6,23 @@ import {
     DialogContent,
     DialogContentText,
     DialogTitle,
-    TextField, FormControl, MenuItem, InputLabel, Select, Button
+    TextField, FormControl, MenuItem, InputLabel, Select, Button, Tooltip
 
 } from '@mui/material';
 import AddBoxRoundedIcon from '@mui/icons-material/AddBoxRounded';
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { FormJugador } from "../FormJugador/FormJugador";
-
-export function ModalAgregarJugadores() {
+import IconButton from '@mui/material/IconButton';
+import DriveFileRenameOutlineRoundedIcon from '@mui/icons-material/DriveFileRenameOutlineRounded';
+export default function ModalEditarJugadores() {
 
     // Nuevo futbolista
     const baseURL = 'http://localhost:3005';
     // Guarda la info
     const [formulario, setFormulario] =
-        useState({ dni: '', nombre: '', apellido: '', posicion: '', apodo: '', piehabil: '' });
+        useState({ nombre: '', apellido: '', dni: '', apodo: '', posicion: '', piehabil: '' });
     // Buscar futbolistas lista actualizada
-    // datos de estudiantes
+    // datos de futbolistas
     const [datos, setDatos] = useState([]);
     // Error validacion
     // const [error, setError] = useState({
@@ -51,17 +50,18 @@ export function ModalAgregarJugadores() {
         e.preventDefault();
         // console.log(formulario);
 
-         axios.post(baseURL + '/api/v1/futbolista/futbolistas', formulario)
+        await axios.post(baseURL + '/api/v1/futbolista/futbolistas', formulario)
             .then(res => {
                 console.log(res);
                 // alert(res.data.msj);
                 setFormulario({
-                    dni: '',
+
                     nombre: '',
                     apellido: '',
-                    correoElectronico: '',
-                    nacionalidad: '',
-                    fechaNacimiento: ''
+                    dni: '',
+                    apodo: '',
+                    posicion: '',
+                    piehabil: ''
                 });
                 BuscarTodosFutbolistas();
             })
@@ -83,22 +83,33 @@ export function ModalAgregarJugadores() {
 
     return (
         <div>
-            <Button
+
+            <Tooltip disableFocusListener title="Editar">
+                <IconButton aria-label="editar"
+                    variant="contained"
+                    color="secondary"
+                    onClick={handleClickOpen}
+                >
+                    <DriveFileRenameOutlineRoundedIcon fontSize="large" />
+                </IconButton>
+            </Tooltip>
+            {/* <Button
                 variant="contained"
                 color="secondary"
                 startIcon={<AddBoxRoundedIcon />}
                 onClick={handleClickOpen}
-            >Agregar</Button>
+            >Agregar</Button> */}
 
             <Dialog open={open} onClose={handleClose}>
-                <DialogTitle>Nuevo jugador</DialogTitle>
+                <DialogTitle>Editar Jugador</DialogTitle>
                 <DialogContent>
                     <Box component="form" onSubmit={e => enviarInformacion(e)} onClose={handleClose} >
+
                         {/* NOMBRE */}
                         <TextField
                             id="nombre"
                             label="Nombre"
-                            type='texto'
+                            type='text'
                             variant="standard"
                             margin="normal"
                             // helperText={error.message}
@@ -125,7 +136,7 @@ export function ModalAgregarJugadores() {
                         {/* DNI */}
                         <TextField
                             id="dni"
-                            label="dni"
+                            label="DNI"
                             type='number'
                             variant="standard"
                             margin="normal"
@@ -140,7 +151,7 @@ export function ModalAgregarJugadores() {
                         {/* APODO */}
                         <TextField
                             id="apodo"
-                            label="apodo"
+                            label="Apodo"
                             type='texto'
                             variant="standard"
                             margin="normal"
@@ -166,9 +177,7 @@ export function ModalAgregarJugadores() {
                                 required
                                 fullWidth
                             >
-                                <MenuItem value="">
-                                    <em>Ninguno</em>
-                                </MenuItem>
+                               
                                 <MenuItem value={0}>Arquero</MenuItem>
                                 <MenuItem value={1}>Defensor</MenuItem>
                                 <MenuItem value={2}>Mediocampista</MenuItem>
@@ -176,30 +185,30 @@ export function ModalAgregarJugadores() {
 
                             </Select>
                         </FormControl>
-                        {/* PIEHABIL */}
+                        {/*PIE HABIL */}
                         <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
                             <InputLabel id="piehabilid">PIÉ HABIL</InputLabel>
                             <Select
                                 labelId="piehabilid"
                                 id="piehabil"
-                                value={formulario.piehabil}
-                                onChange={(e) => setFormulario({ ...formulario, piehabil: e.target.value })}
-                                label="Piehabil"
-                                fullWidth
-                                required
                                 // helperText={error.message}
                                 // error={error.error}
+                                value={formulario.piehabil}
+                                onChange={(e) => setFormulario({ ...formulario, piehabil: e.target.value })}
+                                label="Pié Habil"
+                                required
+                                fullWidth
                             >
-                                <MenuItem value="">
-                                    <em>Ninguno</em>
-                                </MenuItem>
-                                <MenuItem value={0}>Derecho</MenuItem>
-                                <MenuItem value={1}>Izquierdo</MenuItem>
+                                
+                                <MenuItem value={0}>Derecha</MenuItem>
+                                <MenuItem value={1}>Izquierda</MenuItem>
+
+
                             </Select>
                         </FormControl>
                         <Box mt={2}  >
 
-                            <Button sx={{ m: 2 }} variant="contained" color="secondary" type="submit" onClick={() => setOpen(false)}>ENVIAR</Button >
+                            <Button sx={{ m: 2 }} variant="contained" color="secondary" type="submit" onClick={() => BuscarTodosFutbolistas()}>ENVIAR</Button >
                             <Button sx={{ m: 2 }} variant="contained" onClick={handleClose}>CANCELAR</Button>
                         </Box>
 
@@ -210,4 +219,3 @@ export function ModalAgregarJugadores() {
         </div>
     );
 }
-export default ModalAgregarJugadores

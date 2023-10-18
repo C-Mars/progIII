@@ -1,10 +1,10 @@
 import React from 'react';
 import { useState } from "react";
 import axios from 'axios';
-import './iniciosesion.css';
+import './Iniciosesion.css'
 import { Link } from 'react-router-dom';
 
-export function InicioSesion() {
+export  function InicioSesion() {
     const poster = <img width="476px" alt="Poster Mundial Femenino 2023"src='./porter_mundial.jpg'/>
     return (
         <>
@@ -46,4 +46,3 @@ export function InicioSesion() {
     );
 }
 
-export default InicioSesion;

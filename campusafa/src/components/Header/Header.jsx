@@ -2,8 +2,10 @@
 import React from 'react';
 import './Header.css';
 import { Link } from 'react-router-dom';
-import { Button } from 'primereact/button';
+// import { Button } from 'primereact/button';
 import { useState } from "react";
+import { Button } from '@mui/material';
+import InicioSesion from '../InicioSesion/InicioSesion';
 
 
 export function Header() {
@@ -12,20 +14,20 @@ export function Header() {
 
     const [loading, setLoading] = useState(false);
 
+    //Botún Inicio Sesión
+
     const load = () => {
         setLoading(true)
-        
-         
-
         setTimeout(() => {
             setLoading(false)
-            alert('clicked');
+
+
         }, 1000);
-       
+        
     };
-    // return (
-    //     <Link to="iniciosesion"></Link>
-    // )
+    
+
+    // 
 
     return (
         <>
@@ -41,13 +43,16 @@ export function Header() {
                         <li><Link to="equipotitular">EQUIPO TITULAR</Link></li>
                     </ul>
                     {/* cAMBIAR */}
-                    <div className="log">
-                        <Button 
-                        label="Iniciar sesión" 
-                        severity="success" 
-                        outlined  
-                        loading={loading} 
-                        onClick={load}/>
+                    <div >
+                        <Button
+                            color="success"
+                            variant="outlined"
+                            loading={loading}
+                            onClick={load} 
+                            href="iniciosesion"
+                            radius="none"
+    
+                    >Iniciar sesión</Button>
                     </div>
                 </nav>
             </header>
