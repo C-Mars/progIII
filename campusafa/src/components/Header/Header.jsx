@@ -12,19 +12,7 @@ export function Header() {
     const Logo = './logo_afa.png';
     const start = <img alt="logo" src={Logo} width="45px" />;
 
-    const [loading, setLoading] = useState(false);
-
-    //Botún Inicio Sesión
-
-    const load = () => {
-        setLoading(true)
-        setTimeout(() => {
-            setLoading(false)
-
-
-        }, 1000);
-        
-    };
+    
     
 
     // 
@@ -47,8 +35,6 @@ export function Header() {
                         <Button
                             color="success"
                             variant="outlined"
-                            loading={loading}
-                            onClick={load} 
                             href="iniciosesion"
                             radius="none"
     

@@ -208,7 +208,7 @@ export default function ModalEditarJugadores() {
                         </FormControl>
                         <Box mt={2}  >
 
-                            <Button sx={{ m: 2 }} variant="contained" color="secondary" type="submit" onClick={() => BuscarTodosFutbolistas()}>ENVIAR</Button >
+                            <Button sx={{ m: 2 }} variant="contained" color="secondary" type="submit" >GUARDAR</Button >
                             <Button sx={{ m: 2 }} variant="contained" onClick={handleClose}>CANCELAR</Button>
                         </Box>
 

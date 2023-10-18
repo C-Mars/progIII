@@ -197,7 +197,7 @@ export function ModalAgregarJugadores() {
                         </FormControl>
                         <Box mt={2}  >
 
-                            <Button sx={{ m: 2 }} variant="contained" color="secondary" type="submit" onClick={() => setOpen(false)}>ENVIAR</Button >
+                            <Button sx={{ m: 2 }} variant="contained" color="secondary" type="submit" onClick={() => setOpen(false)}>GUARDAR</Button >
                             <Button sx={{ m: 2 }} variant="contained" onClick={handleClose}>CANCELAR</Button>
                         </Box>
 

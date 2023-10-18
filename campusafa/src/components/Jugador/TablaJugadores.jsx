@@ -82,7 +82,7 @@ export function TablaJugadores() {
                     <Card >
                         <CardContent >
 
-                            <Grid container xs="auto" spacing={2}>
+                            <Grid container  spacing={2}>
                                 <Grid xs={4} item mt={1} >
                                     <ModalAgregarJugadores />
                                 </Grid>
@@ -98,9 +98,6 @@ export function TablaJugadores() {
                                     <TableHead  sx={{bgcolor : "#052035"}}>
                                         <TableRow component="tr" >
                                             <TableCell component="td" ><Typography color="white"variant="h5" >JUGADOR</Typography></TableCell>
-                                            {/* <TableCell component="td" >NOMBRE</TableCell>
-                                            <TableCell component="td">APELLIDO</TableCell>
-                                            <TableCell component="td">DNI</TableCell> */}
                                             <TableCell component="td"><Typography color="white" variant="h5">POSICIÓN</Typography></TableCell>
                                             <TableCell component="td"><Typography color="white" variant="h5">APODO</Typography></TableCell>
                                             <TableCell component="td"><Typography color="white" variant="h5">PIÉ HABIL</Typography></TableCell>
@@ -115,7 +112,7 @@ export function TablaJugadores() {
 
                                                     <TableCell component="td" ailing="right">
 
-                                                        <Grid container xs spacing={2} ailing="center">
+                                                        <Grid container spacing={2} ailing="center">
                                                             <Grid item lg={4} mt={2} >
                                                                 <Avatar
                                                                     sx={[{ width: 56, height: 56 },
@@ -134,9 +131,7 @@ export function TablaJugadores() {
 
                                                         </Grid>
                                                     </TableCell>
-                                                    {/* <TableCell component="td" ailing="right">{item.nombre}</TableCell>
-                                                    <TableCell component="td">{item.apellido}</TableCell>
-                                                    <TableCell component="td">{item.dni}</TableCell> */}
+
                                                     <TableCell component="td"><Typography variant="subtitle1">{item.posicion}</Typography></TableCell>
                                                     <TableCell component="td"><Typography variant="subtitle1">{item.apodo}</Typography></TableCell>
                                                     <TableCell component="td"><Typography variant="subtitle1">{item.piehabil}</Typography></TableCell>
@@ -155,19 +150,19 @@ export function TablaJugadores() {
                                                         </Grid>
 
 
-                                                        {/* <Tooltip disableFocusListener title="Convocar">
-                                                            <IconButton aria-label="convocar">
-                                                                <SportsSoccerRoundedIcon color="success" />
-                                                            </IconButton>
-                                                        </Tooltip> */}
+                                                        
                                                     </TableCell>
                                                 </TableRow>
                                             )))
                                                 :
                                                 (
-                                                    <tr>
-                                                        {/* TAREA: un mensaje o similar  */}
-                                                    </tr>
+                                                    <TableRow>
+                                                        {/* <Tooltip disableFocusListener title="Convocar">
+                                                            <IconButton aria-label="convocar">
+                                                                <SportsSoccerRoundedIcon color="success" />
+                                                            </IconButton>
+                                                        </Tooltip> */}
+                                                    </TableRow>
                                                 )
                                         }
 
