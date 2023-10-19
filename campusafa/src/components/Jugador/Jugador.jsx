@@ -1,7 +1,7 @@
 import React from 'react';
 import './Jugador.css';
 
-import { TablaJugadores } from './TablaJugadores'
+import { TablaJugadores } from './TablaJugadores/TablaJugadores'
 import { Grid } from '@mui/material';
 
 
