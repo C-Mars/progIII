@@ -20,7 +20,7 @@ import {
     TextField,
     Grid,
     Typography,
-    FormControl, MenuItem, InputLabel, Select,Tooltip,IconButton
+    FormControl, MenuItem, InputLabel, Select, Tooltip, IconButton
 
 } from "@mui/material";
 import DriveFileRenameOutlineRoundedIcon from '@mui/icons-material/DriveFileRenameOutlineRounded';
@@ -28,78 +28,78 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 export function ModalEditarJugador() {
-    const baseURL = 'http://localhost:3005';
-    const [open, setOpen] = React.useState(false);
+    // const baseURL = 'http://localhost:3005';
+    // const [open, setOpen] = React.useState(false);
 
-    const handleClickOpenEditar = () => {
-        BuscarTodosFutbolistas()
-        setOpen(true);
-    };
+    // const handleClickOpenEditar = () => {
+    //     BuscarTodosFutbolistas()
+    //     setOpen(true);
+    // };
 
-    const handleCloseEditar = () => {
-        setOpen(false);
-    };
-    const [formulario, setFormulario] =
-    useState({ nombre: '', apellido: '', dni: '', apodo: '', posicion: '', piehabil: '' });
-const [datos, setDatos] = useState("");
-useEffect(() => {
-    BuscarTodosFutbolistas();
-}, []);
+    // const handleCloseEditar = () => {
+    //     setOpen(false);
+    // };
+    // const [formulario, setFormulario] =
+    //     useState({ nombre: '', apellido: '', dni: '', apodo: '', posicion: '', piehabil: '' });
+    // const [datos, setDatos] = useState("");
+    // useEffect(() => {
+    //     BuscarTodosFutbolistas();
+    // }, []);
 
-const BuscarTodosFutbolistas = async () => {
-    await axios.get(baseURL + '/api/v1/futbolista/futbolistas')
-        .then(resp => {
-            console.log(resp.data.dato);
-            setDatos(resp.data.dato);
+    // const BuscarTodosFutbolistas = async () => {
+    //     await axios.get(baseURL + '/api/v1/futbolista/futbolistas')
+    //         .then(resp => {
+    //             console.log(resp.data.dato);
+    //             setDatos(resp.data.dato);
 
-        })
-        .catch(error => {
-            console.log(error);
-        })
-}
-const enviarInformacion = async (e) => {
-    e.preventDefault();
-    // console.log(formulario);
+    //         })
+    //         .catch(error => {
+    //             console.log(error);
+    //         })
+    // }
+    // const enviarInformacion = async (e) => {
+    //     e.preventDefault();
+    //     // console.log(formulario);
 
-    await axios.post(baseURL + '/api/v1/futbolista/futbolistas', formulario)
-        .then(res => {
-            console.log(res);
-            // alert(res.data.msj);
-            setFormulario({
+    //     await axios.post(baseURL + '/api/v1/futbolista/futbolistas', formulario)
+    //         .then(res => {
+    //             console.log(res);
+    //             // alert(res.data.msj);
+    //             setFormulario({
 
-                nombre: '',
-                apellido: '',
-                dni: '',
-                apodo: '',
-                posicion: '',
-                piehabil: ''
-            });
-            BuscarTodosFutbolistas();
-        })
+    //                 nombre: '',
+    //                 apellido: '',
+    //                 dni: '',
+    //                 apodo: '',
+    //                 posicion: '',
+    //                 piehabil: ''
+    //             });
+    //             BuscarTodosFutbolistas();
+    //         })
 
-        .catch(error => {
-            console.log('error ', error);
-        });
-}
+    //         .catch(error => {
+    //             console.log('error ', error);
+    //         });
+    // }
     return (
         <>
             <Tooltip disableFocusListener title="Editar">
                 <IconButton aria-label="editar"
                     variant="contained"
                     color="secondary"
-                    onClick={handleClickOpenEditar}
+                    // onClick={handleClickOpenEditar}
                 >
                     <DriveFileRenameOutlineRoundedIcon fontSize="large" />
                 </IconButton>
             </Tooltip>
 
-            <Dialog open={open} onClose={handleCloseEditar}>
+            {/* <Dialog open={open} onClose={handleCloseEditar}>
                 <DialogTitle>Editar Jugador</DialogTitle>
                 <DialogContent>
-                    <Box component="form" onSubmit={e => enviarInformacion(e)} onClose={handleCloseEditar} >
+                    <Box component="form" onSubmit={e => enviarInformacion(e)} onClose={handleCloseEditar} > */}
 
                         {/* NOMBRE */}
-                        <TextField
+                        {/* <TextField
                             id="nombre"
                             label="Nombre"
                             type='text'
@@ -111,9 +111,9 @@ const enviarInformacion = async (e) => {
                             fullWidth
                             value={formulario.nombre}
                             onChange={(e) => setFormulario({ ...formulario, nombre: e.target.value })}
-                        />
+                        /> */}
                         {/* APELLIDO */}
-                        <TextField
+                        {/* <TextField
                             id="apellido"
                             label="Apellido"
                             type='texto'
@@ -125,9 +125,9 @@ const enviarInformacion = async (e) => {
                             required
                             value={formulario.apellido}
                             onChange={(e) => setFormulario({ ...formulario, apellido: e.target.value })}
-                        />
+                        /> */}
                         {/* DNI */}
-                        <TextField
+                        {/* <TextField
                             id="dni"
                             label="DNI"
                             type='number'
@@ -140,9 +140,9 @@ const enviarInformacion = async (e) => {
                             required
                             value={formulario.dni}
                             onChange={(e) => setFormulario({ ...formulario, dni: e.target.value })}
-                        />
+                        /> */}
                         {/* APODO */}
-                        <TextField
+                        {/* <TextField
                             id="apodo"
                             label="Apodo"
                             type='texto'
@@ -155,9 +155,9 @@ const enviarInformacion = async (e) => {
                             required
                             value={formulario.apodo}
                             onChange={(e) => setFormulario({ ...formulario, apodo: e.target.value })}
-                        />
+                        /> */}
                         {/*POSICION */}
-                        <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+                        {/* <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
                             <InputLabel id="posicionid">POSICIÓN</InputLabel>
                             <Select
                                 labelId="posicionid"
@@ -176,10 +176,10 @@ const enviarInformacion = async (e) => {
                                 <MenuItem value={2}>Mediocampista</MenuItem>
                                 <MenuItem value={3}>Delantero</MenuItem>
 
-                            </Select>
-                        </FormControl>
+                            </Select> */}
+                        {/* </FormControl> */}
                         {/*PIE HABIL */}
-                        <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+                        {/* <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
                             <InputLabel id="piehabilid">PIÉ HABIL</InputLabel>
                             <Select
                                 labelId="piehabilid"
@@ -208,7 +208,7 @@ const enviarInformacion = async (e) => {
                     </Box>
                 </DialogContent>
 
-            </Dialog>
+            </Dialog> */}
 
         </>
     )

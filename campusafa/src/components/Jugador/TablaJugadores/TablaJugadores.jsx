@@ -219,8 +219,8 @@ export function TablaJugadores() {
                 </Box>
             </Container >
 
-            <Dialog  className="nuevoJugador" open={open} onClose={handleClose}>
-                <DialogTitle className="nuevoJugador">Nuevo Jugador</DialogTitle>
+            <Dialog  open={open} onClose={handleClose}>
+                <DialogTitle >Nuevo Jugador</DialogTitle>
                 <DialogContent>
                     <Box component="form" onSubmit={e => enviarInformacion(e)} onClose={handleClose} >
 
