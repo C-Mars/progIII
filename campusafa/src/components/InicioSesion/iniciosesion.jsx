@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from "react";
 import axios from 'axios';
-import './Iniciosesion.css'
+import './InicioSesion.css'
 import { Link } from 'react-router-dom';
 
 export  function InicioSesion() {
