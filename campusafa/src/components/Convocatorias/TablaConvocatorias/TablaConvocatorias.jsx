@@ -37,7 +37,9 @@ import Groups2RoundedIcon from '@mui/icons-material/Groups2Rounded';
 import ArticleRoundedIcon from '@mui/icons-material/ArticleRounded';
 import DriveFileRenameOutlineRoundedIcon from '@mui/icons-material/DriveFileRenameOutlineRounded';
 import AddBoxRoundedIcon from '@mui/icons-material/AddBoxRounded';
-
+import { ModalEditarConvocatoria } from "../ModalEditarConvocatoria/ModalEditarConvocatoria";
+import { Convocar} from '../Convocar/Convocar'
+import { ModalResultados } from "../ModalResultados/ModalResultados";
 
 
 
@@ -60,7 +62,7 @@ export function TablaConvocatorias() {
         e.preventDefault();
         // console.log(convocatoria);
 
-        await axios.post(baseURL + '/api/v1/convocatoria/nuevaconvocarotia', convocatoria)
+        await axios.post(baseURL + '/api/v1/convocatoria/nuevaconvocatoria', convocatoria)
             .then(res => {
                 if (res.data.estado === 'OK') {
                     alert(res.data.msj);
@@ -128,6 +130,7 @@ export function TablaConvocatorias() {
     const buscarRivales = async () =>{
         axios.get(baseURL + '/api/v1/rival/rivales')
             .then( resp => {
+                console.log(resp.data.dato)
                 setRivales(resp.data.dato);
             })
             .catch( error => {
@@ -145,16 +148,6 @@ export function TablaConvocatorias() {
     const handleCloseConvocatoria = () => {
         setOpenConv(false);
     };
-    //EDITAR JUGADORES
-    const handleClickOpenEditarConvocaroria = () => {
-        buscarRivales()
-        setOpenConv(true);
-    };
-
-    const handleCloseEditarConvocatoria = () => {
-        setOpenConv(false);
-    };
-
 
 
     return (
@@ -194,15 +187,8 @@ export function TablaConvocatorias() {
                                                     <TableCell component="td">
                                                         <Grid container>
                                                             <Grid item lg={2} ml={1}>
-                                                                <Tooltip disableFocusListener title="Editar">
-                                                                    <IconButton aria-label="editar"
-                                                                        variant="contained"
-                                                                        color="secondary"
-                                                                        onClick={handleClickOpenEditarConvocaroria}
-                                                                    >
-                                                                        <DriveFileRenameOutlineRoundedIcon fontSize="large" />
-                                                                    </IconButton>
-                                                                </Tooltip>
+                                                                <ModalEditarConvocatoria/>
+                                                                
                                                             </Grid>
                                                             <Grid item lg={2} ml={1}>
                                                                 <Tooltip disableFocusListener title="Eliminar">
@@ -212,11 +198,8 @@ export function TablaConvocatorias() {
                                                                 </Tooltip>
                                                             </Grid>
                                                             <Grid item lg={2} ml={1}>
-                                                                <Tooltip disableFocusListener title="Convocar">
-                                                                    <IconButton aria-label="convocar" onClick={() => convocar(item.idConvocatoria)}>
-                                                                        <SportsSoccerRoundedIcon fontSize="large" color="success" />
-                                                                    </IconButton>
-                                                                </Tooltip>
+                                                                <Convocar/>
+                                                                
                                                             </Grid>
                                                             <Grid item lg={2} ml={1}>
                                                                 <Tooltip disableFocusListener title="Convocados">
@@ -227,11 +210,8 @@ export function TablaConvocatorias() {
                                                                 </Tooltip>
                                                             </Grid>
                                                             <Grid item lg={2} ml={1}>
-                                                                <Tooltip disableFocusListener title="Resultados">
-                                                                    <IconButton aria-label="resultados" onClick={() => convocados(item.idConvocatoria, item.fecha)}>
-                                                                        <ArticleRoundedIcon fontSize="large" sx={{ color: cyan[700] }} />
-                                                                    </IconButton>
-                                                                </Tooltip>
+                                                                <ModalResultados/>
+                                                                
                                                             </Grid>
                                                         </Grid>
                                                     </TableCell>
@@ -249,10 +229,14 @@ export function TablaConvocatorias() {
                 </Box>
             </Container >
 
-            <Dialog className="NuevaConvocatoria" open={openconv} onClose={handleCloseConvocatoria}>
+            <Dialog className="NuevaConvocatoria" open={openconv} 
+            onClose={handleCloseConvocatoria}
+            >
                 <DialogTitle>Nueva Convocarotia</DialogTitle>
                 <DialogContent>
-                    <Box component="form" onSubmit={e => crearConvocatoria(e)} onClose={handleCloseConvocatoria} >
+                    <Box component="form" onSubmit={e => crearConvocatoria(e)} 
+                    // onClose={handleCloseConvocatoria} 
+                    >
 
                         {/* fecha */}
                         <TextField
@@ -273,21 +257,19 @@ export function TablaConvocatorias() {
                         {/*POSICION */}
                         <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
                             <InputLabel id="rivalid">RIVAL</InputLabel>
-                            <NativeSelect
+                            <Select
                                 required
+                                value={convocatoria.idRival}
                                 fullWidth
-                                onChange={(e) => setConvocatoria({ ...convocatoria, rival: e.target.value })}
-                                inputProps={{
-                                    name: 'rival',
-                                    id: 'rivalid',
-                                }}
+                                onChange={(e) => setConvocatoria({ ...convocatoria, rival:e.target.value })}
+                            
                             >
                                 { (rivales?.length > 0) ? rivales.map(item => (
-                                            <option key={item.idRival} value={item.idRival}>
+                                            <MenuItem key={item.idRival} value={item.idRival}>
                                                 {item.nombre}
-                                            </option>
+                                            </MenuItem>
                                         )) : <></>}     
-                            </NativeSelect>
+                            </Select>
 
 
 
@@ -298,7 +280,9 @@ export function TablaConvocatorias() {
 
                         <Box mt={2}  >
 
-                            <Button sx={{ m: 2 }} variant="contained" color="secondary" type="submit" onClick={() => setOpenConv(false)}>GUARDAR</Button >
+                            <Button sx={{ m: 2 }} variant="contained" color="secondary" type="submit" 
+                            // onClick={() => setOpenConv(false)}
+                            >GUARDAR</Button >
                             <Button sx={{ m: 2 }} variant="contained" onClick={handleCloseConvocatoria}>CANCELAR</Button>
                         </Box>
 
@@ -307,63 +291,7 @@ export function TablaConvocatorias() {
 
             </Dialog>
 
-            <Dialog className="editar" open={openconv} onClose={handleCloseEditarConvocatoria}>
-                <DialogTitle >Editar Jugador</DialogTitle>
-                <DialogContent>
-                    <Box component="form" onSubmit={e => crearConvocatoria(e)} onClose={handleCloseEditarConvocatoria} >
-
-                        {/* fecha */}
-                        <TextField
-                            id="fecha"
-                            label="Fecha"
-                            type='date'
-                            variant="standard"
-                            margin="normal"
-                            // helperText={error.message}
-                            // error={error.error}
-                            required
-                            fullWidth
-                            value={convocatoria.fecha}
-                            onChange={(e) => setConvocatorias({ ...convocatoria, fecha: e.target.value })}
-                        />
-                        {/*POSICION */}
-                        {/* <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
-                            <InputLabel id="posicionid">RIVAL</InputLabel>
-                            <Select
-                                labelId="rivalid"
-                                id="rival"
-                                // helperText={error.message}
-                                // error={error.error}
-                                value={convocatoria.rival}
-                                onChange={(e) => setConvocatorias({ ...convocatoria, rival: e.target.value })}
-                                label="Rival"
-                                required
-                                fullWidth
-                            >
-                                <MenuItem value={0}>País</MenuItem>
-                                <MenuItem value={1}>Uruguay</MenuItem>
-                                <MenuItem value={2}>Brasil</MenuItem>
-                                <MenuItem value={3}>Mediocampista</MenuItem>
-                                <MenuItem value={4}>Chile</MenuItem>
-                                <MenuItem value={5}>Perú</MenuItem>
-                                <MenuItem value={6}>Venezuela</MenuItem>
-                                <MenuItem value={7}>Colombia</MenuItem>
-                                <MenuItem value={8}>Ecuador</MenuItem>
-                                <MenuItem value={9}>Bolivia</MenuItem>
-
-
-                            </Select>
-                        </FormControl> */}
-                        <Box mt={2}  >
-
-                            <Button sx={{ m: 2 }} variant="contained" color="secondary" type="submit" >GUARDAR</Button >
-                            <Button sx={{ m: 2 }} variant="contained" onClick={handleCloseEditarConvocatoria}>CANCELAR</Button>
-                        </Box>
-
-                    </Box>
-                </DialogContent>
-
-            </Dialog>
+            
 
 
 

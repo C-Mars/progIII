@@ -116,7 +116,10 @@ export function TablaJugadores() {
         setOpen(false);
     };
     //EDITAR JUGADORES
-    
+    const handleClickOpenEditar = () => {
+        BuscarTodosFutbolistas()
+        setOpen(true);
+    };
     return (
         <>
             <Container >
@@ -222,7 +225,9 @@ export function TablaJugadores() {
             <Dialog  open={open} onClose={handleClose}>
                 <DialogTitle >Nuevo Jugador</DialogTitle>
                 <DialogContent>
-                    <Box component="form" onSubmit={e => enviarInformacion(e)} onClose={handleClose} >
+                    <Box component="form" 
+                    onSubmit={e => enviarInformacion(e)} 
+                    onClose={handleClose} >
 
                         {/* NOMBRE */}
                         <TextField
@@ -327,7 +332,7 @@ export function TablaJugadores() {
                         </FormControl>
                         <Box mt={2}  >
 
-                            <Button sx={{ m: 2 }} variant="contained" color="secondary" type="submit" onClick={() => setOpen(false)}>GUARDAR</Button >
+                            <Button sx={{ m: 2 }} variant="contained" color="secondary" type="submit" >GUARDAR</Button >
                             <Button sx={{ m: 2 }} variant="contained" onClick={handleClose}>CANCELAR</Button>
                         </Box>
 

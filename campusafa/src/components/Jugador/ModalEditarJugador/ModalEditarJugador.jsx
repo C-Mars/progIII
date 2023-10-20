@@ -28,78 +28,80 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 export function ModalEditarJugador() {
-    // const baseURL = 'http://localhost:3005';
-    // const [open, setOpen] = React.useState(false);
 
-    // const handleClickOpenEditar = () => {
-    //     BuscarTodosFutbolistas()
-    //     setOpen(true);
-    // };
+    const baseURL = 'http://localhost:3005';
 
-    // const handleCloseEditar = () => {
-    //     setOpen(false);
-    // };
-    // const [formulario, setFormulario] =
-    //     useState({ nombre: '', apellido: '', dni: '', apodo: '', posicion: '', piehabil: '' });
-    // const [datos, setDatos] = useState("");
-    // useEffect(() => {
-    //     BuscarTodosFutbolistas();
-    // }, []);
+    const [open, setOpen] = React.useState(false);
 
-    // const BuscarTodosFutbolistas = async () => {
-    //     await axios.get(baseURL + '/api/v1/futbolista/futbolistas')
-    //         .then(resp => {
-    //             console.log(resp.data.dato);
-    //             setDatos(resp.data.dato);
+    const handleClickOpenEditar = () => {
+        BuscarIdFutbolistas()
+        setOpen(true);
+    };
 
-    //         })
-    //         .catch(error => {
-    //             console.log(error);
-    //         })
-    // }
-    // const enviarInformacion = async (e) => {
-    //     e.preventDefault();
-    //     // console.log(formulario);
+    const handleCloseEditar = () => {
+        setOpen(false);
+    };
+    const [formulario, setFormulario] =
+        useState({ nombre: '', apellido: '', dni: '', apodo: '', posicion: '', piehabil: '' });
+    const [datos, setDatos] = useState("");
+    useEffect(() => {
+        BuscarIdFutbolistas();
+    }, []);
 
-    //     await axios.post(baseURL + '/api/v1/futbolista/futbolistas', formulario)
-    //         .then(res => {
-    //             console.log(res);
-    //             // alert(res.data.msj);
-    //             setFormulario({
+    const BuscarIdFutbolistas = async (idFutbolista) => {
+        await axios.get(baseURL + '/api/v1/futbolista/futbolistas' + idFutbolista)
+            .then(resp => {
+                console.log(resp.data.dato);
+                setDatos(resp.data.dato);
 
-    //                 nombre: '',
-    //                 apellido: '',
-    //                 dni: '',
-    //                 apodo: '',
-    //                 posicion: '',
-    //                 piehabil: ''
-    //             });
-    //             BuscarTodosFutbolistas();
-    //         })
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    }
+    const editarFutbolista = async (idFutbolista) => {
+        // idFutbolista.preventDefault();
+        await axios.put(baseURL + '/api/v1/futbolista/futbolistas/' + idFutbolista, formulario)
+            .then(resp => {
+                console.log(resp.data);
+                setFormulario({
+                    nombre: '',
+                    apellido: '',
+                    dni: '',
+                    apodo: '',
+                    posicion: '',
+                    piehabil: ''
+                });
+                BuscarIdFutbolistas(idFutbolista);
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    }
 
-    //         .catch(error => {
-    //             console.log('error ', error);
-    //         });
-    // }
     return (
         <>
             <Tooltip disableFocusListener title="Editar">
                 <IconButton aria-label="editar"
                     variant="contained"
                     color="secondary"
-                    // onClick={handleClickOpenEditar}
+                    onClick={handleClickOpenEditar}
                 >
                     <DriveFileRenameOutlineRoundedIcon fontSize="large" />
                 </IconButton>
             </Tooltip>
 
-            {/* <Dialog open={open} onClose={handleCloseEditar}>
+            <Dialog open={open} onClose={handleCloseEditar}>
                 <DialogTitle>Editar Jugador</DialogTitle>
                 <DialogContent>
-                    <Box component="form" onSubmit={e => enviarInformacion(e)} onClose={handleCloseEditar} > */}
+                    <Box component="form"
+                        onSubmit={e => editarFutbolista(e)}
+
+                        // onSubmit={e => editarFutbolista(e)}
+                        onClose={handleCloseEditar} >
 
                         {/* NOMBRE */}
-                        {/* <TextField
+                        <TextField
                             id="nombre"
                             label="Nombre"
                             type='text'
@@ -111,9 +113,9 @@ export function ModalEditarJugador() {
                             fullWidth
                             value={formulario.nombre}
                             onChange={(e) => setFormulario({ ...formulario, nombre: e.target.value })}
-                        /> */}
+                        />
                         {/* APELLIDO */}
-                        {/* <TextField
+                        <TextField
                             id="apellido"
                             label="Apellido"
                             type='texto'
@@ -125,9 +127,9 @@ export function ModalEditarJugador() {
                             required
                             value={formulario.apellido}
                             onChange={(e) => setFormulario({ ...formulario, apellido: e.target.value })}
-                        /> */}
+                        />
                         {/* DNI */}
-                        {/* <TextField
+                        <TextField
                             id="dni"
                             label="DNI"
                             type='number'
@@ -140,9 +142,9 @@ export function ModalEditarJugador() {
                             required
                             value={formulario.dni}
                             onChange={(e) => setFormulario({ ...formulario, dni: e.target.value })}
-                        /> */}
+                        />
                         {/* APODO */}
-                        {/* <TextField
+                        <TextField
                             id="apodo"
                             label="Apodo"
                             type='texto'
@@ -155,9 +157,9 @@ export function ModalEditarJugador() {
                             required
                             value={formulario.apodo}
                             onChange={(e) => setFormulario({ ...formulario, apodo: e.target.value })}
-                        /> */}
+                        />
                         {/*POSICION */}
-                        {/* <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+                        <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
                             <InputLabel id="posicionid">POSICIÓN</InputLabel>
                             <Select
                                 labelId="posicionid"
@@ -176,10 +178,10 @@ export function ModalEditarJugador() {
                                 <MenuItem value={2}>Mediocampista</MenuItem>
                                 <MenuItem value={3}>Delantero</MenuItem>
 
-                            </Select> */}
-                        {/* </FormControl> */}
+                            </Select>
+                        </FormControl>
                         {/*PIE HABIL */}
-                        {/* <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+                        <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
                             <InputLabel id="piehabilid">PIÉ HABIL</InputLabel>
                             <Select
                                 labelId="piehabilid"
@@ -208,7 +210,7 @@ export function ModalEditarJugador() {
                     </Box>
                 </DialogContent>
 
-            </Dialog> */}
+            </Dialog>
 
         </>
     )
