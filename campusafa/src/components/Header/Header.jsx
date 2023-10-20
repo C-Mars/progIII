@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 // import { Button } from 'primereact/button';
 import { useState } from "react";
 import { Button } from '@mui/material';
-import InicioSesion from '../InicioSesion/InicioSesion';
+import InicioSesion from '../InicioSesion';
 
 
 export function Header() {
