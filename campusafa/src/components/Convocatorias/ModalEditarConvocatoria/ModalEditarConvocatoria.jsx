@@ -149,7 +149,7 @@ export function ModalEditarConvocatoria() {
         {/****************** MODAL DE EDITAR *****************************/}
 
             <Dialog className="editar" open={openconv} onClose={handleCloseEditarConvocatoria}>
-                <DialogTitle >Editar Jugador</DialogTitle>
+                <DialogTitle >Editar Convocatoria</DialogTitle>
                 <DialogContent>
                     <Box component="form" 
                     onSubmit={e => editarConvocatoria(e)} 

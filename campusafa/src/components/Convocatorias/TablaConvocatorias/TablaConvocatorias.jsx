@@ -40,6 +40,7 @@ import AddBoxRoundedIcon from '@mui/icons-material/AddBoxRounded';
 import { ModalEditarConvocatoria } from "../ModalEditarConvocatoria/ModalEditarConvocatoria";
 import { Convocar } from '../Convocar/Convocar'
 import { ModalResultados } from "../ModalResultados/ModalResultados";
+import Swal from 'sweetalert2/dist/sweetalert2.js'
 
 
 
@@ -75,6 +76,7 @@ export function TablaConvocatorias() {
             })
 
     }
+    
 
 
     // Inicio del modal
@@ -82,6 +84,7 @@ export function TablaConvocatorias() {
 
 
     // datos de los rivales disponibles
+    const [datos, setDatos] = useState("");
 
 
 
@@ -90,9 +93,11 @@ export function TablaConvocatorias() {
     }, []);
 
     const BuscarTodosConvocatorias = async () => {
-        axios.get(baseURL + '/api/v1/convocatoria/convocatorias')
+        await axios.get(baseURL + '/api/v1/convocatoria/convocatorias/')
             .then(resp => {
+                console.log(resp.data.dato);
                 setConvocatorias(resp.data.dato);
+            
             })
             .catch(error => {
                 console.log(error);
@@ -107,12 +112,27 @@ export function TablaConvocatorias() {
 
     const eliminarConvocatoria = async (idConvocatoria) => {
         await axios.delete(baseURL + '/api/v1/convocatoria/convocatorias/' + idConvocatoria)
-            .then(resp => {
-                console.log(resp.data);
+        .then( async resp => {
+            console.log(resp.data);
+            if (resp.data.estado === 'OK') {
+                const result = await Swal.fire({
+                    text: resp.data.msj,
+                    icon: 'success',
+                    confirmButtonText: 'Listo',
+                    confirmButtonColor:'#326fd1'
+                })
 
-                BuscarTodosConvocatorias();
-                alert(resp.data.msj);
-            })
+                if (result.isConfirmed) {
+                    BuscarTodosConvocatorias();
+                    
+                }
+            }
+            
+           
+            // setOpen(true)
+            // alert(resp.data.msj);
+            
+        })
             .catch(error => {
                 console.log(error);
             })
