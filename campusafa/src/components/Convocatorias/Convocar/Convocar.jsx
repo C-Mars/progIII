@@ -133,8 +133,8 @@ export function Convocar() {
                     <Card >
                         <CardContent >
 
-                            <Grid container spacing={2}>
-                                <Grid xs={4} item mt={1} >
+                            <Grid container >
+                                <Grid xs={4} item mt={2} mb={2}  >
                                     <Button
                                         variant="contained"
                                         color="secondary"
@@ -142,9 +142,9 @@ export function Convocar() {
                                         onClick={enviarInformacion}
                                     >Convocar</Button>
                                 </Grid>
-                                <Grid xs={8} item marginBottom={2}>
+                                {/* <Grid xs={8} item marginBottom={2}>
                                     <TextField id="filled-basic" label="Filled" variant="filled" fullWidth />
-                                </Grid>
+                                </Grid> */}
 
 
                             </Grid>
@@ -168,7 +168,7 @@ export function Convocar() {
 
                                                     <TableCell component="td" ailing="right">
 
-                                                        <Grid container spacing={2} ailing="center">
+                                                        <Grid container  ailing="center">
                                                             <Grid item lg={4} mt={2} >
                                                                 <Avatar
                                                                     sx={[{ width: 56, height: 56 },
@@ -192,7 +192,7 @@ export function Convocar() {
                                                         <Grid container>
                                                             <Grid item lg={6}>
                                                                 <Checkbox 
-                                                                    
+                                                                    color="success"
                                                                     checked={convocados.includes(item.idFutbolista)}
                                                                     onChange={() => convocar(item.idFutbolista)} 
                                                                      />

@@ -1,7 +1,45 @@
 import { useState, useEffect } from 'react';
+import { cyan } from '@mui/material/colors';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Table, Button } from 'react-bootstrap';
+import ReplyRoundedIcon from '@mui/icons-material/ReplyRounded';
+
 // import './Convocados.css';
+import {
+
+    Box,
+    Card,
+    Dialog,
+    DiDialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
+    CardContent,
+    CardHeader,
+    Container,
+    Table,
+    TableHead, Avatar,
+    TableCell,
+    TableContainer,
+    Button,
+    TableRow,
+    ButtonBase,
+    TableBody,
+    TextField,
+    Grid,
+    Typography,
+    FormControl,
+    MenuItem,
+    InputLabel,
+    Select,
+    NativeSelect,
+    Checkbox,
+    FormControlLabel,
+    FormGroup,
+    Tooltip,
+    IconButton,
+
+
+} from "@mui/material";
 import axios from 'axios';
 import Swal from 'sweetalert2';
 
@@ -48,68 +86,136 @@ export function Convocados(props) {
 
     // hacer
     const volver = () => {
+        navigate('/convocatoria')
     }
-
+    function formatoFecha(dateTime) {
+        const fecha = new Date(dateTime);
+        return fecha.toISOString().split('T')[0];
+    };
     return (
         <>
 
             <section className='contjugadores'>
                 <div className="jugadores">EQUIPO TITULAR</div>
             </section>
+            {/* *************TABLA CONVOCADOS--->EQUIPOTITULAR********** */}
 
-            <div className='container mt-3 mb-1 mb-5'>
-                <div className='row'>
-                    <div className="col-md-10">
-                        <h2>Convocados vs {rival}</h2>
-                    </div>
-                    <div className="col-md-2">
-                        <Button variant="primary" onClick={volver}>Volver</Button>
-                    </div>
-                </div>
+            <Container >
+                <Box component="div">
+                    <Card >
 
-                <div className='miTabla'>
-                    <Table striped bordered hover>
-                        <thead >
-                            <tr>
-                                {/* <th className='miThead'>id</th> */}
-                                <th className='miThead'>Nombre</th>
-                                <th className='miThead'>Apellido</th>
-                                <th className='miThead'>Pie Habil</th>
-                                <th className='miThead'>Dorsal</th>
-                                <th className='miThead'>Capitán</th>
-                                <th className='miThead'>Titular ({titulares.length})</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {
-                                convocados ? (convocados.map((item, index) => (
-                                    <tr key={index}>
-                                        <td>{item.nombre}</td>
-                                        <td>{item.apellido}</td>
-                                        <td>{item.pieHabil}</td>
-                                        <td>{item.dorsal}</td>
-                                        <td>
-                                            <input
-                                                type="radio"
-                                            // checked={titulares.includes(item.idFutbolista)}
-                                            // onChange={() => marcarCapitan(item.idFutbolista)}
-                                            />
-                                        </td>
-                                        <td>
-                                            <input
-                                                type="checkbox"
-                                                checked={titulares.includes(item.idFutbolista)}
-                                                onChange={() => titularizar(item.idFutbolista)}
-                                            />
-                                        </td>
-                                    </tr>
-                                )))
-                                    : <></>
-                            }
-                        </tbody>
-                    </Table>
-                </div>
-            </div>
+                        <CardContent >
+                            <Typography color="primary" variant="h5">Convocados vs {formatoFecha(rival)} </Typography>
+                            <Grid container>
+                                <Grid xs={4} item mt={2} mb={2}>
+                                    <Button
+                                        variant="contained"
+                                        color="secondary"
+                                        startIcon={<ReplyRoundedIcon />}
+                                        onClick={volver}
+                                    >Volver</Button>
+                                </Grid>
+
+
+
+                            </Grid>
+
+                            <TableContainer sx={{ boxShadow: 1 }} >
+                                <Table >
+
+                                    <TableHead sx={{ bgcolor: "#052035" }}>
+                                        <TableRow component="tr" >
+                                            <TableCell component="td" ><Typography color="white" variant="h5" >JUGADOR</Typography></TableCell>
+
+                                            <TableCell component="td"><Typography color="white" variant="h5">PIÉ HABIL</Typography></TableCell>
+
+                                            <TableCell component="td"><Typography color="white" variant="h5">DORSAL</Typography></TableCell>
+                                            <TableCell component="td"><Typography color="white" variant="h5">CAPITÁN</Typography></TableCell>
+                                            <TableCell component="td"><Typography color="white" variant="h5">TITULAR({titulares.length})</Typography></TableCell>
+
+
+                                        </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                        {
+                                            convocados ? (convocados.map((item, index) => (
+                                                <TableRow component="tr" key={index}>
+
+                                                    <TableCell component="td" ailing="center">
+                                                        <Grid container >
+                                                            <Grid item lg={4} mt={2} >
+                                                                <Avatar
+                                                                    sx={[{ width: 56, height: 56 },
+                                                                    { bgcolor: cyan[700] }]}
+                                                                    alt={item.nombre}
+                                                                    rc={item.foto} />
+                                                            </Grid>
+                                                            <Grid item lg={8} mt={2}>
+                                                                <Typography variant="subtitle1">{item.nombre}</Typography>
+                                                                <Typography variant="subtitle2"> {item.apellido}</Typography>
+
+                                                            </Grid>
+
+                                                        </Grid>
+                                                    </TableCell>
+
+
+                                                    <TableCell component="td"><Typography variant="subtitle1">{item.pieHabil}</Typography></TableCell>
+                                                    <TableCell component="td"><Typography variant="subtitle1">{item.dorsal}</Typography></TableCell>
+
+
+                                                    <TableCell component="td">
+                                                        <Grid container>
+                                                            <Grid item>
+                                                                <Tooltip disableFocusListener title="capitan">
+
+                                                                    <Checkbox
+                                                                        // checked={titulares.includes(item.idFutbolista)}
+                                                                        // onChange={() => marcarCapitan(item.idFutbolista)}
+                                                                        fontSize="large"
+                                                                        color="error" />
+
+                                                                </Tooltip>
+                                                            </Grid>
+
+                                                        </Grid>
+
+
+
+                                                    </TableCell>
+                                                    <TableCell component="td">
+                                                        <Grid container>
+                                                            <Grid item >
+                                                                <Tooltip disableFocusListener title="titular">
+
+                                                                    <Checkbox
+                                                                        checked={titulares.includes(item.idFutbolista)}
+                                                                        onChange={() => titularizar(item.idFutbolista)}
+                                                                        fontSize="large"
+                                                                        color="success" />
+
+                                                                </Tooltip>
+                                                            </Grid>
+                                                        </Grid>
+                                                    </TableCell>
+                                                </TableRow>
+                                            )))
+                                                :
+                                                (
+                                                    <>
+                                                    </>
+                                                )
+                                        }
+
+                                    </TableBody>
+
+                                </Table>
+                            </TableContainer>
+                        </CardContent>
+                    </Card>
+                </Box>
+            </Container >
+
         </>
     );
 }
