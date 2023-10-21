@@ -10,6 +10,8 @@
     "@mui/material": "^5.14.14",
     "@mui/styled-engine-sc": "^6.0.0-alpha.2",
     "@nextui-org/react": "^2.1.13",
+    "@sweetalert2/theme-material-ui": "^5.0.15",
+    "@sweetalert2/themes": "^5.0.15",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",

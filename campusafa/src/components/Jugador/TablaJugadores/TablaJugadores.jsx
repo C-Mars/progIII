@@ -22,7 +22,7 @@ import {
     TextField,
     Grid,
     Typography,
-    FormControl, MenuItem, InputLabel, Select
+    FormControl, MenuItem, InputLabel, Select, 
 
 } from "@mui/material";
 import { useState, useEffect } from "react";
@@ -32,6 +32,7 @@ import { cyan } from '@mui/material/colors';
 import Tooltip from '@mui/material/Tooltip';
 import AddBoxRoundedIcon from '@mui/icons-material/AddBoxRounded';
 import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded';
+import Swal from 'sweetalert2/dist/sweetalert2.js'
 
 import { ModalEditarJugador } from "../ModalEditarJugador/ModalEditarJugador";
 
@@ -70,16 +71,32 @@ export function TablaJugadores() {
     // Modal/Dialogo para eliminar futbolistas
     const eliminarFutbolista = async (idFutbolista) => {
         await axios.delete(baseURL + '/api/v1/futbolista/futbolistas/' + idFutbolista)
-            .then(resp => {
+            .then( async resp => {
                 console.log(resp.data);
+                if (resp.data.estado === 'OK') {
+                    const result = await Swal.fire({
+                        text: resp.data.msj,
+                        icon: 'success',
+                        confirmButtonText: 'Listo',
+                        confirmButtonColor:'#326fd1'
+                    })
 
-                BuscarTodosFutbolistas();
-                alert(resp.data.msj);
+                    if (result.isConfirmed) {
+                        BuscarTodosFutbolistas();
+                        
+                    }
+                }
+                
+               
+                // setOpen(true)
+                // alert(resp.data.msj);
+                
             })
             .catch(error => {
                 console.log(error);
             })
     }
+
     const enviarInformacion = async (e) => {
         e.preventDefault();
         // console.log(formulario);
@@ -87,6 +104,7 @@ export function TablaJugadores() {
         await axios.post(baseURL + '/api/v1/futbolista/futbolistas', formulario)
             .then(res => {
                 console.log(res);
+               
                 // alert(res.data.msj);
                 setFormulario({
 
@@ -185,7 +203,7 @@ export function TablaJugadores() {
                                                     <TableCell component="td">
                                                         <Grid container>
                                                             <Grid item lg={6}>
-                                                                <ModalEditarJugador/>
+                                                                <ModalEditarJugador />
                                                             </Grid>
                                                             <Grid item lg={6}>
                                                                 <Tooltip disableFocusListener title="Eliminar">
@@ -222,12 +240,12 @@ export function TablaJugadores() {
                 </Box>
             </Container >
 
-            <Dialog  open={open} onClose={handleClose}>
+            <Dialog open={open} onClose={handleClose}>
                 <DialogTitle >Nuevo Jugador</DialogTitle>
                 <DialogContent>
-                    <Box component="form" 
-                    onSubmit={e => enviarInformacion(e)} 
-                    onClose={handleClose} >
+                    <Box component="form"
+                        onSubmit={e => enviarInformacion(e)}
+                        onClose={handleClose} >
 
                         {/* NOMBRE */}
                         <TextField
@@ -341,7 +359,8 @@ export function TablaJugadores() {
 
             </Dialog>
 
-           
+
+
 
         </>
     )

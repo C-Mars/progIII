@@ -35,9 +35,11 @@ import Tooltip from '@mui/material/Tooltip';
 import AddBoxRoundedIcon from '@mui/icons-material/AddBoxRounded';
 import { useParams } from 'react-router-dom';
 import DriveFileRenameOutlineRoundedIcon from '@mui/icons-material/DriveFileRenameOutlineRounded';
-import Swal from 'sweetalert2';
+import Swal from 'sweetalert2'
 
 export function Convocar() {
+
+   
     const { parametro } = useParams();
 
     const baseURL = 'http://localhost:3005';
@@ -71,12 +73,26 @@ export function Convocar() {
             setConvocados(convocados.filter((rowId) => rowId !== idFutbolista));
         } else {
             // Si no está seleccionada, agrego a la lista de convocados
-            setConvocados([...convocados, idFutbolista]);
+            if(convocados.length === 26 && (convocados.filter((idFutbolista.posicion)).length === 1)){
+                Swal.fire({
+                    position: 'top-center',
+                    icon: 'error',
+                    text: 'Superó el cupo permitido',
+                    showConfirmButton: false,
+                    timer: 1500
+                  }) 
+                // alert('Supero el cupo permitido')
+            } 
+            else{
+                
+                setConvocados([...convocados, idFutbolista]);
+            }
+            
+            
         }
     }
-    const Swal = require('sweetalert2')
-    // tiene el error de no controlar si seleccionó o no futbolistas
-    // tarea: corregir
+   
+
     const enviarInformacion = () => {
 
         const lista = { idConvocatoria: parametro, futbolistas: convocados }
@@ -87,7 +103,9 @@ export function Convocar() {
                 if (res.data.estado === 'OK') {
                     const result = await Swal.fire({
                         text: res.data.msj,
-                        icon: 'success'
+                        icon: 'success',
+                        confirmButtonText: 'Listo',
+                        confirmButtonColor:'#326fd1'
                     })
 
                     if (result.isConfirmed) {
