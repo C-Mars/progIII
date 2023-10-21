@@ -21,7 +21,7 @@ import {
     TextField,
     Grid,
     Typography,
-    FormControl, MenuItem, InputLabel, Select, Tooltip, IconButton
+    FormControl, MenuItem, InputLabel, Select, Tooltip, IconButton, containerClasses
 
 } from "@mui/material";
 import DriveFileRenameOutlineRoundedIcon from '@mui/icons-material/DriveFileRenameOutlineRounded';
@@ -29,10 +29,14 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 export function ModalEditarConvocatoria() {
+    
+    
     const baseURL = 'http://localhost:3005';
 
 
     const navigate = useNavigate();
+    
+    
     const [rivales, setRivales] = useState(null);
 
 
@@ -74,28 +78,8 @@ export function ModalEditarConvocatoria() {
         const fecha = new Date(dateTime);
         return fecha.toISOString().split('T')[0];
     };
-    const eliminarConvocatoria = async (idConvocatoria) => {
-        await axios.delete(baseURL + '/api/v1/convocatoria/convocatorias/' + idConvocatoria)
-            .then(resp => {
-                console.log(resp.data);
-
-                BuscarTodosConvocatorias();
-                alert(resp.data.msj);
-            })
-            .catch(error => {
-                console.log(error);
-            })
-    };
+  
     //Busqueda 
-    const convocar = (id) => {
-        const parametro = id;
-        navigate(`/convocar/${parametro}`);
-    };
-
-    const convocados = (idConvocatoria, rival) => {
-        // const idConvocatoria = idConvocatoria; 
-        navigate(`/convocados/${idConvocatoria}/${rival}`);
-    };
     const buscarRivales = async () => {
         axios.get(baseURL + '/api/v1/rival/rivales')
             .then(resp => {
@@ -117,8 +101,9 @@ export function ModalEditarConvocatoria() {
         };
     // Inicio del modal
     const [openconv, setOpenConv] = React.useState(false);
-    //AGREGAR JUGADORES
+
     const handleClickOpenEditarConvocaroria = () => {
+       
         buscarRivales()
         setOpenConv(true);
     };
@@ -127,9 +112,31 @@ export function ModalEditarConvocatoria() {
         setOpenConv(false);
     };
 
-
+    const editarConvocatoria = async (idConvocatoria) =>{
+        idConvocatoria.preventDefault();
+        axios.put(baseURL + '/api/v1/convocatoria/convocatorias'+ idConvocatoria)
+            .then(resp => {
+                setConvocatorias(resp.data.dato);
+                BuscarTodosConvocatorias();
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    }
+    
+    const BuscarIdConvocatorias = async (idConvocatoria) => {
+        axios.get(baseURL + '/api/v1/convocatoria/convocatorias'+ idConvocatoria)
+            .then(resp => {
+                setConvocatorias(resp.data.dato);
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    }
+  
     return (
         <>
+        {/*************** BOTÓN DE EDITAR *****************************/}
             <Tooltip disableFocusListener title="Editar">
                 <IconButton aria-label="editar"
                     variant="contained"
@@ -139,13 +146,17 @@ export function ModalEditarConvocatoria() {
                     <DriveFileRenameOutlineRoundedIcon fontSize="large" />
                 </IconButton>
             </Tooltip>
+        {/****************** MODAL DE EDITAR *****************************/}
 
             <Dialog className="editar" open={openconv} onClose={handleCloseEditarConvocatoria}>
                 <DialogTitle >Editar Jugador</DialogTitle>
                 <DialogContent>
-                    <Box component="form" onSubmit={e => crearConvocatoria(e)} onClose={handleCloseEditarConvocatoria} >
+                    <Box component="form" 
+                    onSubmit={e => editarConvocatoria(e)} 
+                     >
 
-                        {/* fecha */}
+                        {/********** FECHA ********************/}
+                        {/***** INGRESAR FECHA *********/}
                         <TextField
                             id="fecha"
                             label="Fecha"
@@ -157,12 +168,40 @@ export function ModalEditarConvocatoria() {
                             required
                             fullWidth
                             value={convocatoria.fecha}
-                            onChange={(e) => setConvocatorias({ ...convocatoria, fecha: e.target.value })}
+                            onChange={(e) => setConvocatoria({ ...convocatoria, fecha: e.target.value })}
                         />
-                    
+
+                        {/*************** RIVAL ******************/}
+                        <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+                            <InputLabel id="rivalid">RIVAL</InputLabel>
+                            <Select
+                                required
+                                value={convocatoria.idRival}
+                                fullWidth
+                                onChange={(e) => setConvocatoria({ ...convocatoria, rival:e.target.value })}
+                            
+                            >
+                                { (rivales?.length > 0) ? rivales.map(item => (
+                                            <MenuItem key={item.idRival} value={item.idRival}>
+                                                {item.nombre}
+                                            </MenuItem>
+                                        )) : <></>}     
+                            </Select>                    
+                        </FormControl>
+                    {/******************BOTON CIERRE *****************************/}
                         <Box mt={2}  >
-                            <Button sx={{ m: 2 }} variant="contained" color="secondary" type="submit" >GUARDAR</Button >
-                            <Button sx={{ m: 2 }} variant="contained" onClick={handleCloseEditarConvocatoria}>CANCELAR</Button>
+                        {/******************BOTON GUARDAR *****************************/}
+
+                            <Button sx={{ m: 2 }} 
+                            variant="contained" 
+                            color="secondary" 
+                            type="submit" >GUARDAR</Button >
+                    
+                        {/******************BOTON CANCELAR *****************************/}
+        
+                            <Button sx={{ m: 2 }} v
+                            ariant="contained" 
+                            onClick={handleCloseEditarConvocatoria}>CANCELAR</Button>
                         </Box>
                     </Box>
                 </DialogContent>
