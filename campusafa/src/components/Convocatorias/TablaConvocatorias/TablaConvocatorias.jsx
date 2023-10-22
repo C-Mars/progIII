@@ -30,7 +30,7 @@ import {
 import { useState, useEffect } from "react";
 import axios from "axios";
 import IconButton from '@mui/material/IconButton';
-import { cyan } from '@mui/material/colors';
+import { cyan , grey } from '@mui/material/colors';
 import Tooltip from '@mui/material/Tooltip';
 import SportsSoccerRoundedIcon from '@mui/icons-material/SportsSoccerRounded';
 import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded';
@@ -239,7 +239,7 @@ export function TablaConvocatorias() {
                                             <TableCell component="td"><Typography sx={{color : cyan[50]}} variant="h5">ACCIONES</Typography></TableCell>
                                         </TableRow>
                                     </TableHead>
-                                    <TableBody sx={{ bgcolor:cyan[50] }}>
+                                    <TableBody sx={{ bgcolor:grey[100] }}>
                                         {
                                             convocatorias ? (convocatorias.map((item, index) => (
                                                 <TableRow component="tr" key={index}>

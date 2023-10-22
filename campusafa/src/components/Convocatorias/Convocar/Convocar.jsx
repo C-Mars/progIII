@@ -30,7 +30,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import IconButton from '@mui/material/IconButton';
 import SportsSoccerRoundedIcon from '@mui/icons-material/SportsSoccerRounded';
-import { cyan } from '@mui/material/colors';
+import { cyan, grey } from '@mui/material/colors';
 import Tooltip from '@mui/material/Tooltip';
 import AddBoxRoundedIcon from '@mui/icons-material/AddBoxRounded';
 import { useParams } from 'react-router-dom';
@@ -161,7 +161,7 @@ export function Convocar() {
 
                                         </TableRow>
                                     </TableHead>
-                                    <TableBody sx={{ bgcolor:cyan[50] }}>
+                                    <TableBody sx={{ bgcolor:grey[100] }}>
                                         {
                                             futbolistas ? (futbolistas.map((item, index) => (
                                                 <TableRow component="tr" key={index}>

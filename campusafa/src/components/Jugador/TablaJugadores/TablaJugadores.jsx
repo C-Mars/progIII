@@ -28,7 +28,7 @@ import {
 import { useState, useEffect } from "react";
 import axios from "axios";
 import IconButton from '@mui/material/IconButton';
-import { cyan } from '@mui/material/colors';
+import { cyan, grey } from '@mui/material/colors';
 import Tooltip from '@mui/material/Tooltip';
 import AddBoxRoundedIcon from '@mui/icons-material/AddBoxRounded';
 import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded';
@@ -102,20 +102,35 @@ export function TablaJugadores() {
         // console.log(formulario);
 
         await axios.post(baseURL + '/api/v1/futbolista/futbolistas', formulario)
-            .then(res => {
-                console.log(res);
+            .then(async resp => {
+                console.log(resp);
 
-                // alert(res.data.msj);
-                setFormulario({
+                // alert(resp.data.msj);
 
-                    nombre: '',
-                    apellido: '',
-                    dni: '',
-                    apodo: '',
-                    posicion: '',
-                    piehabil: ''
-                });
-                BuscarTodosFutbolistas();
+
+                if (resp.data.estado === 'OK') {
+
+                    setFormulario({
+
+                        nombre: '',
+                        apellido: '',
+                        dni: '',
+                        apodo: '',
+                        posicion: '',
+                        piehabil: ''
+                    });
+                    const result = await Swal.fire({
+                        text: resp.data.msj,
+                        icon: 'success',
+                        confirmButtonText: 'Listo',
+                        confirmButtonColor: '#326fd1'
+                    })
+
+                    if (result.isConfirmed) {
+                        BuscarTodosFutbolistas();
+
+                    }
+                }
             })
 
             .catch(error => {
@@ -160,10 +175,18 @@ export function TablaJugadores() {
         await axios.put(baseURL + '/api/v1/futbolista/futbolistas/' + idFutbolista, formulario)
             .then(async resp => {
                 console.log(resp.data);
-                setFormulario(resp.data.dato);
-            
-               
+                
+
                 if (resp.data.estado === 'OK') {
+                    setFormulario({
+
+                        nombre: formulario.nombre,
+                        apellido: formulario.apellido,
+                        dni: formulario.dni,
+                        apodo: formulario.apodo,
+                        posicion: formulario.posicion,
+                        piehabil: formulario.piehabil
+                    });
                     const result = await Swal.fire({
                         text: resp.data.msj,
                         icon: 'success',
@@ -208,15 +231,15 @@ export function TablaJugadores() {
                                 <Table >
                                     <TableHead sx={{ bgcolor: "#052035" }}>
                                         <TableRow component="tr" >
-                                            <TableCell component="td" ><Typography sx={{color : cyan[50]}} variant="h5" >JUGADOR</Typography></TableCell>
-                                            <TableCell component="td"><Typography sx={{color : cyan[50]}} variant="h5">POSICIÓN</Typography></TableCell>
-                                            <TableCell component="td"><Typography sx={{color : cyan[50]}} variant="h5">APODO</Typography></TableCell>
-                                            <TableCell component="td"><Typography sx={{color : cyan[50]}} variant="h5">PIÉ HABIL</Typography></TableCell>
-                                            <TableCell component="td"><Typography sx={{color : cyan[50]}} variant="h5">ACCIONES</Typography></TableCell>
+                                            <TableCell component="td" ><Typography sx={{ color: cyan[50] }} variant="h5" >JUGADOR</Typography></TableCell>
+                                            <TableCell component="td"><Typography sx={{ color: cyan[50] }} variant="h5">POSICIÓN</Typography></TableCell>
+                                            <TableCell component="td"><Typography sx={{ color: cyan[50] }} variant="h5">APODO</Typography></TableCell>
+                                            <TableCell component="td"><Typography sx={{ color: cyan[50] }} variant="h5">PIÉ HABIL</Typography></TableCell>
+                                            <TableCell component="td"><Typography sx={{ color: cyan[50] }} variant="h5">ACCIONES</Typography></TableCell>
 
                                         </TableRow>
                                     </TableHead>
-                                    <TableBody sx={{ bgcolor:cyan[50] }}>
+                                    <TableBody sx={{ bgcolor: grey[100] }}>
                                         {
                                             datos ? (datos.map((item, index) => (
                                                 <TableRow component="tr" key={index}>
@@ -251,9 +274,9 @@ export function TablaJugadores() {
                                                                     <IconButton aria-label="editar"
                                                                         variant="contained"
                                                                         color="secondary"
-                                                                       onChange={() => editarFutbolista(item.idFutbolista)}
-                                                                        onClick={handleClickOpenEditar} 
-                                                                        // open={open}
+                                                                        onChange={() => editarFutbolista(item.idFutbolista)}
+                                                                        onClick={handleClickOpenEditar}
+                                                                    // open={open}
                                                                     >
                                                                         <DriveFileRenameOutlineRoundedIcon fontSize="large" />
                                                                     </IconButton>
@@ -262,8 +285,8 @@ export function TablaJugadores() {
                                                             </Grid>
                                                             <Grid item lg={6}>
                                                                 <Tooltip disableFocusListener title="Eliminar">
-                                                                    <IconButton aria-label="eliminar" 
-                                                                    onClick={() => eliminarFutbolista(item.idFutbolista)}>
+                                                                    <IconButton aria-label="eliminar"
+                                                                        onClick={() => eliminarFutbolista(item.idFutbolista)}>
                                                                         <DeleteForeverRoundedIcon fontSize="large" color="error" />
                                                                     </IconButton>
                                                                 </Tooltip>
@@ -406,7 +429,7 @@ export function TablaJugadores() {
                         </FormControl>
                         <Box mt={2}  >
 
-                            <Button sx={{ m: 2 }} variant="contained" color="secondary" type="submit" >GUARDAR</Button >
+                            <Button sx={{ m: 2 }} variant="contained" color="secondary" type="submit" onClick={handleClose}>GUARDAR</Button >
                             <Button sx={{ m: 2 }} variant="contained" onClick={handleClose}>CANCELAR</Button>
                         </Box>
 
@@ -416,7 +439,7 @@ export function TablaJugadores() {
             </Dialog>
 
 
-            <Dialog open={openEd} onClose={handleCloseEditar} onSubmit={(e)=>editarFutbolista(e)}>
+            <Dialog open={openEd} onClose={handleCloseEditar} onSubmit={(e) => editarFutbolista(e)}>
                 <DialogTitle>Editar Jugador</DialogTitle>
                 <DialogContent>
                     <Box component="form"

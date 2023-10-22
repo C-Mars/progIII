@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { cyan } from '@mui/material/colors';
+import { cyan , grey} from '@mui/material/colors';
 import { useNavigate, useParams } from 'react-router-dom';
 import ReplyRoundedIcon from '@mui/icons-material/ReplyRounded';
 
@@ -136,7 +136,7 @@ export function Convocados(props) {
 
                                         </TableRow>
                                     </TableHead>
-                                    <TableBody sx={{ bgcolor:cyan[50] }}>
+                                    <TableBody sx={{ bgcolor:grey[100] }}>
                                         {
                                             convocados ? (convocados.map((item, index) => (
                                                 <TableRow component="tr" key={index}>
