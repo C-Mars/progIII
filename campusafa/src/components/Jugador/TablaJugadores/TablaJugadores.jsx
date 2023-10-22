@@ -208,15 +208,15 @@ export function TablaJugadores() {
                                 <Table >
                                     <TableHead sx={{ bgcolor: "#052035" }}>
                                         <TableRow component="tr" >
-                                            <TableCell component="td" ><Typography color="white" variant="h5" >JUGADOR</Typography></TableCell>
-                                            <TableCell component="td"><Typography color="white" variant="h5">POSICIÓN</Typography></TableCell>
-                                            <TableCell component="td"><Typography color="white" variant="h5">APODO</Typography></TableCell>
-                                            <TableCell component="td"><Typography color="white" variant="h5">PIÉ HABIL</Typography></TableCell>
-                                            <TableCell component="td"><Typography color="white" variant="h5">ACCIONES</Typography></TableCell>
+                                            <TableCell component="td" ><Typography sx={{color : cyan[50]}} variant="h5" >JUGADOR</Typography></TableCell>
+                                            <TableCell component="td"><Typography sx={{color : cyan[50]}} variant="h5">POSICIÓN</Typography></TableCell>
+                                            <TableCell component="td"><Typography sx={{color : cyan[50]}} variant="h5">APODO</Typography></TableCell>
+                                            <TableCell component="td"><Typography sx={{color : cyan[50]}} variant="h5">PIÉ HABIL</Typography></TableCell>
+                                            <TableCell component="td"><Typography sx={{color : cyan[50]}} variant="h5">ACCIONES</Typography></TableCell>
 
                                         </TableRow>
                                     </TableHead>
-                                    <TableBody>
+                                    <TableBody sx={{ bgcolor:cyan[50] }}>
                                         {
                                             datos ? (datos.map((item, index) => (
                                                 <TableRow component="tr" key={index}>

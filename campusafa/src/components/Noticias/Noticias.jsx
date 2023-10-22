@@ -53,7 +53,7 @@ export function Noticias() {
     <main>
       <section className="noticias">
         <div className="noticia-t">
-          <h1>NOTICIAS</h1>
+         <h2></h2>
         </div>
       </section>
       <input className='notiimp'

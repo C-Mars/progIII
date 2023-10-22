@@ -3,6 +3,7 @@ import News from './News';
 import NextMatch from './NextMatch';
 import './Inicio.css';
 import ApiSection from './ApiSection';
+import { Noticias } from '../Noticias/Noticias';
 
 
 export function Inicio() {
@@ -14,7 +15,8 @@ export function Inicio() {
                     <h1>NOTICIAS</h1>
                 </div>
                 <News />
-                <ApiSection />
+                <Noticias />
+                {/* <ApiSection /> */}
             </main>
 
         </>

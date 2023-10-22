@@ -125,18 +125,18 @@ export function Convocados(props) {
 
                                     <TableHead sx={{ bgcolor: "#052035" }}>
                                         <TableRow component="tr" >
-                                            <TableCell component="td" ><Typography color="white" variant="h5" >JUGADOR</Typography></TableCell>
+                                            <TableCell component="td" ><Typography sx={{color : cyan[50]}} variant="h5" >JUGADOR</Typography></TableCell>
 
-                                            <TableCell component="td"><Typography color="white" variant="h5">PIÉ HABIL</Typography></TableCell>
+                                            <TableCell component="td"><Typography sx={{color : cyan[50]}} variant="h5">PIÉ HABIL</Typography></TableCell>
 
-                                            <TableCell component="td"><Typography color="white" variant="h5">DORSAL</Typography></TableCell>
-                                            <TableCell component="td"><Typography color="white" variant="h5">CAPITÁN</Typography></TableCell>
-                                            <TableCell component="td"><Typography color="white" variant="h5">TITULAR({titulares.length})</Typography></TableCell>
+                                            <TableCell component="td"><Typography sx={{color : cyan[50]}} variant="h5">DORSAL</Typography></TableCell>
+                                            <TableCell component="td"><Typography sx={{color : cyan[50]}} variant="h5">CAPITÁN</Typography></TableCell>
+                                            <TableCell component="td"><Typography sx={{color : cyan[50]}} variant="h5">TITULAR({titulares.length})</Typography></TableCell>
 
 
                                         </TableRow>
                                     </TableHead>
-                                    <TableBody>
+                                    <TableBody sx={{ bgcolor:cyan[50] }}>
                                         {
                                             convocados ? (convocados.map((item, index) => (
                                                 <TableRow component="tr" key={index}>
