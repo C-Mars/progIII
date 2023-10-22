@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from 'react-router-dom';
+import SearchIcon from '@mui/icons-material/Search';
 import {
 
     Box,
@@ -64,11 +65,23 @@ export function TablaConvocatorias() {
         // console.log(convocatoria);
 
         await axios.post(baseURL + '/api/v1/convocatoria/nuevaconvocatoria', convocatoria)
-            .then(res => {
+            .then(async res => {
                 if (res.data.estado === 'OK') {
-                    alert(res.data.msj);
-                    handleCloseConvocatoria();
-                    BuscarTodosConvocatorias();
+                    const result = await Swal.fire({
+                        text: res.data.msj,
+                        icon: 'success',
+                        confirmButtonText: 'Listo',
+                        confirmButtonColor: '#326fd1'
+                    })
+
+                    if (result.isConfirmed) {
+                        BuscarTodosConvocatorias();
+                    }
+
+
+
+
+
                 }
             })
             .catch(error => {
@@ -76,7 +89,7 @@ export function TablaConvocatorias() {
             })
 
     }
-    
+
 
 
     // Inicio del modal
@@ -97,7 +110,7 @@ export function TablaConvocatorias() {
             .then(resp => {
                 console.log(resp.data.dato);
                 setConvocatorias(resp.data.dato);
-            
+
             })
             .catch(error => {
                 console.log(error);
@@ -112,27 +125,27 @@ export function TablaConvocatorias() {
 
     const eliminarConvocatoria = async (idConvocatoria) => {
         await axios.delete(baseURL + '/api/v1/convocatoria/convocatorias/' + idConvocatoria)
-        .then( async resp => {
-            console.log(resp.data);
-            if (resp.data.estado === 'OK') {
-                const result = await Swal.fire({
-                    text: resp.data.msj,
-                    icon: 'success',
-                    confirmButtonText: 'Listo',
-                    confirmButtonColor:'#326fd1'
-                })
+            .then(async resp => {
+                console.log(resp.data);
+                if (resp.data.estado === 'OK') {
+                    const result = await Swal.fire({
+                        text: resp.data.msj,
+                        icon: 'success',
+                        confirmButtonText: 'Listo',
+                        confirmButtonColor: '#326fd1'
+                    })
 
-                if (result.isConfirmed) {
-                    BuscarTodosConvocatorias();
-                    
+                    if (result.isConfirmed) {
+                        BuscarTodosConvocatorias();
+
+                    }
                 }
-            }
-            
-           
-            // setOpen(true)
-            // alert(resp.data.msj);
-            
-        })
+
+
+                // setOpen(true)
+                // alert(resp.data.msj);
+
+            })
             .catch(error => {
                 console.log(error);
             })
@@ -169,7 +182,32 @@ export function TablaConvocatorias() {
         setOpenConv(false);
     };
 
+    const handleClickOpenEditarConvocaroria = () => {
 
+        buscarRivales()
+        setOpenConv(true);
+    };
+
+    const handleCloseEditarConvocatoria = () => {
+        setOpenConv(false);
+    };
+
+    const editarConvocatoria = async (idConvocatoria) => {
+
+        await axios.put(baseURL + '/api/v1/convocatoria/esditarconvocatoria/' + idConvocatoria, convocatoria)
+            .then(async (resp) => {
+                if (resp.data.estado === 'OK') {
+                    setConvocatoria(
+                        resp.data.estado
+                    );
+
+                    BuscarTodosConvocatorias();
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    }
     return (
         <>
             <Container >
@@ -186,6 +224,9 @@ export function TablaConvocatorias() {
                                     >Agregar</Button>
                                 </Grid>
                                 <Grid xs={8} item marginBottom={2}>
+                                   
+                
+                                       
                                     <TextField id="filled-basic" label="Filled" variant="filled" fullWidth />
                                 </Grid>
                             </Grid>
@@ -306,7 +347,7 @@ export function TablaConvocatorias() {
 
                         <Box mt={2}  >
 
-                            <Button sx={{ m: 2 }} variant="contained" color="secondary" type="submit"
+                            <Button sx={{ m: 2 }} variant="contained" color="secondary" type="submit" onClick={handleCloseConvocatoria}
                             // onClick={() => setOpenConv(false)}
                             >GUARDAR</Button >
                             <Button sx={{ m: 2 }} variant="contained" onClick={handleCloseConvocatoria}>CANCELAR</Button>
@@ -315,7 +356,7 @@ export function TablaConvocatorias() {
                     </Box>
                 </DialogContent>
 
-            </Dialog>
+            </Dialog >
 
 
 

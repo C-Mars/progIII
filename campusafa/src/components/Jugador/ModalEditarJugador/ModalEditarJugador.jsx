@@ -63,16 +63,11 @@ export function ModalEditarJugador() {
         // idFutbolista.preventDefault();
         await axios.put(baseURL + '/api/v1/futbolista/futbolistas/' + idFutbolista, formulario)
             .then(resp => {
-                console.log(resp.data);
-                setFormulario({
-                    nombre: '',
-                    apellido: '',
-                    dni: '',
-                    apodo: '',
-                    posicion: '',
-                    piehabil: ''
-                });
-                BuscarIdFutbolistas(idFutbolista);
+                console.log(resp.data.dato);
+                setFormulario(
+                    resp.data.dato
+                );
+                BuscarIdFutbolistas();
             })
             .catch(error => {
                 console.log(error);

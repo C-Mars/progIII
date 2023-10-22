@@ -28,7 +28,7 @@ import DriveFileRenameOutlineRoundedIcon from '@mui/icons-material/DriveFileRena
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-export function ModalEditarConvocatoria() {
+export function ModalEditarConvocatoria(idConvocatoria) {
     
     
     const baseURL = 'http://localhost:3005';
@@ -40,35 +40,23 @@ export function ModalEditarConvocatoria() {
     const [rivales, setRivales] = useState(null);
 
 
-    const [convocatorias, setConvocatorias] = useState(null);
 
-    const [convocatoria, setConvocatoria] = useState({ fecha: '', rival: '', golesRecibidos: '', golesConvertidos: '' });
+    const [convocatoria, setConvocatoria] = useState({ 
+        fecha: '', 
+        rival: '', 
+        golesRecibidos: '', 
+        golesConvertidos: '' });
 
-    const crearConvocatoria = async (e) => {
-        e.preventDefault();
-        // console.log(convocatoria);
-
-        await axios.post(baseURL + '/api/v1/convocatoria/nuevaconvocarotia', convocatoria)
-            .then(res => {
-                if (res.data.estado === 'OK') {
-                    alert(res.data.msj);
-                    handleCloseConvocatoria();
-                    BuscarTodosConvocatorias();
-                }
-            })
-            .catch(error => {
-                console.log(error);
-            })
-
-    }
+   
     useEffect(() => {
         BuscarTodosConvocatorias();
     }, []);
 
     const BuscarTodosConvocatorias = async () => {
+        
         axios.get(baseURL + '/api/v1/convocatoria/convocatorias')
             .then(resp => {
-                setConvocatorias(resp.data.dato);
+                setConvocatoria(resp.data.dato);
             })
             .catch(error => {
                 console.log(error);
@@ -113,26 +101,22 @@ export function ModalEditarConvocatoria() {
     };
 
     const editarConvocatoria = async (idConvocatoria) =>{
-        idConvocatoria.preventDefault();
-        axios.put(baseURL + '/api/v1/convocatoria/convocatorias'+ idConvocatoria)
-            .then(resp => {
-                setConvocatorias(resp.data.dato);
+       
+        await axios.put(baseURL + '/api/v1/convocatoria/esditarconvocatoria/'+ idConvocatoria, convocatoria)
+            .then( async (resp) => {
+                if (resp.data.estado === 'OK') {
+                setConvocatoria(
+                    resp.data.estado
+                );
+
                 BuscarTodosConvocatorias();
+            }
             })
             .catch(error => {
                 console.log(error);
             })
     }
-    
-    const BuscarIdConvocatorias = async (idConvocatoria) => {
-        axios.get(baseURL + '/api/v1/convocatoria/convocatorias'+ idConvocatoria)
-            .then(resp => {
-                setConvocatorias(resp.data.dato);
-            })
-            .catch(error => {
-                console.log(error);
-            })
-    }
+ 
   
     return (
         <>
@@ -151,9 +135,7 @@ export function ModalEditarConvocatoria() {
             <Dialog className="editar" open={openconv} onClose={handleCloseEditarConvocatoria}>
                 <DialogTitle >Editar Convocatoria</DialogTitle>
                 <DialogContent>
-                    <Box component="form" 
-                    onSubmit={e => editarConvocatoria(e)} 
-                     >
+                    <Box component="form" >
 
                         {/********** FECHA ********************/}
                         {/***** INGRESAR FECHA *********/}
@@ -195,7 +177,9 @@ export function ModalEditarConvocatoria() {
                             <Button sx={{ m: 2 }} 
                             variant="contained" 
                             color="secondary" 
-                            type="submit" >GUARDAR</Button >
+                            type="submit" 
+                            onSubmit= {(item) => editarConvocatoria(item.idConvocatoria)}
+                            >GUARDAR</Button >
                     
                         {/******************BOTON CANCELAR *****************************/}
         
