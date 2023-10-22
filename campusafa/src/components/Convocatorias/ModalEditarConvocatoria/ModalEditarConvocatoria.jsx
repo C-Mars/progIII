@@ -183,8 +183,7 @@ export function ModalEditarConvocatoria(idConvocatoria) {
                     
                         {/******************BOTON CANCELAR *****************************/}
         
-                            <Button sx={{ m: 2 }} v
-                            ariant="contained" 
+                            <Button sx={{ m: 2 }} variant="contained" 
                             onClick={handleCloseEditarConvocatoria}>CANCELAR</Button>
                         </Box>
                     </Box>
