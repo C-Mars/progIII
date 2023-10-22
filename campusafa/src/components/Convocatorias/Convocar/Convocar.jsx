@@ -73,7 +73,7 @@ export function Convocar() {
             setConvocados(convocados.filter((rowId) => rowId !== idFutbolista));
         } else {
             // Si no está seleccionada, agrego a la lista de convocados
-            if(convocados.length === 26 && (convocados.filter((idFutbolista.posicion)).length === 1)){
+            if(convocados.length === 26 ){
                 Swal.fire({
                     position: 'top-center',
                     icon: 'error',

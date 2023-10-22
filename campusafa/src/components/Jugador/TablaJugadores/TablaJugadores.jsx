@@ -119,6 +119,7 @@ export function TablaJugadores() {
                         posicion: '',
                         piehabil: ''
                     });
+                    
                     const result = await Swal.fire({
                         text: resp.data.msj,
                         icon: 'success',
