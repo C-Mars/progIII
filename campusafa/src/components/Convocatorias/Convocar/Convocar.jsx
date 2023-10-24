@@ -66,7 +66,7 @@ export function Convocar() {
             });
     }
 
-    // TAREA controlar que no se convoquen mas de 26 futbolistas
+  
     const convocar = (idFutbolista) => {
         if (convocados.includes(idFutbolista)) {
             // Si ya está seleccionado, quito de la lista de convocados
@@ -187,7 +187,7 @@ export function Convocar() {
 
                                                     <TableCell component="td"><Typography variant="subtitle1">{item.posicion}</Typography></TableCell>
                                                     <TableCell component="td"><Typography variant="subtitle1">{item.apodo}</Typography></TableCell>
-                                                    <TableCell component="td"><Typography variant="subtitle1">{item.piehabil}</Typography></TableCell>
+                                                    <TableCell component="td"><Typography variant="subtitle1">{item.pieHabil}</Typography></TableCell>
                                                     <TableCell component="td">
                                                         <Grid container>
                                                             <Grid item lg={6}>

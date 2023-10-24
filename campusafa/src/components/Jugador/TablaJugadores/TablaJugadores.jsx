@@ -26,6 +26,7 @@ import {
 
 } from "@mui/material";
 import { useState, useEffect } from "react";
+import { useParams } from "react-router";
 import axios from "axios";
 import IconButton from '@mui/material/IconButton';
 import { cyan, grey } from '@mui/material/colors';
@@ -47,9 +48,10 @@ export function TablaJugadores() {
     // datos de estudiantes
 
     const [formulario, setFormulario] =
-        useState({ nombre: '', apellido: '', dni: '', apodo: '', posicion: '', piehabil: '' });
+        useState({ nombre: '', apellido: '', dni: '', apodo: '', posicion: '', pieHabil: '' });
     // Buscar futbolistas lista actualizada
     const [datos, setDatos] = useState("");
+
 
 
     useEffect(() => {
@@ -67,7 +69,47 @@ export function TablaJugadores() {
                 console.log(error);
             })
     }
+    const enviarInformacion = async (e) => {
+        e.preventDefault();
+        // console.log(formulario);
 
+        await axios.post(baseURL + '/api/v1/futbolista/futbolistas', formulario)
+            .then(async resp => {
+                console.log(resp);
+
+                // alert(resp.data.msj);
+
+
+                if (resp.data.estado === 'OK') {
+
+                    setFormulario({
+
+                        nombre: '',
+                        apellido: '',
+                        dni: '',
+                        apodo: '',
+                        posicion: '',
+                        pieHabil: ''
+                    });
+                    BuscarTodosFutbolistas();
+                    // const result = await Swal.fire({
+                    //     text: resp.data.msj,
+                    //     icon: 'success',
+                    //     confirmButtonText: 'Listo',
+                    //     confirmButtonColor: '#326fd1'
+                    // })
+
+                    // if (result.isConfirmed) {
+                    //     BuscarTodosFutbolistas();
+
+                    // }
+                }
+            })
+
+            .catch(error => {
+                console.log('error ', error);
+            });
+    }
     // Modal/Dialogo para eliminar futbolistas
     const eliminarFutbolista = async (idFutbolista) => {
         await axios.delete(baseURL + '/api/v1/futbolista/futbolistas/' + idFutbolista)
@@ -97,47 +139,7 @@ export function TablaJugadores() {
             })
     }
 
-    const enviarInformacion = async (e) => {
-        e.preventDefault();
-        // console.log(formulario);
 
-        await axios.post(baseURL + '/api/v1/futbolista/futbolistas', formulario)
-            .then(async resp => {
-                console.log(resp);
-
-                // alert(resp.data.msj);
-
-
-                if (resp.data.estado === 'OK') {
-
-                    setFormulario({
-
-                        nombre: '',
-                        apellido: '',
-                        dni: '',
-                        apodo: '',
-                        posicion: '',
-                        piehabil: ''
-                    });
-                    
-                    const result = await Swal.fire({
-                        text: resp.data.msj,
-                        icon: 'success',
-                        confirmButtonText: 'Listo',
-                        confirmButtonColor: '#326fd1'
-                    })
-
-                    if (result.isConfirmed) {
-                        BuscarTodosFutbolistas();
-
-                    }
-                }
-            })
-
-            .catch(error => {
-                console.log('error ', error);
-            });
-    }
     // Inicio del modal
     const [open, setOpen] = React.useState(false);
     //AGREGAR JUGADORES
@@ -156,12 +158,14 @@ export function TablaJugadores() {
         setOpenEd(false);
     };
     //EDITAR JUGADORES
-    const handleClickOpenEditar = () => {
-        BuscarTodosFutbolistas()
+    const handleClickOpenEditar = (idFutbolista) => {
+        priEdicion(idFutbolista)
+
+        // editarFutbolista(idFutbolista)
         setOpenEd(true);
     };
     const BuscarIdFutbolistas = async (idFutbolista) => {
-        await axios.get(baseURL + '/api/v1/futbolista/futbolistas' + idFutbolista)
+        await axios.get(baseURL + '/api/v1/futbolista/futbolistas/' + idFutbolista)
             .then(resp => {
                 console.log(resp.data.dato);
                 setDatos(resp.data.dato);
@@ -171,40 +175,82 @@ export function TablaJugadores() {
                 console.log(error);
             })
     }
-    const editarFutbolista = async (idFutbolista) => {
-        // idFutbolista.preventDefault();
-        await axios.put(baseURL + '/api/v1/futbolista/futbolistas/' + idFutbolista, formulario)
-            .then(async resp => {
-                console.log(resp.data);
-                
-
-                if (resp.data.estado === 'OK') {
-                    setFormulario({
-
-                        nombre: formulario.nombre,
-                        apellido: formulario.apellido,
-                        dni: formulario.dni,
-                        apodo: formulario.apodo,
-                        posicion: formulario.posicion,
-                        piehabil: formulario.piehabil
-                    });
-                    const result = await Swal.fire({
-                        text: resp.data.msj,
-                        icon: 'success',
-                        confirmButtonText: 'Listo',
-                        confirmButtonColor: '#326fd1'
-                    })
-
-                    if (result.isConfirmed) {
-                        BuscarIdFutbolistas();
-
-                    }
-                }
+    
+    const priEdicion = (idFutbolista) => {
+        BuscarIdFutbolistas(idFutbolista)
+        if (!idFutbolista){
+            alert('no se encuentra')
+        }
+        else{
+           
+            setFormulario({
+                nombre: formulario.nombre,
+                apellido: formulario.apellido,
+                dni: formulario.dni,
+                apodo: formulario.apodo,
+                posicion: formulario.posicion,
+                pieHabil: formulario.pieHabil
             })
-            .catch(error => {
-                console.log(error);
-            })
+        }
+        
     }
+    // const finEdicion = async (e) => {
+    //     e.preventDefault();
+    //     await axios.put(baseURL + '/api/v1/futbolista/futbolistas/', formulario)
+    //         .then(async resp => {
+    //             console.log(resp.data.dato);
+    //             if (resp.data.estado === 'OK') {
+    //                 const editado = formulario.map(item => item.nombre === formulario.nombre ? { nombre, apellido, dni, apodo, posicion, pieHabil } : item)
+    //                 setFormulario(editado)
+    //                 BuscarIdFutbolistas();
+    // //             }
+    //         }
+
+
+    //         )
+    //         .catch(error => {
+    //             console.log(error);
+    //         })
+    // }
+    // const editarEnviarFutbolista = async (idFutbolista) => {
+    //     await axios.put(baseURL + '/api/v1/futbolista/futbolistas/' + idFutbolista)
+    //         .then(async resp => {
+    //             console.log(resp.data.dato);
+
+
+    //             if (resp.data.estado === 'OK') {
+    //                 setFormulario({
+    //                     dni: formulario.dni,
+    //                     nombre: formulario.nombre,
+    //                     apellido: formulario.apellido,
+
+    //                     apodo: formulario.apodo,
+    //                     posicion: formulario.posicion,
+    //                     pieHabil: formulario.pieHabil
+    //                 });
+    //                 BuscarIdFutbolistas();
+
+                    // const result = await Swal.fire({
+                    //     text: resp.data.msj,
+                    //     icon: 'success',
+                    //     confirmButtonText: 'Listo',
+                    //     confirmButtonColor: '#326fd1'
+                    // })
+
+                    // if (result.isConfirmed) {
+                    //     BuscarIdFutbolistas();
+
+                    // }
+    //             }
+    //         }
+
+
+    //         )
+    //         .catch(error => {
+    //             console.log(error);
+    //         })
+    // }
+
     return (
         <>
             <Container >
@@ -222,7 +268,11 @@ export function TablaJugadores() {
                                     >Agregar</Button>
                                 </Grid>
                                 <Grid xs={8} item marginBottom={2}>
-                                    <TextField id="filled-basic" label="Filled" variant="filled" fullWidth />
+                                    <TextField
+                                        id="filled-basic"
+                                        label="Busqueda"
+                                        variant="filled"
+                                        fullWidth />
                                 </Grid>
 
 
@@ -266,7 +316,7 @@ export function TablaJugadores() {
 
                                                     <TableCell component="td"><Typography variant="subtitle1">{item.posicion}</Typography></TableCell>
                                                     <TableCell component="td"><Typography variant="subtitle1">{item.apodo}</Typography></TableCell>
-                                                    <TableCell component="td"><Typography variant="subtitle1">{item.piehabil}</Typography></TableCell>
+                                                    <TableCell component="td"><Typography variant="subtitle1">{item.pieHabil}</Typography></TableCell>
                                                     <TableCell component="td">
                                                         <Grid container>
                                                             <Grid item lg={6}>
@@ -275,8 +325,9 @@ export function TablaJugadores() {
                                                                     <IconButton aria-label="editar"
                                                                         variant="contained"
                                                                         color="secondary"
-                                                                        onChange={() => editarFutbolista(item.idFutbolista)}
-                                                                        onClick={handleClickOpenEditar}
+                                                                        onClick={() => handleClickOpenEditar(item.idFutbolista)}
+
+
                                                                     // open={open}
                                                                     >
                                                                         <DriveFileRenameOutlineRoundedIcon fontSize="large" />
@@ -293,22 +344,11 @@ export function TablaJugadores() {
                                                                 </Tooltip>
                                                             </Grid>
                                                         </Grid>
-
-
-
                                                     </TableCell>
                                                 </TableRow>
                                             )))
                                                 :
-                                                (
-                                                    <TableRow>
-                                                        {/* <Tooltip disableFocusListener title="Convocar">
-                                                            <IconButton aria-label="convocar">
-                                                                <SportsSoccerRoundedIcon color="success" />
-                                                            </IconButton>
-                                                        </Tooltip> */}
-                                                    </TableRow>
-                                                )
+                                                <></>
                                         }
 
                                     </TableBody>
@@ -319,12 +359,12 @@ export function TablaJugadores() {
                     </Card>
                 </Box>
             </Container >
-
+            {/************************MODAL/DIALOGO NUEVO***********************************************************************************************************************************************************************************************/}
             <Dialog open={open} onClose={handleClose}>
                 <DialogTitle >Nuevo Jugador</DialogTitle>
                 <DialogContent>
                     <Box component="form"
-                        onSubmit={e => enviarInformacion(e)}
+
                         onClose={handleClose} >
 
                         {/* NOMBRE */}
@@ -409,14 +449,14 @@ export function TablaJugadores() {
                         </FormControl>
                         {/*Pie habil*/}
                         <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
-                            <InputLabel id="piehabilid">PIÉ HABIL</InputLabel>
+                            <InputLabel id="pieHabilid">PIÉ HABIL</InputLabel>
                             <Select
-                                labelId="piehabilid"
-                                id="piehabil"
+                                labelId="pieHabilid"
+                                id="pieHabil"
                                 // helperText={error.message}
                                 // error={error.error}
-                                value={formulario.piehabil}
-                                onChange={(e) => setFormulario({ ...formulario, piehabil: e.target.value })}
+                                value={formulario.pieHabil}
+                                onChange={(e) => setFormulario({ ...formulario, pieHabil: e.target.value })}
                                 label="Pié Habil"
                                 required
                                 fullWidth
@@ -430,7 +470,8 @@ export function TablaJugadores() {
                         </FormControl>
                         <Box mt={2}  >
 
-                            <Button sx={{ m: 2 }} variant="contained" color="secondary" type="submit" onClick={handleClose}>GUARDAR</Button >
+                            <Button sx={{ m: 2 }} variant="contained" color="secondary" type="submit"
+                                onSubmit={e => enviarInformacion(e)}>GUARDAR</Button >
                             <Button sx={{ m: 2 }} variant="contained" onClick={handleClose}>CANCELAR</Button>
                         </Box>
 
@@ -439,15 +480,15 @@ export function TablaJugadores() {
 
             </Dialog>
 
-
-            <Dialog open={openEd} onClose={handleCloseEditar} onSubmit={(e) => editarFutbolista(e)}>
+            {/********************MODAL/DIALOGO EDITAR************************************************************************************************************************************************************/}
+            <Dialog open={openEd} onClose={handleCloseEditar} >
                 <DialogTitle>Editar Jugador</DialogTitle>
                 <DialogContent>
                     <Box component="form"
-                        onSubmit={e => editarFutbolista(e)}
 
-                        // onSubmit={e => editarFutbolista(e)}
-                        onClose={handleCloseEditar} >
+                    // onClick={() => editarFutbolista(item.idFutbolista)}
+                    // onSubmit={e => editarFutbolista(e)}
+                    >
 
                         {/* NOMBRE */}
                         <TextField
@@ -531,14 +572,14 @@ export function TablaJugadores() {
                         </FormControl>
                         {/*PIE HABIL */}
                         <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
-                            <InputLabel id="piehabilid">PIÉ HABIL</InputLabel>
+                            <InputLabel id="pieHabilid">PIÉ HABIL</InputLabel>
                             <Select
-                                labelId="piehabilid"
-                                id="piehabil"
+                                labelId="pieHabilid"
+                                id="pieHabil"
                                 // helperText={error.message}
                                 // error={error.error}
-                                value={formulario.piehabil}
-                                onChange={(e) => setFormulario({ ...formulario, piehabil: e.target.value })}
+                                value={formulario.pieHabil}
+                                onChange={(e) => setFormulario({ ...formulario, pieHabil: e.target.value })}
                                 label="Pié Habil"
                                 required
                                 fullWidth
@@ -552,7 +593,9 @@ export function TablaJugadores() {
                         </FormControl>
                         <Box mt={2}  >
 
-                            <Button sx={{ m: 2 }} variant="contained" color="secondary" type="submit" >GUARDAR</Button >
+                            <Button sx={{ m: 2 }} variant="contained" 
+                            // onSubmit={e => editarEnviarFutbolista(e)} 
+                            color="secondary" type="submit" >GUARDAR</Button >
                             <Button sx={{ m: 2 }} variant="contained" onClick={handleCloseEditar}>CANCELAR</Button>
                         </Box>
 
