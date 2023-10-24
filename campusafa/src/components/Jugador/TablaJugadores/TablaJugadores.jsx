@@ -160,10 +160,16 @@ export function TablaJugadores() {
     //EDITAR JUGADORES
     const handleClickOpenEditar = (idFutbolista) => {
         priEdicion(idFutbolista)
-
-        // editarFutbolista(idFutbolista)
-        setOpenEd(true);
+        
+        setOpenEd(true);//abrir el modal
     };
+
+    const priEdicion =(idFutbolista) => {
+            BuscarIdFutbolistas(idFutbolista)
+            
+        }
+    
+    
     const BuscarIdFutbolistas = async (idFutbolista) => {
         await axios.get(baseURL + '/api/v1/futbolista/futbolistas/' + idFutbolista)
             .then(resp => {
@@ -176,24 +182,7 @@ export function TablaJugadores() {
             })
     }
     
-    const priEdicion = (idFutbolista) => {
-        BuscarIdFutbolistas(idFutbolista)
-        if (!idFutbolista){
-            alert('no se encuentra')
-        }
-        else{
-           
-            setFormulario({
-                nombre: formulario.nombre,
-                apellido: formulario.apellido,
-                dni: formulario.dni,
-                apodo: formulario.apodo,
-                posicion: formulario.posicion,
-                pieHabil: formulario.pieHabil
-            })
-        }
-        
-    }
+   
     // const finEdicion = async (e) => {
     //     e.preventDefault();
     //     await axios.put(baseURL + '/api/v1/futbolista/futbolistas/', formulario)

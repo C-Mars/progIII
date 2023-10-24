@@ -184,7 +184,7 @@ export function ModalEditarJugador() {
                                 // helperText={error.message}
                                 // error={error.error}
                                 value={formulario.piehabil}
-                                onChange={(e) => setFormulario({ ...formulario, piehabil: e.target.value })}
+                                onChange={(e) => setFormulario({ ...formulario, pieHabil: e.target.value })}
                                 label="Pié Habil"
                                 required
                                 fullWidth
