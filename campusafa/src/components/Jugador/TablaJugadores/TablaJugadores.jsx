@@ -157,8 +157,9 @@ export function TablaJugadores() {
     const handleCloseEditar = () => {
         setOpenEd(false);
     };
+    
     //EDITAR JUGADORES
-    const handleClickOpenEditar = (item) => {
+    const editarJugador = (item) => {
 
         console.log(item)
         setFormulario({
@@ -174,6 +175,8 @@ export function TablaJugadores() {
 
 
         setOpenEd(true);//abrir el modal
+
+
     };
     // const [edFutbolista, setEdFutbolista] = useState([]);
     // const priEdicion = (idFutbolista) => {
@@ -218,62 +221,44 @@ export function TablaJugadores() {
     }
 
 
-    // const finEdicion = async (e) => {
-    //     e.preventDefault();
-    //     await axios.put(baseURL + '/api/v1/futbolista/futbolistas/', formulario)
-    //         .then(async resp => {
-    //             console.log(resp.data.dato);
-    //             if (resp.data.estado === 'OK') {
-    //                 const editado = formulario.map(item => item.nombre === formulario.nombre ? { nombre, apellido, dni, apodo, posicion, pieHabil } : item)
-    //                 setFormulario(editado)
-    //                 BuscarIdFutbolistas();
-    // //             }
-    //         }
+
+    const editarEnviarFutbolista = async (idFutbolista) => {
+        // item.preventDefault()
+        await axios.put(baseURL + '/api/v1/futbolista/futbolistas/' + idFutbolista)
+            .then(async resp => {
+                console.log(resp.data.dato);
 
 
-    //         )
-    //         .catch(error => {
-    //             console.log(error);
-    //         })
-    // }
-    // const editarEnviarFutbolista = async (idFutbolista) => {
-    //     await axios.put(baseURL + '/api/v1/futbolista/futbolistas/' + idFutbolista)
-    //         .then(async resp => {
-    //             console.log(resp.data.dato);
+                if (resp.data.estado === 'OK') {
+                    setFormulario({
+                        idFutbolista: formulario.idFutbolista,
+                        dni: formulario.dni,
+                        nombre: formulario.nombre,
+                        apellido: formulario.apellido,
+                        apodo: formulario.apodo,
+                        posicion: formulario.posicion,
+                        pieHabil: formulario.pieHabil
+                    });
+                    BuscarIdFutbolistas();
 
+                    const result = await Swal.fire({
+                        text: resp.data.msj,
+                        icon: 'success',
+                        confirmButtonText: 'Listo',
+                        confirmButtonColor: '#326fd1'
+                    })
 
-    //             if (resp.data.estado === 'OK') {
-    //                 setFormulario({
-    //                     dni: formulario.dni,
-    //                     nombre: formulario.nombre,
-    //                     apellido: formulario.apellido,
+                    if (result.isConfirmed) {
+                        BuscarIdFutbolistas();
 
-    //                     apodo: formulario.apodo,
-    //                     posicion: formulario.posicion,
-    //                     pieHabil: formulario.pieHabil
-    //                 });
-    //                 BuscarIdFutbolistas();
-
-    // const result = await Swal.fire({
-    //     text: resp.data.msj,
-    //     icon: 'success',
-    //     confirmButtonText: 'Listo',
-    //     confirmButtonColor: '#326fd1'
-    // })
-
-    // if (result.isConfirmed) {
-    //     BuscarIdFutbolistas();
-
-    // }
-    //             }
-    //         }
-
-
-    //         )
-    //         .catch(error => {
-    //             console.log(error);
-    //         })
-    // }
+                    }
+                }
+            }
+            )
+            .catch(error => {
+                console.log(error);
+            })
+    }
 
     return (
         <>
@@ -349,7 +334,7 @@ export function TablaJugadores() {
                                                                     <IconButton aria-label="editar"
                                                                         variant="contained"
                                                                         color="secondary"
-                                                                        onClick={() => handleClickOpenEditar(item)}
+                                                                        onClick={() => editarJugador(item)}
 
 
                                                                     // open={open}
@@ -402,6 +387,7 @@ export function TablaJugadores() {
                             // error={error.error}
                             required
                             fullWidth
+
                             value={formulario.nombre}
                             onChange={(e) => setFormulario({ ...formulario, nombre: e.target.value })}
                         />
@@ -416,6 +402,7 @@ export function TablaJugadores() {
                             // error={error.error}
                             fullWidth
                             required
+
                             value={formulario.apellido}
                             onChange={(e) => setFormulario({ ...formulario, apellido: e.target.value })}
                         />
@@ -445,6 +432,7 @@ export function TablaJugadores() {
                             // error={error.error}
                             fullWidth
                             // error
+
                             required
                             value={formulario.apodo}
                             onChange={(e) => setFormulario({ ...formulario, apodo: e.target.value })}
@@ -452,51 +440,55 @@ export function TablaJugadores() {
                         {/*POSICION */}
                         <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
                             <InputLabel id="posicionid">POSICIÓN</InputLabel>
-                            <Select
-                                labelId="posicionid"
-                                id="posicion"
-                                // helperText={error.message}
-                                // error={error.error}
-                                value={formulario.posicion || ''}
-                                onChange={(e) => setFormulario({ ...formulario, posicion: e.target.value })}
-                                label="Posicion"
-                                required
-                                fullWidth
-                                defaultValue=""
-                            >
-                                <MenuItem value="">
-                                    <em>Seleccionar</em>
-                                </MenuItem>
-                                <MenuItem value={0}>Arquero</MenuItem>
-                                <MenuItem value={1}>Defensor</MenuItem>
-                                <MenuItem value={2}>Mediocampista</MenuItem>
-                                <MenuItem value={3}>Delantero</MenuItem>
+                            {formulario.posicion !== undefined &&
+                                <Select
+                                    defaultValue=""
+                                    labelId="posicionid"
+                                    id="posicionid"
+                                    // helperText={error.message}
+                                    // error={error.error}
+                                    value={formulario.posicion}
+                                    onChange={(e) => setFormulario({ ...formulario, posicion: e.target.value })}
+                                    label="Posicion"
+                                    required
+                                    fullWidth
+                                    key={formulario.posicion}
 
-                            </Select>
+                                >
+                                    
+                                    <MenuItem value="0">Arquero</MenuItem>
+                                    <MenuItem value="1">Defensor</MenuItem>
+                                    <MenuItem value="2">Mediocampista</MenuItem>
+                                    <MenuItem value="3">Delantero</MenuItem>
+
+                                </Select>}
                         </FormControl>
                         {/*Pie habil*/}
                         <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
                             <InputLabel id="pieHabilid">PIÉ HABIL</InputLabel>
-                            <Select
-                                labelId="pieHabilid"
-                                id="pieHabil"
-                                // helperText={error.message}
-                                // error={error.error}
-                                value={formulario.pieHabil || ''}
-                                onChange={(e) => setFormulario({ ...formulario, pieHabil: e.target.value })}
-                                label="Pié Habil"
-                                required
-                                fullWidth
-                                defaultValue=""
-                            >
-                                <MenuItem value="">
+                            {formulario.pieHabil !== undefined &&
+                                <Select
+                                    defaultValue=""
+                                    labelId="pieHabilid"
+                                    id="pieHabilid"
+                                    // helperText={error.message}
+                                    // error={error.error}
+                                    key={formulario.pieHabil}
+                                    value={formulario.pieHabil}
+                                    onChange={(e) => setFormulario({ ...formulario, pieHabil: e.target.value })}
+                                    label="Pié Habil"
+                                    required
+                                    fullWidth
+
+                                >
+                                    {/* <MenuItem value="">
                                     <em>Seleccionar</em>
-                                </MenuItem>
-                                <MenuItem value={0}>Derecha</MenuItem>
-                                <MenuItem value={1}>Izquierda</MenuItem>
+                                </MenuItem> */}
+                                    <MenuItem value="0">Derecha</MenuItem>
+                                    <MenuItem value="1">Izquierda</MenuItem>
 
 
-                            </Select>
+                                </Select>}
                         </FormControl>
                         <Box mt={2}  >
 
@@ -511,11 +503,13 @@ export function TablaJugadores() {
             </Dialog>
 
             {/********************MODAL/DIALOGO EDITAR************************************************************************************************************************************************************/}
-            <Dialog open={openEd} onClose={handleCloseEditar} >
+            <Dialog open={openEd} onClose={handleCloseEditar}
+                
+            >
                 <DialogTitle>Editar Jugador</DialogTitle>
                 <DialogContent>
                     <Box component="form"
-
+                    onSubmit={(item) => editarEnviarFutbolista(item)}
                     // onClick={() => editarFutbolista(item.idFutbolista)}
                     // onSubmit={e => editarFutbolista(e)}
                     >
@@ -533,21 +527,22 @@ export function TablaJugadores() {
                             fullWidth
                             value={formulario.nombre}
 
-                            onChange={(e) => setFormulario({ ...formulario, nombre: e.target.value })}
+                            onChange={(item) => setFormulario({ ...formulario, nombre: item.target.value })}
                         />
                         {/* APELLIDO */}
                         <TextField
                             id="apellido"
                             label="Apellido"
-                            type='texto'
+                            type='text'
                             variant="standard"
                             margin="normal"
                             // helperText={error.message}
                             // error={error.error}
                             fullWidth
+
                             required
                             value={formulario.apellido}
-                            onChange={(e) => setFormulario({ ...formulario, apellido: e.target.value })}
+                            onChange={(item) => setFormulario({ ...formulario, apellido: item.target.value })}
                         />
                         {/* DNI */}
                         <TextField
@@ -562,13 +557,13 @@ export function TablaJugadores() {
 
                             required
                             value={formulario.dni}
-                            onChange={(e) => setFormulario({ ...formulario, dni: e.target.value })}
+                            onChange={(item) => setFormulario({ ...formulario, dni: item.target.value })}
                         />
                         {/* APODO */}
                         <TextField
                             id="apodo"
                             label="Apodo"
-                            type='texto'
+                            type='text'
                             variant="standard"
                             margin="normal"
                             // helperText={error.message}
@@ -576,63 +571,69 @@ export function TablaJugadores() {
                             fullWidth
                             // error
                             required
+
                             value={formulario.apodo}
-                            onChange={(e) => setFormulario({ ...formulario, apodo: e.target.value })}
+                            onChange={(item) => setFormulario({ ...formulario, apodo: item.target.value })}
                         />
                         {/*POSICION */}
                         <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
                             <InputLabel id="posicionid">POSICIÓN</InputLabel>
-                            <Select
-                                labelId="posicionid"
-                                id="posicion"
-                                // helperText={error.message}
-                                // error={error.error}
-                                value={formulario.posicion || ''}
-                                onChange={(e) => setFormulario({ ...formulario, posicion: e.target.value })}
-                                label="Posicion"
-                                required
-                                fullWidth
-                                defaultValue=""
-                            >
-                                <MenuItem value="">
+                            {formulario.posicion !== undefined &&
+                                <Select
+                                    defaultValue=""
+                                    labelId="posicionid"
+                                    id="posicion"
+                                    // helperText={error.message}
+                                    // error={error.error}
+                                    value={formulario.posicion}
+                                    onChange={(item) => setFormulario({ ...formulario, posicion: item.target.value })}
+                                    label="Posicion"
+                                    required
+                                    fullWidth
+                                    key={formulario.posicion}
+                                >
+                                    {/* <MenuItem value="">
                                     <em>Seleccionar</em>
-                                </MenuItem>
-                                <MenuItem value={0}>Arquero</MenuItem>
-                                <MenuItem value={1}>Defensor</MenuItem>
-                                <MenuItem value={2}>Mediocampista</MenuItem>
-                                <MenuItem value={3}>Delantero</MenuItem>
+                                </MenuItem> */}
+                                    <MenuItem value="0">Arquero</MenuItem>
+                                    <MenuItem value="1">Defensor</MenuItem>
+                                    <MenuItem value="2">Mediocampista</MenuItem>
+                                    <MenuItem value="3">Delantero</MenuItem>
 
-                            </Select>
+                                </Select>}
                         </FormControl>
                         {/*PIE HABIL */}
                         <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
                             <InputLabel id="pieHabilid">PIÉ HABIL</InputLabel>
-                            <Select
-                                labelId="pieHabilid"
-                                id="pieHabil"
-                                // helperText={error.message}
-                                // error={error.error}
-                                value={formulario.pieHabil || ''}
-                                onChange={(e) => setFormulario({ ...formulario, pieHabil: e.target.value })}
-                                label="Pié Habil"
-                                required
-                                fullWidth
+                            {formulario.pieHabil !== undefined &&
+                                <Select
+                                    defaultValue=""
+                                    labelId="pieHabilid"
+                                    id="pieHabil"
+                                    // helperText={error.message}
+                                    // error={error.error}
+                                    value={formulario.pieHabil}
+                                    onChange={(item) => setFormulario({ ...formulario, pieHabil: item.target.value })}
+                                    label="Pié Habil"
+                                    required
+                                    fullWidth
+                                    key={formulario.pieHabil}
 
 
-                            >
-                                <MenuItem value="">
+                                >
+                                    {/* <MenuItem value="">
                                     <em>Seleccionar</em>
-                                </MenuItem>
-                                <MenuItem value={0}>Derecha</MenuItem>
-                                <MenuItem value={1}>Izquierda</MenuItem>
+                                </MenuItem> */}
+                                    <MenuItem value="0">Derecha</MenuItem>
+                                    <MenuItem value="1">Izquierda</MenuItem>
 
 
-                            </Select>
+                                </Select>}
                         </FormControl>
                         <Box mt={2}  >
 
                             <Button sx={{ m: 2 }} variant="contained"
-                                // onSubmit={e => editarEnviarFutbolista(e)} 
+
                                 color="secondary" type="submit" onClick={handleCloseEditar} >GUARDAR</Button >
                             <Button sx={{ m: 2 }} variant="contained" onClick={handleCloseEditar}>CANCELAR</Button>
                         </Box>
