@@ -27,7 +27,7 @@ import {
     FormControl, MenuItem, InputLabel, Select, NativeSelect
 
 } from "@mui/material";
-import { useState, useEffect } from "react";
+import {  useContext,useState, useEffect } from "react";
 import axios from "axios";
 import IconButton from '@mui/material/IconButton';
 import { cyan, grey } from '@mui/material/colors';
@@ -38,10 +38,9 @@ import Groups2RoundedIcon from '@mui/icons-material/Groups2Rounded';
 import ArticleRoundedIcon from '@mui/icons-material/ArticleRounded';
 import DriveFileRenameOutlineRoundedIcon from '@mui/icons-material/DriveFileRenameOutlineRounded';
 import AddBoxRoundedIcon from '@mui/icons-material/AddBoxRounded';
-import { ModalEditarConvocatoria } from "../ModalEditarConvocatoria/ModalEditarConvocatoria";
 import { Convocar } from '../Convocar/Convocar'
 import Swal from 'sweetalert2/dist/sweetalert2.js'
-
+import { UserContext } from '../../UserContext/UserContext';
 
 
 
@@ -50,17 +49,20 @@ export function TablaConvocatorias() {
 
     const baseURL = 'http://localhost:3005';
 
-
+    const { userData, setUserData } = useContext(UserContext);
     const navigate = useNavigate();
+
+
     const [rivales, setRivales] = useState(null);
 
 
-    const [convocatorias, setConvocatorias] = useState(null);
+    const [convocatorias, setConvocatorias] = useState([]);
 
-    const [convocatoria, setConvocatoria] = useState({ fecha: '', rival: '', golesRecibidos: '', golesConvertidos: '' });
+    const [convocatoria, setConvocatoria] = useState({ fecha: '', rival: '', golesRecibidos: toString(''), golesConvertidos: toString('') });
 
     const [open, setOpen] = React.useState(false);
-
+    //Guarda los datos del resultado de la busqueda utilizando(asociando) los datos todos los jugadores 
+    const [resultados, setResultados] = useState(convocatorias);
     const handleClickOpen = () => {
         buscarRivales()
         setOpen(true);
@@ -69,50 +71,15 @@ export function TablaConvocatorias() {
     const handleClose = () => {
         setOpen(false);
     };
-    const crearConvocatoria = async (e) => {
-        e.preventDefault();
-        // console.log(convocatoria);
-
-        await axios.post(baseURL + '/api/v1/convocatoria/nuevaconvocatoria', convocatoria)
-            .then(async res => {
-                if (res.data.estado === 'OK') {
-                    const result = await Swal.fire({
-                        text: res.data.msj,
-                        icon: 'success',
-                        confirmButtonText: 'Listo',
-                        confirmButtonColor: '#326fd1'
-                    })
-
-                    if (result.isConfirmed) {
-                        BuscarTodosConvocatorias();
-                    }
-
-
-
-
-
-                }
-            })
-            .catch(error => {
-                console.log(error);
-            })
-
-    }
-
-
-
-    // Inicio del modal
-    // datos de convocatoria
-
-
-    // datos de los rivales disponibles
-    const [datos, setDatos] = useState("");
-
-
 
     useEffect(() => {
         BuscarTodosConvocatorias();
+        buscarRivales()
     }, []);
+
+    useEffect(() => {
+        setResultados(convocatorias);
+    }, [convocatorias]);
 
     const BuscarTodosConvocatorias = async () => {
         await axios.get(baseURL + '/api/v1/convocatoria/convocatorias/')
@@ -130,110 +97,272 @@ export function TablaConvocatorias() {
         return fecha.toISOString().split('T')[0];
     };
 
-    // Modal/Dialogo para eliminar convocatorias
+    const crearConvocatoria = async () => {
+        try {
+            const resp = await axios.post(baseURL + '/api/v1/convocatoria/convocatorias', convocatoria);
+    
+            if (resp.data.estado === 'OK') {
+                handleClose();
+                const result = await Swal.fire({
+                    text: resp.data.msj,
+                    icon: 'success',
+                    confirmButtonText: 'Listo',
+                    confirmButtonColor: '#326fd1'
+                });
+    
+                if (result.isConfirmed) {
+                    BuscarTodosConvocatorias();
+                }
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+  
+        const buscar = (termino) => {
+            if (termino) {
+               
+                // filtrar los datos
+                const resultadosFiltrados = convocatorias.filter((item) => {
+                    // Según:
+                    return (
+                        //convierte el valor de dni a string para poder realizar la busqueda
+                        item.fecha.toString().includes(termino) 
+                       
+                    );
+                });
+                // Actualiza con los resultados filtrados
+                setResultados(resultadosFiltrados);
+            } else {
+                //Muestra todos los resultados
+                setResultados(convocatorias);
 
-    const eliminarConvocatoria = async (idConvocatoria) => {
-        await axios.delete(baseURL + '/api/v1/convocatoria/convocatorias/' + idConvocatoria)
-            .then(async resp => {
-                console.log(resp.data);
+            }
+        };
+
+
+
+        // Modal/Dialogo para eliminar convocatorias
+
+        const eliminarConvocatoria = async (idConvocatoria) => {
+            await axios.delete(baseURL + '/api/v1/convocatoria/convocatorias/' + idConvocatoria)
+                .then(async resp => {
+                    console.log(resp.data);
+                    if (resp.data.estado === 'OK') {
+                        const result = await Swal.fire({
+                            text: resp.data.msj,
+                            icon: 'success',
+                            confirmButtonText: 'Listo',
+                            confirmButtonColor: '#326fd1'
+                        })
+
+                        if (result.isConfirmed) {
+                            BuscarTodosConvocatorias();
+
+                        }
+                    }
+
+
+                    // setOpen(true)
+                    // alert(resp.data.msj);
+
+                })
+                .catch(error => {
+                    console.log(error);
+                })
+        };
+        //Busqueda 
+        const convocar = (id) => {
+            const parametro = id;
+            navigate(`/convocar/${parametro}`);
+        };
+
+        const convocados = (idConvocatoria, rival) => {
+            // const idConvocatoria = idConvocatoria; 
+            navigate(`/convocados/${idConvocatoria}/${rival}`);
+        };
+        const buscarRivales = async () => {
+            axios.get(baseURL + '/api/v1/rival/rivales')
+                .then(resp => {
+                    console.log(resp.data.dato)
+                    setRivales(resp.data.dato);
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        }
+    // Inicio del modal
+    const [openconv, setOpenConv] = React.useState(false);
+        //AGREGAR JUGADORES
+
+
+        const handleClickOpenConvocatoria = () => {
+            buscarRivales()
+            setOpenConv(true);
+        };
+
+        const handleCloseConvocatoria = () => {
+            setOpenConv(false);
+        };
+
+
+
+        const handleCloseEditarConvocatoria = () => {
+            setOpenConv(false);
+        };
+
+        //EDITAR Convocatoria carga los datos al modal/dialog
+        const editarConvocatoria = (item) => {
+
+            console.log(item);
+            if (item.idConvocatoria && item.fecha && item.rival) {
+                setConvocatoria({
+                    // ...convocatoria,
+                    idConvocatoria: item.idConvocatoria,
+                    fecha: item.fecha,
+                    rival: item.rival
+
+                });
+
+                handleClickOpenConvocatoria();
+            }
+        };
+
+
+
+
+
+
+        const editarEnviarConvocatoria = async () => {
+            const { idConvocatoria, fecha, rival, golesRecibidos, golesConvertidos } = convocatoria;
+        
+            try {
+                const resp = await axios.put(baseURL + '/api/v1/convocatoria/convocatorias/' + idConvocatoria, {
+                    idConvocatoria: idConvocatoria,
+                    fecha: fecha,
+                    rival: rival,
+                    golesRecibidos: golesRecibidos,
+                    golesConvertidos: golesConvertidos
+                });
+        
                 if (resp.data.estado === 'OK') {
+                    // Cierra el modal/dialog antes de mostrar Swal
+                    handleCloseEditarConvocatoria();
+                    
                     const result = await Swal.fire({
                         text: resp.data.msj,
                         icon: 'success',
                         confirmButtonText: 'Listo',
                         confirmButtonColor: '#326fd1'
-                    })
-
+                    });
+        
                     if (result.isConfirmed) {
+                        // Actualiza la lista
                         BuscarTodosConvocatorias();
-
                     }
                 }
-
-
-                // setOpen(true)
-                // alert(resp.data.msj);
-
-            })
-            .catch(error => {
-                console.log(error);
-            })
-    };
-    //Busqueda 
-    const convocar = (id) => {
-        const parametro = id;
-        navigate(`/convocar/${parametro}`);
-    };
-
-    const convocados = (idConvocatoria, rival) => {
-        // const idConvocatoria = idConvocatoria; 
-        navigate(`/convocados/${idConvocatoria}/${rival}`);
-    };
-    const buscarRivales = async () => {
-        axios.get(baseURL + '/api/v1/rival/rivales')
-            .then(resp => {
-                console.log(resp.data.dato)
-                setRivales(resp.data.dato);
-            })
-            .catch(error => {
-                console.log(error);
-            });
-    }
-    // Inicio del modal
-    const [openconv, setOpenConv] = React.useState(false);
-    //AGREGAR JUGADORES
-    const handleClickOpenConvocatoria = () => {
-        buscarRivales()
-        setOpenConv(true);
-    };
-
-    const handleCloseConvocatoria = () => {
-        setOpenConv(false);
-    };
-
-    const handleClickOpenEditarConvocaroria = (item) => {
-        console.log(item)
-        setConvocatoria({
-            idConvocatoria: item.idConvocatoria,
-            rival: item.rival,
-            fecha: item.fecha
-        });
-        buscarRivales();
-        setOpenConv(true);
-    };
-
-    const handleCloseEditarConvocatoria = () => {
-        setOpenConv(false);
-    };
-
-    const editarConvocatoria = async (idConvocatoria) => {
-
-        await axios.put(baseURL + '/api/v1/convocatoria/esditarconvocatoria/' + idConvocatoria, convocatoria)
-            .then(async (resp) => {
-                if (resp.data.estado === 'OK') {
-                    setConvocatoria(
-                        resp.data.estado
-                    );
-
-                    BuscarTodosConvocatorias();
-                }
-            })
-            .catch(error => {
-                console.log(error);
-            })
-    }
+            } catch (error) {
+                console.error(error);
+            }
+        }
 
     const [openres, setOpenRes] = React.useState(false);
 
-    const handleClickOpenResultados = () => {
 
-        setOpenRes(true);
-    };
 
-    const handleCloseResultados = () => {
-        setOpenRes(false);
-    };
-    return (
+        const handleClickOpenResultados = () => {
+
+
+
+            setOpenRes(true);
+
+        };
+
+
+
+        const handleCloseResultados = () => {
+
+            setOpenRes(false);
+
+        };
+
+
+        //EDITAR Resultados carga los datos al modal/dialog
+
+        const editarResultados = (item) => {
+            console.log(item)
+            setConvocatoria({
+                idConvocatoria: item.idConvocatoria,
+                golesRecibidos: item.golesRecibidos,
+                golesConvertidos: item.golesConvertidos
+            })
+
+            handleClickOpenResultados();//muestra el modal
+
+        };
+
+
+
+        const editarEnviarResultados = async () => {
+
+            const { idConvocatoria, fecha, rival, golesRecibidos, golesConvertidos } = convocatoria
+
+            await axios.put(baseURL + '/api/v1/convocatoria/convocatorias/resultados/' + idConvocatoria, {
+
+                idConvocatoria: idConvocatoria,
+                fecha: fecha,
+                rival: rival,
+                golesRecibidos: golesRecibidos.toString(),
+                golesConvertidos: golesConvertidos.toString()
+
+            })
+
+                .then(async (resp) => {
+
+                    console.log(resp.data.dato);
+
+
+
+                    if (resp.data.estado === 'OK') {
+
+                        const result = await Swal.fire({
+
+                            text: resp.data.msj,
+                            icon: 'success',
+                            confirmButtonText: 'Listo',
+                            confirmButtonColor: '#326fd1'
+
+                        })
+
+
+
+                        if (result.isConfirmed) {
+
+                            //cierra el modal/dialog  
+
+                            handleCloseResultados();
+
+                            //actualiza la lista
+
+                            BuscarTodosConvocatorias();
+
+                        }
+
+
+
+                    }
+
+                })
+
+                .catch(error => {
+
+                    console.log(error);
+
+                })
+
+        }
+
+    return(
         <>
             <Container >
                 <Box component="div">
@@ -249,10 +378,13 @@ export function TablaConvocatorias() {
                                     >Agregar</Button>
                                 </Grid>
                                 <Grid xs={8} item marginBottom={2}>
-
-
-
-                                    <TextField id="filled-basic" label="Filled" variant="filled" fullWidth />
+                                    <TextField
+                                        id="filled-basic"
+                                        label="Busqueda"
+                                        placeholder="Busqueda por: fecha"
+                                        variant="filled"
+                                        onChange={(e) => buscar(e.target.value)}
+                                        fullWidth />
                                 </Grid>
                             </Grid>
                             <TableContainer sx={{ boxShadow: 1 }}   >
@@ -266,7 +398,8 @@ export function TablaConvocatorias() {
                                     </TableHead>
                                     <TableBody sx={{ bgcolor: grey[100] }}>
                                         {
-                                            convocatorias ? (convocatorias.map((item, index) => (
+                                                //Para poder aplicar los filtros de busqueda --> resultados estan asociadosa convocatorias
+                                            resultados.length > 0 ? (resultados.map((item, index) => (
                                                 <TableRow component="tr" key={index}>
                                                     <TableCell component="td"><Typography variant="h6">{formatoFecha(item.fecha)}</Typography></TableCell>
                                                     <TableCell component="td"><Typography variant="h6">{item.nombre}</Typography></TableCell>
@@ -277,7 +410,7 @@ export function TablaConvocatorias() {
                                                                     <IconButton aria-label="editar"
                                                                         variant="contained"
                                                                         color="secondary"
-                                                                        onClick={() => handleClickOpenEditarConvocaroria(item.idConvocatoria)}
+                                                                        onClick={() => editarConvocatoria(item)}
                                                                     >
                                                                         <DriveFileRenameOutlineRoundedIcon fontSize="large" />
                                                                     </IconButton>
@@ -312,7 +445,7 @@ export function TablaConvocatorias() {
                                                             </Grid>
                                                             <Grid item lg={2} ml={1}>
                                                                 <Tooltip disableFocusListener title="Resultados">
-                                                                    <IconButton aria-label="resultados" onClick={handleClickOpenResultados}
+                                                                    <IconButton aria-label="resultados" onClick={() => editarResultados(item)}
 
                                                                     >
                                                                         <ArticleRoundedIcon fontSize="large" sx={{ color: cyan[700] }} />
@@ -338,12 +471,14 @@ export function TablaConvocatorias() {
             </Container >
 
             <Dialog className="NuevaConvocatoria" open={open}
-                onClose={handleClose}
+                
             >
                 <DialogTitle>Nueva Convocarotia</DialogTitle>
                 <DialogContent>
-                    <Box component="form" onSubmit={e => crearConvocatoria(e)}
-                    // onClose={handleClose} 
+                    <Box component="form" 
+                    
+                    onSubmit={e => crearConvocatoria(e)}
+                    
                     >
 
                         {/* fecha */}
@@ -367,12 +502,12 @@ export function TablaConvocatorias() {
                         <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
                             <InputLabel id="rivalid">RIVAL</InputLabel>
                             {
-                                // convocatoria.idRival !== undefined &&
+                                convocatoria.rival !== undefined &&
                                 <Select
                                     defaultValue=""
-                                    key={convocatoria.idRival}
+
                                     required
-                                    value={convocatoria.idRival}
+
                                     fullWidth
                                     onChange={(e) => setConvocatoria({ ...convocatoria, rival: e.target.value })}
 
@@ -393,8 +528,8 @@ export function TablaConvocatorias() {
 
                         <Box mt={2}  >
 
-                            <Button sx={{ m: 2 }} variant="contained" color="secondary" type="submit" onClick={handleClose}
-                            // onClick={() => setOpenConv(false)}
+                            <Button sx={{ m: 2 }} variant="contained" color="secondary" type="submit"
+                            
                             >GUARDAR</Button >
                             <Button sx={{ m: 2 }} variant="contained" onClick={handleClose}>CANCELAR</Button>
                         </Box>
@@ -409,7 +544,7 @@ export function TablaConvocatorias() {
                 <DialogTitle >Editar Convocatoria</DialogTitle>
                 <DialogContent>
                     <Box component="form"
-                        onSubmit={(item) => editarConvocatoria(item.idConvocatoria)}
+                        onSubmit={(item) => editarEnviarConvocatoria(item.idConvocatoria)}
                     >
 
                         {/********** FECHA ********************/}
@@ -422,7 +557,7 @@ export function TablaConvocatorias() {
                             margin="normal"
                             // helperText={error.message}
                             // error={error.error}
-
+                            key={convocatoria.fecha}
                             required
                             fullWidth
                             value={convocatoria.fecha}
@@ -433,14 +568,14 @@ export function TablaConvocatorias() {
                         <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
                             <InputLabel id="rivalid">RIVAL</InputLabel>
                             {
-                            // convocatoria.idRival !== undefined &&
+                                convocatoria.rival !== undefined &&
                                 <Select
                                     defaultValue=""
                                     required
-                                    value={convocatoria.idRival}
+
                                     fullWidth
                                     onChange={(e) => setConvocatoria({ ...convocatoria, rival: e.target.value })}
-                                    key={convocatoria.idRival}
+
                                 >
                                     {(rivales?.length > 0) ? rivales.map(item => (
                                         <MenuItem key={item.idRival} value={item.idRival}>
@@ -457,7 +592,7 @@ export function TablaConvocatorias() {
                                 variant="contained"
                                 color="secondary"
                                 type="submit"
-                            // onSubmit= {(item) => editarConvocatoria(item.idConvocatoria)}
+
                             >GUARDAR</Button >
 
                             {/******************BOTON CANCELAR *****************************/}
@@ -469,54 +604,51 @@ export function TablaConvocatorias() {
                 </DialogContent>
 
             </Dialog>
-            {/***************************************************Resusultados*******************************/}
-            <Dialog className="editar" open={openres}
-                onClose={handleCloseResultados}>
-                <DialogTitle >Resultados</DialogTitle>
-                <DialogContent>
-                    <Box component="form"
-                        // onSubmit={e => crearRehandleCloseResultados(e)} 
-                        onClose={handleCloseResultados} >
+    {/***************************************************Resusultados*******************************/ }
+    <Dialog className="editar" open={openres}
+        onClose={handleCloseResultados}>
+        <DialogTitle >Resultados</DialogTitle>
+        <DialogContent>
+            <Box component="form"
+                onSubmit={e => editarEnviarResultados(e)} >
 
-                        {/* Goles Recibidos */}
-                        <TextField
-                            id="golesrecibidos"
-                            label="Goles Recibidos"
-                            type='number'
-                            variant="standard"
-                            margin="normal"
-                            // helperText={error.message}
-                            // error={error.error}
-                            required
-                            fullWidth
-                        // value={convocatoria.golesrecibidos}
-                        // onChange={(e) => setConvocatorias({ ...convocatoria, golesrecibidos: e.target.value })}
-                        />
-                        {/* Goles Realizados */}
-                        <TextField
-                            id="golesrealizados"
-                            label="Goles Convertidos"
-                            type='number'
-                            variant="standard"
-                            margin="normal"
-                            // helperText={error.message}
-                            // error={error.error}
-                            required
-                            fullWidth
-                        // value={convocatoria.golesrealizados}
-                        // onChange={(e) => setConvocatorias({ ...convocatoria, golesrealizados: e.target.value })}
-                        />
+                {/* Goles Recibidos */}
+                <TextField
+                    id="golesrecibidos"
+                    label="Goles Recibidos"
+                    type='number'
+                    variant="standard"
+                    margin="normal"
 
-                        <Box mt={2}  >
+                    required
+                    fullWidth
+                    value={convocatoria.golesRecibidos}
+                    onChange={(e) => setConvocatoria({ ...convocatoria, golesRecibidos: e.target.value })}
+                />
+                {/* Goles CONVERTIDOS */}
+                <TextField
+                    id="golesconvertidos"
+                    label="Goles Convertidos"
+                    type='number'
+                    variant="standard"
+                    margin="normal"
+                    required
+                    fullWidth
 
-                            <Button sx={{ m: 2 }} variant="contained" color="secondary" type="submit" >GUARDAR</Button >
-                            <Button sx={{ m: 2 }} variant="contained" onClick={handleCloseConvocatoria}>CANCELAR</Button>
-                        </Box>
+                    value={convocatoria.golesConvertidos}
+                    onChange={(e) => setConvocatoria({ ...convocatoria, golesConvertidos: e.target.value })}
+                />
 
-                    </Box>
-                </DialogContent>
+                <Box mt={2}  >
 
-            </Dialog>
+                    <Button sx={{ m: 2 }} variant="contained" color="secondary" type="submit" >GUARDAR</Button >
+                    <Button sx={{ m: 2 }} variant="contained" onClick={handleCloseResultados}>CANCELAR</Button>
+                </Box>
+
+            </Box>
+        </DialogContent>
+
+    </Dialog>
 
         </>
     )

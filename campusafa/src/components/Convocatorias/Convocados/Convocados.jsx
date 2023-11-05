@@ -50,13 +50,16 @@ export function Convocados(props) {
     const Swal = require('sweetalert2')
     const [convocados, setConvocados] = useState([]);
     const [titulares, setTitulares] = useState([]);
+    const [archivo, setArchivo] = useState(null);
 
     const navigate = useNavigate();
 
     useEffect(() => {
         buscarConvocados();
     }, []);
-
+    const changeArchivo = (e) => {        
+        setArchivo(e.target.files[0]);}
+        
     const buscarConvocados = async () => {
         axios.get(baseURL + '/api/v1/futbolistaconvocatoria/futbolistaconvocatoria/' + idConvocatoria)
             .then(res => {
@@ -86,7 +89,7 @@ export function Convocados(props) {
 
     // hacer
     const volver = () => {
-        navigate('/convocatoria')
+        navigate('/privado/convocatoria')
     }
     function formatoFecha(dateTime) {
         const fecha = new Date(dateTime);
@@ -148,7 +151,7 @@ export function Convocados(props) {
                                                                     sx={[{ width: 56, height: 56 },
                                                                     { bgcolor: cyan[700] }]}
                                                                     alt={item.nombre}
-                                                                    rc={item.foto} />
+                                                                    src={`http://localhost:3005/archivos/${item.foto}`} />
                                                             </Grid>
                                                             <Grid item lg={8} mt={2}>
                                                                 <Typography variant="subtitle1">{item.nombre}</Typography>

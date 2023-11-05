@@ -24,11 +24,11 @@ export function Header() {
                     <div className="logoNav"><Link to="/">{start}</Link></div>
                     <ul className="menu">
                         <li><Link to="institucional">INSTITUCIONAL</Link></li>
-                        {/* <li><Link to="noticias">NOTICIAS</Link></li> */}
+                        
                         <li><Link to="contacto">CONTACTO</Link></li>
-                        <li><Link to="jugador">JUGADORES</Link></li>
-                        <li><Link to="convocatoria">CONVOCATORIAS</Link></li>
-                        {/* <li><Link to="equipotitular">EQUIPO TITULAR</Link></li> */}
+                        {/* <li><Link to="jugador">JUGADORES</Link></li>
+                        <li><Link to="convocatoria">CONVOCATORIAS</Link></li> */}
+                      
                     </ul>
                     {/* cAMBIAR */}
                     <div >

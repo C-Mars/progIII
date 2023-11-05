@@ -26,7 +26,7 @@ import {
     FormControl, MenuItem, InputLabel, Select, NativeSelect, Checkbox, FormControlLabel, FormGroup
 
 } from "@mui/material";
-import { useState, useEffect } from "react";
+import { useContext,useState, useEffect } from "react";
 import axios from "axios";
 import IconButton from '@mui/material/IconButton';
 import SportsSoccerRoundedIcon from '@mui/icons-material/SportsSoccerRounded';
@@ -36,18 +36,20 @@ import AddBoxRoundedIcon from '@mui/icons-material/AddBoxRounded';
 import { useParams } from 'react-router-dom';
 import DriveFileRenameOutlineRoundedIcon from '@mui/icons-material/DriveFileRenameOutlineRounded';
 import Swal from 'sweetalert2'
-
+import { UserContext } from '../../UserContext/UserContext';
 export function Convocar() {
 
-   
+
     const { parametro } = useParams();
+
+
 
     const baseURL = 'http://localhost:3005';
 
     const [futbolistas, setFutbolistas] = useState([]);
 
     const [convocados, setConvocados] = useState([]);
-
+    const { userData, setUserData } = useContext(UserContext);
     const navigate = useNavigate();
 
     // buscamos los jugadores activos
@@ -55,8 +57,14 @@ export function Convocar() {
         buscarTodosFubolistas();
     }, []);
 
+
     const buscarTodosFubolistas = async () => {
-        axios.get(baseURL + '/api/v1/futbolista/futbolistas')
+        axios.get(baseURL + '/api/v1/futbolista/futbolistas',{
+            headers:{
+                Authorization:`Bearer ${userData.token}`
+            }
+
+        })
             .then(res => {
                 // console.log(res.data.dato); 
                 setFutbolistas(res.data.dato);
@@ -66,33 +74,45 @@ export function Convocar() {
             });
     }
 
-  
+
     const convocar = (idFutbolista) => {
-        if (convocados.includes(idFutbolista)) {
-            // Si ya está seleccionado, quito de la lista de convocados
-            setConvocados(convocados.filter((rowId) => rowId !== idFutbolista));
+        if (convocados.length >= 26) {
+            // Estan seleccionados los 26 jugadores-->muestra un mensaje de error
+            Swal.fire({
+                position: 'top-center',
+                icon: 'error',
+                text: 'Alcanzaste el límite de 26 jugadores seleccionados',
+                showConfirmButton: false,
+                timer: 1500
+            });
         } else {
-            // Si no está seleccionada, agrego a la lista de convocados
-            if(convocados.length === 26 ){
-                Swal.fire({
-                    position: 'top-center',
-                    icon: 'error',
-                    text: 'Superó el cupo permitido',
-                    showConfirmButton: false,
-                    timer: 1500
-                  }) 
-                // alert('Supero el cupo permitido')
-            } 
-            else{
-                
-                setConvocados([...convocados, idFutbolista]);
+            const jugador = futbolistas.find((item) => item.idFutbolista === idFutbolista);
+    
+            if (jugador) {
+                if (convocados.includes(idFutbolista)) {
+                    // Si ya está seleccionado, quita de la lista de convocados
+                    setConvocados(convocados.filter((rowId) => rowId !== idFutbolista));
+                } else {
+                    // Si no está seleccionado, agrega a la lista de convocados como MAX un Arquero
+                    if (jugador.posicion === 'Arquero' && convocados.some((id) => {
+                        const convocado = futbolistas.find((futbolista) => futbolista.idFutbolista === id);
+                        return convocado.posicion === 'Arquero';
+                    })) {
+                     // muestra un mensaje de error 
+                        Swal.fire({
+                            position: 'top-center',
+                            icon: 'error',
+                            text: 'Ya seleccionaste un Arquero',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    } else {
+                        setConvocados([...convocados, idFutbolista]);
+                    }
+                }
             }
-            
-            
         }
     }
-   
-
     const enviarInformacion = () => {
 
         const lista = { idConvocatoria: parametro, futbolistas: convocados }
@@ -105,11 +125,11 @@ export function Convocar() {
                         text: res.data.msj,
                         icon: 'success',
                         confirmButtonText: 'Listo',
-                        confirmButtonColor:'#326fd1'
+                        confirmButtonColor: '#326fd1'
                     })
 
                     if (result.isConfirmed) {
-                        navigate('/convocatoria');
+                        navigate('/privado/convocatoria');
                     }
                 }
             })
@@ -118,6 +138,9 @@ export function Convocar() {
             });
 
     }
+    const convocatoria = () => {        
+        navigate('/privado/convocatoria');        
+    };
     return (
         <>
 
@@ -153,28 +176,28 @@ export function Convocar() {
                                 <Table >
                                     <TableHead sx={{ bgcolor: "#052035" }}>
                                         <TableRow component="tr" >
-                                            <TableCell component="td" ><Typography sx={{color : cyan[50]}} variant="h5" >JUGADOR</Typography></TableCell>
-                                            <TableCell component="td"><Typography sx={{color : cyan[50]}} variant="h5">POSICIÓN</Typography></TableCell>
-                                            <TableCell component="td"><Typography sx={{color : cyan[50]}} variant="h5">APODO</Typography></TableCell>
-                                            <TableCell component="td"><Typography sx={{color : cyan[50]}} variant="h5">PIÉ HABIL</Typography></TableCell>
-                                            <TableCell component="td"><Typography sx={{color : cyan[50]}} variant="h5">CONVOCAR</Typography></TableCell>
+                                            <TableCell component="td" ><Typography sx={{ color: cyan[50] }} variant="h5" >JUGADOR</Typography></TableCell>
+                                            <TableCell component="td"><Typography sx={{ color: cyan[50] }} variant="h5">POSICIÓN</Typography></TableCell>
+                                            <TableCell component="td"><Typography sx={{ color: cyan[50] }} variant="h5">APODO</Typography></TableCell>
+                                            <TableCell component="td"><Typography sx={{ color: cyan[50] }} variant="h5">PIÉ HABIL</Typography></TableCell>
+                                            <TableCell component="td"><Typography sx={{ color: cyan[50] }} variant="h5">CONVOCAR</Typography></TableCell>
 
                                         </TableRow>
                                     </TableHead>
-                                    <TableBody sx={{ bgcolor:grey[100] }}>
+                                    <TableBody sx={{ bgcolor: grey[100] }}>
                                         {
                                             futbolistas ? (futbolistas.map((item, index) => (
                                                 <TableRow component="tr" key={index}>
 
                                                     <TableCell component="td" ailing="right">
 
-                                                        <Grid container  ailing="center">
+                                                        <Grid container ailing="center">
                                                             <Grid item lg={4} mt={2} >
                                                                 <Avatar
                                                                     sx={[{ width: 56, height: 56 },
                                                                     { bgcolor: cyan[700] }]}
                                                                     alt={item.nombre}
-                                                                    rc={item.foto} />
+                                                                    src={`http://localhost:3005/archivos/${item.foto}`} />
                                                             </Grid>
                                                             <Grid item lg={8} >
                                                                 <Typography variant="subtitle1">{item.nombre}</Typography>
@@ -191,12 +214,12 @@ export function Convocar() {
                                                     <TableCell component="td">
                                                         <Grid container>
                                                             <Grid item lg={6}>
-                                                                <Checkbox 
+                                                                <Checkbox
                                                                     color="success"
                                                                     checked={convocados.includes(item.idFutbolista)}
-                                                                    onChange={() => convocar(item.idFutbolista)} 
-                                                                     />
-                                                                        
+                                                                    onChange={() => convocar(item.idFutbolista)}
+                                                                />
+
 
                                                             </Grid>
 
