@@ -12,7 +12,7 @@ import { Grid, Typography, Button, Card, CardContent, Box } from '@mui/material'
 
 
 const Dashboard = () => {
-    const baseURL = 'http://localhost:3010';
+    const baseURL = 'http://localhost:3005';
 
     const navigate = useNavigate();
     const { userData, setUserData } = useContext(UserContext);
