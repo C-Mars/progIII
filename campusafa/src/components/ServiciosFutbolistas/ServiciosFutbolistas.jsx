@@ -13,7 +13,9 @@ const baseURL = 'http://localhost:3005';
     }, []);
 
     const BuscarTodosFutbolistas = async () => {
-        await axios.get(baseURL + '/api/v1/futbolista/futbolistas')
+        await axios.get(baseURL + '/api/v1/futbolista/futbolistas',{ headers:{
+            Authorization:`Bearer ${userData.token}`
+        }})
             .then(resp => {
                 console.log(resp.data.dato);
                 setDatos(resp.data.dato);

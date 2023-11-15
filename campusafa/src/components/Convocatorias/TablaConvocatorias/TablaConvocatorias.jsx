@@ -82,7 +82,11 @@ export function TablaConvocatorias() {
     }, [convocatorias]);
 
     const BuscarTodosConvocatorias = async () => {
-        await axios.get(baseURL + '/api/v1/convocatoria/convocatorias/')
+        await axios.get(baseURL + '/api/v1/convocatoria/convocatorias/',{
+            headers:{
+                Authorization:`Bearer ${userData.token}` //necesario para la autenticacion del usuario en el api
+            } 
+        })
             .then(resp => {
                 console.log(resp.data.dato);
                 setConvocatorias(resp.data.dato);
@@ -99,7 +103,11 @@ export function TablaConvocatorias() {
 
     const crearConvocatoria = async () => {
         try {
-            const resp = await axios.post(baseURL + '/api/v1/convocatoria/convocatorias', convocatoria);
+            const resp = await axios.post(baseURL + '/api/v1/convocatoria/convocatorias', convocatoria,{
+                headers:{
+                    Authorization:`Bearer ${userData.token}` //necesario para la autenticacion del usuario en el api
+                } 
+            });
     
             if (resp.data.estado === 'OK') {
                 handleClose();
@@ -145,7 +153,11 @@ export function TablaConvocatorias() {
         // Modal/Dialogo para eliminar convocatorias
 
         const eliminarConvocatoria = async (idConvocatoria) => {
-            await axios.delete(baseURL + '/api/v1/convocatoria/convocatorias/' + idConvocatoria)
+            await axios.delete(baseURL + '/api/v1/convocatoria/convocatorias/' + idConvocatoria,{
+                headers:{
+                    Authorization:`Bearer ${userData.token}` //necesario para la autenticacion del usuario en el api
+                } 
+            })
                 .then(async resp => {
                     console.log(resp.data);
                     if (resp.data.estado === 'OK') {
@@ -173,16 +185,19 @@ export function TablaConvocatorias() {
         };
         //Busqueda 
         const convocar = (id) => {
-            const parametro = id;
-            navigate(`/convocar/${parametro}`);
+            const parametro = id; 
+            navigate(`/privado/convocar/${parametro}`);        
         };
 
         const convocados = (idConvocatoria, rival) => {
-            // const idConvocatoria = idConvocatoria; 
-            navigate(`/convocados/${idConvocatoria}/${rival}`);
+            navigate(`/privado/convocados/${idConvocatoria}/${rival}`);        
         };
         const buscarRivales = async () => {
-            axios.get(baseURL + '/api/v1/rival/rivales')
+            axios.get(baseURL + '/api/v1/rival/rivales',{
+                headers:{
+                    Authorization:`Bearer ${userData.token}` //necesario para la autenticacion del usuario en el api
+                } 
+            })
                 .then(resp => {
                     console.log(resp.data.dato)
                     setRivales(resp.data.dato);
@@ -237,7 +252,11 @@ export function TablaConvocatorias() {
             const { idConvocatoria, fecha, rival, golesRecibidos, golesConvertidos } = convocatoria;
         
             try {
-                const resp = await axios.put(baseURL + '/api/v1/convocatoria/convocatorias/' + idConvocatoria, {
+                const resp = await axios.put(baseURL + '/api/v1/convocatoria/convocatorias/' + idConvocatoria,{
+                    headers:{
+                        Authorization:`Bearer ${userData.token}` //necesario para la autenticacion del usuario en el api
+                    } 
+                } ,{
                     idConvocatoria: idConvocatoria,
                     fecha: fecha,
                     rival: rival,
@@ -307,7 +326,11 @@ export function TablaConvocatorias() {
 
             const { idConvocatoria, fecha, rival, golesRecibidos, golesConvertidos } = convocatoria
 
-            await axios.put(baseURL + '/api/v1/convocatoria/convocatorias/resultados/' + idConvocatoria, {
+            await axios.put(baseURL + '/api/v1/convocatoria/convocatorias/resultados/' + idConvocatoria,{
+                headers:{
+                    Authorization:`Bearer ${userData.token}` //necesario para la autenticacion del usuario en el api
+                } 
+            } ,{
 
                 idConvocatoria: idConvocatoria,
                 fecha: fecha,

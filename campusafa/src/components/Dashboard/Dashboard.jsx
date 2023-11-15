@@ -8,7 +8,7 @@ import axios from 'axios';
 
 import Col from 'react-bootstrap/Col';
 import { Cuerpo } from '../Cuerpo/Cuerpo';
-import { Grid, Typography, Button, Card, CardContent, Box } from '@mui/material';
+import { Grid, Typography, Button, Card, CardContent, Box, CardActionArea, CardMedia } from '@mui/material';
 
 
 const Dashboard = () => {
@@ -55,16 +55,55 @@ const Dashboard = () => {
             <main>
                 <Cuerpo>
                     <Box sx={{ m: 2 }}>
-                    <section className='centre'>
-                        <div className="entrenador"><h1>Bienvenido {userData.user.nombre}!</h1>
-                        </div>
-                    </section>
+                        <section className='centre'>
+                            <div className="entrenador"><h1>BIENVENIDO  {userData.user.nombre}!</h1>
+                            </div>
+                        </section>
                     </Box>
-                   
-
-
                     <ProtectedElement mustBeEntrenador={true}>
-                        <Card sx={{ m: 2 }}>
+                        <Grid container spacing={2}>
+                            <Grid item>
+                                <Card sx={{ maxWidth: 345 }} m={2}>
+                                    <CardActionArea onClick={irAFutbolista}>
+                                        <CardMedia
+                                            component="img"
+                                            height="140"
+                                            image="/jugadoras.jpg"
+                                            alt="Jugadoras de fútbol femenino"
+                                        />
+                                        <CardContent>
+                                            <Typography gutterBottom variant="h5" component="div">
+                                                Jugadoras
+                                            </Typography>
+                                            <Typography variant="body2" color="text.secondary">
+                                                Sección principal para la conformación del equipo femenino
+                                            </Typography>
+                                        </CardContent>
+                                    </CardActionArea>
+                                </Card>
+                            </Grid>
+                            <Grid item>
+                                <Card sx={{ maxWidth: 345 }} m={2}>
+                                    <CardActionArea onClick={irAConvocatoria}>
+                                        <CardMedia
+                                            component="img"
+                                            height="140"
+                                            image="/femenino1.jpg"
+                                            alt="Jugadoras de fútbol femenino disputando un partido"
+                                        />
+                                        <CardContent>
+                                            <Typography gutterBottom variant="h5" component="div">
+                                                Convocatorias
+                                            </Typography>
+                                            <Typography variant="body2" color="text.secondary">
+                                                Sección principal para la conformación del equipo femenino en las distintas convocatorias programadas
+                                            </Typography>
+                                        </CardContent>
+                                    </CardActionArea>
+                                </Card>
+                            </Grid>
+                        </Grid>
+                        {/* <Card sx={{ m: 2 }}>
                             <CardContent >
                                 <Grid sx={{ m: 2 }} spacing={2}>
                                     <Typography>Convocatorias</Typography>
@@ -87,86 +126,97 @@ const Dashboard = () => {
                                     </Button>
                                 </Grid>
                             </CardContent>
-                        </Card>
+                        </Card> */}
                     </ProtectedElement>
                     <ProtectedElement mustBePresidente={true}>
-                        <div className='row'>
-                            <h3>Scaloneta</h3>
-                            <div className='container mt-3 mb-1 mb-5'>
-                                <div className="col-md-12">
-                                    <div className='row'>
-                                        <Col sm={6} md={4} lg={3}>
-                                            <Card bg='success'>
-                                                <Card.Body>
-                                                    <Card.Title>Futbolistas Creados</Card.Title>
-                                                    <Card.Subtitle className="mb-2 text-muted">Activos</Card.Subtitle>
-                                                    <Card.Text><h3>100</h3></Card.Text>
-                                                </Card.Body>
-                                            </Card>
-                                        </Col>
-                                        <Col sm={6} md={4} lg={3}>
-                                            <Card bg='danger'>
-                                                <Card.Body>
-                                                    <Card.Title>Lesionados</Card.Title>
-                                                    <Card.Subtitle className="mb-2 text-muted">No llegan...</Card.Subtitle>
-                                                    <Card.Text><h3>10</h3></Card.Text>
-                                                </Card.Body>
-                                            </Card>
-                                        </Col>
-                                        <Col sm={6} md={4} lg={3}>
-                                            <Card bg='info'>
-                                                <Card.Body>
-                                                    <Card.Title>Convocatorias</Card.Title>
-                                                    <Card.Subtitle className="mb-2 text-muted">Con 26 convocados</Card.Subtitle>
-                                                    <Card.Text><h3>10</h3></Card.Text>
-                                                </Card.Body>
-                                            </Card>
-                                        </Col>
-                                        <Col sm={6} md={4} lg={3}>
-                                            <Card bg='info'>
-                                                <Card.Body>
-                                                    <Card.Title>Próximo Partido</Card.Title>
-                                                    <Card.Subtitle className="mb-2 text-muted">Córdoba</Card.Subtitle>
-                                                    <Card.Text><h3>14/11/2023</h3></Card.Text>
-                                                </Card.Body>
-                                            </Card>
-                                        </Col>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className='row'>
-                            <h3>Bedelia</h3>
-                            <div className='container mt-3 mb-1 mb-5'>
-                                <div className="col-md-12">
-                                    <div className='row'>
-                                        <Col sm={6} md={4} lg={3}>
-                                            <Card bg='info'>
-                                                <Card.Body>
-                                                    <Card.Title>Estudiantes + 30</Card.Title>
-                                                    <Card.Subtitle className="mb-2 text-muted">Con mas de 30 años</Card.Subtitle>
-                                                    <Card.Text><h3>{(estadistica ? estadistica.mas30 : <></>)}</h3></Card.Text>
-                                                </Card.Body>
-                                            </Card>
-                                        </Col>
-                                        <Col sm={6} md={4} lg={3}>
-                                            <Card bg='info'>
-                                                <Card.Body>
-                                                    <Card.Title>Inscriptos TUDW</Card.Title>
-                                                    <Card.Subtitle className="mb-2 text-muted">Cant. Insc. TUDW</Card.Subtitle>
-                                                    <Card.Text><h3>{(estadistica ? estadistica.cantidadInscriptos : <></>)}</h3></Card.Text>
-                                                </Card.Body>
-                                            </Card>
-                                        </Col>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <Grid container spacing={2}>
+                            <Grid item>
+                                <Card sx={{ maxWidth: 345 }} m={2}>
+                                    <CardActionArea>
+                                        <CardMedia
+                                            component="img"
+                                            height="140"
+                                            image="/seleccion-argentina-de-futbol-femenino_862x485.jpg"
+                                            alt="Jugadoras de fútbol femenino"
+                                        />
+                                        <CardContent>
+                                            <Typography gutterBottom variant="h5" component="div">
+                                            Activos
+                                            </Typography>
+                                            <Typography variant="body2" color="text.secondary">
+                                                Sección principal para la conformación del equipo femenino
+                                            </Typography>
+                                        </CardContent>
+                                    </CardActionArea>
+                                </Card>
+                            </Grid>
+                            <Grid item>
+                                <Card sx={{ maxWidth: 345 }} m={2}>
+                                    <CardActionArea >
+                                        <CardMedia
+                                            component="img"
+                                            height="140"
+                                            image="/images.jpg"
+                                            alt="Jugadoras de fútbol femenino disputando un partido"
+                                        />
+                                        <CardContent>
+                                            <Typography gutterBottom variant="h5" component="div">
+                                            Lesionados
+                                            </Typography>
+                                            <Typography variant="body2" color="text.secondary">
+                                                Sección principal para la conformación del equipo femenino en las distintas convocatorias programadas
+                                            </Typography>
+                                        </CardContent>
+                                    </CardActionArea>
+                                </Card>
+                            </Grid>
+                            <Grid item>
+                                <Card sx={{ maxWidth: 345 }} m={2}>
+                                    <CardActionArea onClick={irAConvocatoria}>
+                                        <CardMedia
+                                            component="img"
+                                            height="140"
+                                            image="/femenino1.jpg"
+                                            alt="Jugadoras de fútbol femenino disputando un partido"
+                                        />
+                                        <CardContent>
+                                            <Typography gutterBottom variant="h5" component="div">
+                                                Convocatorias
+                                            </Typography>
+                                            <Typography variant="body2" color="text.secondary">
+                                                Sección principal para la conformación del equipo femenino en las distintas convocatorias programadas
+                                            </Typography>
+                                        </CardContent>
+                                    </CardActionArea>
+                                </Card>
+                            </Grid>
+                            <Grid item>
+                                <Card sx={{ maxWidth: 345 }} m={2}>
+                                    <CardActionArea onClick={irAConvocatoria}>
+                                        <CardMedia
+                                            component="img"
+                                            height="140"
+                                            image="/femenino1.jpg"
+                                            alt="Jugadoras de fútbol femenino disputando un partido"
+                                        />
+                                        <CardContent>
+                                            <Typography gutterBottom variant="h5" component="div">
+                                                Proximo partido
+                                            </Typography>
+                                            <Typography variant="body2" color="text.secondary">
+                                                Sección principal para la conformación del equipo femenino en las distintas convocatorias programadas
+                                            </Typography>
+                                        </CardContent>
+                                    </CardActionArea>
+                                </Card>
+                            </Grid>
+                        </Grid>
+
                     </ProtectedElement>
-               
-            </Cuerpo>
-        </main >
-           
+
+                </Cuerpo>
+            </main >
+
         </> : <></>
     )
 };

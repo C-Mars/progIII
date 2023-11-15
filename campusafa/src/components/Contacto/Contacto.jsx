@@ -55,9 +55,9 @@ export function Contacto() {
             <h2>PARA MÁS INFORMACIÓN</h2>
             <br></br>
             <form onSubmit={(e) => enviarInformacionForm(e)} className="cont-form" id="formContactos">
-              <label for="nombreyapellido"></label>
+              <label htmlFor="nombreyapellido"></label>
               <input className="controles" id="nombreyapellido" type="text" placeholder="Nombre y Apellido:" value={formulario.nombreyapellido} required onChange={(e) => setFormulario({ ...formulario, "nombreyapellido": e.target.value })} ></input>
-              <label for="email"></label>
+              <label htmlFor="email"></label>
               <input className="controles" id="email" value={formulario.email} type="email" placeholder="Email:" required onChange={(e) => setFormulario({ ...formulario, "email": e.target.value })}></input>
               <div className="asunto">
                 <select className="asunt-cont" name="asunto" value={formulario.asunto} id="asunto" onChange={(e) => setFormulario({ ...formulario, "asunto": e.target.value })}>

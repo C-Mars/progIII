@@ -117,7 +117,9 @@ export function Convocar() {
 
         const lista = { idConvocatoria: parametro, futbolistas: convocados }
         // console.log(lista);   
-        axios.post(baseURL + '/api/v1/futbolistaconvocatoria/nuevafutbolistaconvocatoria', lista)
+        axios.post(baseURL + '/api/v1/futbolistaconvocatoria/nuevafutbolistaconvocatoria', lista,{ headers:{
+            Authorization:`Bearer ${userData.token}`
+        }})
             .then(async res => {
                 // console.log(res.data); 
                 if (res.data.estado === 'OK') {

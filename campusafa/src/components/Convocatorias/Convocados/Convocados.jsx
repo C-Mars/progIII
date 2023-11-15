@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect,useContext } from "react";
 import { cyan , grey} from '@mui/material/colors';
 import { useNavigate, useParams } from 'react-router-dom';
 import ReplyRoundedIcon from '@mui/icons-material/ReplyRounded';
-
+import { UserContext } from '../../UserContext/UserContext';
 // import './Convocados.css';
 import {
 
@@ -45,7 +45,7 @@ import Swal from 'sweetalert2';
 
 export function Convocados(props) {
     const { idConvocatoria, rival } = useParams();
-
+    const { userData, setUserData } = useContext(UserContext);
     const baseURL = 'http://localhost:3005';
     const Swal = require('sweetalert2')
     const [convocados, setConvocados] = useState([]);
@@ -61,7 +61,9 @@ export function Convocados(props) {
         setArchivo(e.target.files[0]);}
         
     const buscarConvocados = async () => {
-        axios.get(baseURL + '/api/v1/futbolistaconvocatoria/futbolistaconvocatoria/' + idConvocatoria)
+        axios.get(baseURL + '/api/v1/futbolistaconvocatoria/futbolistaconvocatoria/' + idConvocatoria,{ headers:{
+            Authorization:`Bearer ${userData.token}`
+        }})
             .then(res => {
                 // tarea agregar control       
                 setConvocados(res.data.dato);

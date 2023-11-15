@@ -49,13 +49,13 @@ export function InicioSesion() {
                             <fieldset>
                                 <legend>Inicio de Sesión</legend>
                                 <div className="fila-ses">
-                                    <label for="emailUsuario">Correo Electrónico</label>
+                                    <label htmlFor="emailUsuario">Correo Electrónico</label>
                                     <input id="emailUsuario" name="usuario" type="email" placeholder="Escriba  su email"
                                         onChange={(e) => setFormulario({ ...formulario, correoElectronico: e.target.value })}
                                         value={formulario.correoElectronico} required></input>
                                 </div>
                                 <div className="fila-ses">
-                                    <label for="texcontrasenia">Contraseña</label>
+                                    <label htmlFor="texcontrasenia">Contraseña</label>
                                     <input type="password" name="contrasenia" id="texcontrasenia" placeholder="Escriba aquí su contraseña"
                                      onChange={(e) => setFormulario({ ...formulario, clave:e.target.value })}
                                      value={formulario.clave} required></input>

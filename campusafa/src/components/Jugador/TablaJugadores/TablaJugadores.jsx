@@ -257,7 +257,11 @@ export function TablaJugadores() {
         const { idFutbolista, dni, nombre, apellido, apodo, posicion, pieHabil,
             foto
         } = formulario;
-        await axios.put(baseURL + '/api/v1/futbolista/futbolistas/' + idFutbolista, {
+        await axios.put(baseURL + '/api/v1/futbolista/futbolistas/' + idFutbolista,{
+            headers:{
+                Authorization:`Bearer ${userData.token}` //necesario para la autenticacion del usuario en el api
+            } 
+        } ,{
             idFutbolista: idFutbolista,
             dni: dni,
             nombre: nombre,
